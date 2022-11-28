@@ -45,3 +45,26 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect("accounts:index")
+
+@login_required
+def update(request, user_pk):
+    user = get_user_model().objects.get(pk=user_pk)
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect("accounts:profile", user_pk)
+    else:
+        form = CustomUserCreationForm(instance=user)
+    context = {
+        "form": form,
+    }
+    return render(request, "accounts/update.html", context)
+
+@login_required
+def profile(request, user_pk):
+    user = get_user_model().objects.get(pk=user_pk)
+    context = {
+        'user':user,
+    }
+    return render(request, 'accounts/profile.html', context)
