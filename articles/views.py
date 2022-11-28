@@ -4,6 +4,7 @@ from .forms import ArticlesForm
 from django.contrib import messages
 
 # Create your views here.
+
 from .models import Articles
 from django.contrib.auth.decorators import login_required
 
@@ -71,3 +72,4 @@ def articles_update(request, articles_pk):
     else:
         messages.warning(request, "작성자만 수정 할 수 있습니다.")
         return redirect("articles:articles_index")
+
