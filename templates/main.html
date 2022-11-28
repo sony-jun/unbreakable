@@ -7,12 +7,17 @@
 
 {% block content %}
 
+<!-- logo -->
+<div class="logo-img">
+    <a href="#"><img src="{% static 'images/logo.png' %}" alt="" style="height:80px; width:80px;"></a>
+</div>
+
 <!-- nav bar -->
 <div class="nav-bar fixed-bottom">
-    <a href="#"><img class="logo-img" src="{% static 'images/calendar2.png' %}" alt=""></a>
-    <a href="#"><img class="logo-img" src="{% static 'images/diary2.png' %}" alt=""></a>
-    <a href="#"><img class="logo-img" src="{% static 'images/community2.png' %}" alt=""></a>
-    <a href="#"><img class="logo-img" src="{% static 'images/user2.png' %}" alt="" style="height:30px; width:30px;"></a>
+    <a href="#"><img class="nav-img" src="{% static 'images/calendar2.png' %}" alt="" style="height:32px; width:32px;"></a>
+    <a href="#"><img class="nav-img" src="{% static 'images/diary2.png' %}" alt="" style="height:35px; width:35px;"></a>
+    <a href="#"><img class="nav-img" src="{% static 'images/community2.png' %}" alt=""></a>
+    <a href="#"><img class="nav-img" src="{% static 'images/user2.png' %}" alt="" style="height:30px; width:30px;"></a>
 </div>
 
 {% endblock content %}
