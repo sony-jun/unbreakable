@@ -21,8 +21,8 @@ class Articles(models.Model):
     disclosure = models.BooleanField(default=True)
     # True가 공개, False가 비공개
     feelings_choices = (
-        ("1", "👿"),
-        ("2", "😞"),
-        ("3", "😊"),
+        ("👿", "👿"),
+        ("😞", "😞"),
+        ("😊", "😊"),
     )
     feelings = models.CharField(max_length=2, choices=feelings_choices)
