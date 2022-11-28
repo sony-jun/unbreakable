@@ -2,5 +2,39 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-글 목록
-{% endblock content %}
+<div class="row justify-content-center padding-page">
+  <div class="shadow-lg bg-white p-5">
+    <div class="row my-2">
+      <div class="col-12 col-lg-6">
+        <div class="position-sticky bg-white p-5 rounded-5 review-card" style="top: 10rem;">
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <h1 class="text-start fs-6 mb-0 fw-bold font-space">{{ articles.user.username }}</h1>
+          </div>
+
+
+          {% if articles.picture %}
+
+          <div class="d-flex justify-content-center">
+            <img src="{{ articles.picture.url }}" alt="{{ articles.picture }}" class="container px-0">
+          </div>
+          {% else %}
+          <div class="d-flex justify-content-center">
+            <img src="" alt="">
+          </div>
+          {% endif %}
+          <div class="fs-6 font-space">{{ articles.content }}</div>
+          {{ articles.feelings }}
+
+          {% if request.user == articles.user %}
+          <form action="{% url 'articles:articles_delete' articles.pk %}" method="POST">
+            {% csrf_token %}
+            <div class="text-end">
+              <a href="{% url 'articles:articles_update' articles.pk %}" class="btn articles-update-btn rounded-0"
+                method="POST">수정</a>
+              <input class="btn articles-delete-btn rounded-0" type="submit" value="삭제">
+            </div>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+      {% endblock content %}
