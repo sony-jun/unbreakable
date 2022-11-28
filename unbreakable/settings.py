@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     "accounts",
     "articles",
     "imagekit",
-    "django_extensions",
-    "django_bootstrap5",
+    'django_bootstrap5',
+    'django_extensions',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -132,5 +132,6 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = BASE_DIR / "images"
 MEDIA_URL = "/media/"
 
+AUTH_USER_MODEL = "accounts.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
