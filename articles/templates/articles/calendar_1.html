@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>달력달력</h3>
+<table id="calendar" style="border: 3; text-align: center;" >
+    <tr>
+        <td><label onclick="preCalendar()"></label></td>
+        <td id="tbCalendarYM" text-align="center" colspan="5">yyyy년 m월</td>
+        <td><label onclick="nextCalendar()"></label></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"><p style="color: #F79DC2;">일</p></td>
+        <td style="text-align: center;">월</td>
+        <td style="text-align: center;">화</td>
+        <td style="text-align: center;">수</td>
+        <td style="text-align: center;">목</td>
+        <td style="text-align: center;">금</td>
+        <td style="text-align: center;"><p style="color: #F79DC2;">토</p></td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    var today = new Date(); // 오늘 날짜 // 내 컴퓨터 로컬을 기준으로 today에 date 객체를 넣어줌
+    var date = new Date(); // today의 Date를 세어주는 역학
+    function preCalendar(){ // 이번 달
+    // 이전 달을 today에 값을 저장하고 달력에 today를 넣어줌
+    // today.getFullYear() 현재 년도 //today.getMonth() 월 //today.getDate()일
+    // getMonth()는 현재 달을 받아 옴으로 이전달을 출력하려면 -1을 해줘야함
+    today = new Date(today.getFullYear(), today.getMonth()-1, today.getDate());
+    buildCalendar(); //달력 cell 만들어 출력
+    }
+
+    function nextCalendar() { //다음 달
+        var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        // 이번 달의 첫째 날,
+        // new를 쓰는 이유: new를 쓰면, 이번달의 로컬 월을 정확하게 받아옴
+        // new를 쓰지 않았을때 이번달을 받아오려면 +1을 해줘야한다.
+        // 왜냐면 getMonth()는 0~11을 반환하기 때문
+    }
+
+    function buildCalendar(){ // 현재 달 달력 만들기
+        var doMonth = new Date(today.getFullYear(), today.getMonth(), 1); // 이번 달의 첫째 날
+        var lastDate = new Date(today.getFullYear(), today.getMonth() +1, 0); // 이번 달의 마지막 날
+        var tbCalendar = document.getElementById("calendar"); // 날짜를 찍을 테이블 변수 만듬
+        var tbCalendarYM = document.getElementById("tbCalendarYM"); // 테이블에 정확한 날짜 찍는 변수
+        tbCalendarYM.innerHTML = today.getFullYear() + "년" + (today.getMonth() + 1) + "월";
+    
+        while (tbCalendar.row.length > 2 ){ // 다음달로 넘겨주는 역할
+            // 열을 지워줌
+            tbCalendar.deleteRow(tbCalendar.rows.length - 1);
+        }
+        var row = null; 
+        row = tbCalendar.insertRow(); // 테이블에 새로운 열 삽입, 초기화
+        
+        var cnt = 0; //셀의 갯수를 세어줌
+        for (i=0; i<doMonth.getDay(); i++) { // 이번달의  day만큼 돌림
+            cell = row.insertCell(); // 열 한칸한칸 만듬
+            cnt = cnt + 1; // 열의 갯수를 다음으로 위치하게 함
+        }
+        // 달의 출력
+        for (i=1; i <= lastDate.getDate(); i++) { // 1일부터 마지막 일까지 돌림
+            cell = row.insertCell();
+            cell.innerHTML = i;
+            cnt = cnt + 1;
+            if (cnt % 7 == 1) {
+                cell.innerHTML = "<font color = #F79DC2>" + i // 1번째의 cell에만 색칠
+            }
+            if (cnt % 7 == 0) {
+                cell.innerHTML = "<font color = skyblue>" + i
+                    row = calendar.insertRow();
+            }
+            if (today.getFullYear() == date.getFullYear()
+            && today.getMonth() == date.getMonth()
+            && i == date.getDate()){
+                cell.bgColor = "#FAF58C";
+            }
+        }
+    }
+</script>
+{% endblock content %}

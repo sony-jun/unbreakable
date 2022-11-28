@@ -8,6 +8,8 @@ from django.contrib import messages
 from .models import Articles
 from django.contrib.auth.decorators import login_required
 
+def calendar_1(request):
+    return render(request, "articles/calendar_1.html")
 
 def articles_index(request):
     articles = Articles.objects.order_by("-created_at")
