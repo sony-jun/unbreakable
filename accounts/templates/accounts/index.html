@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>accounts 인덱스</h1>
+{% if request.user.is_authenticated %}
+{{request.user.username}}님, 환영합니다
+{% endif %}
+{% endblock content %}
