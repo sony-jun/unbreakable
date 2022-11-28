@@ -1,0 +1,11 @@
+.logo-img{
+    height:30px; 
+    width:30px;
+}
+
+.nav-bar{
+    display:flex; 
+    flex-direction:row; 
+    justify-content:space-between; 
+    padding:2rem 4rem;
+}

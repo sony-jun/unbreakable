@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/mainstyle.css">
+{% endblock css %}
 
 {% block content %}
 
-<h1>hi</h1>
+<!-- nav bar -->
+<div class="nav-bar fixed-bottom">
+    <img class="logo-img" src="{% static 'images/calendar.png' %}" alt="">
+    <img class="logo-img" src="{% static 'images/diary.png' %}" alt="">
+    <img class="logo-img" src="{% static 'images/community.png' %}" alt="">
+    <img class="logo-img" src="{% static 'images/settings.png' %}" alt="">
+</div>
+
 {% endblock content %}
