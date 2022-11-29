@@ -1,9 +1,3 @@
-.logo-img{
-    display:flex; 
-    justify-content:center; 
-    align-items:center; 
-}
-
 .logo-img:hover{
     filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
 }
@@ -39,8 +33,22 @@
 }
 
 .top_account_img:hover{
-    transform: scale(1);
+    transform: scale(1.1);
     filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
+}
+
+.top_account_user{
+    text-decoration:none;
+    color:black;
+}
+
+.top_account_user:hover{
+    color:#ba9082;
+}
+
+.fullname-img{
+    text-decoration:none;
+    color: black;
 }
 
 .fullname-img:hover{
