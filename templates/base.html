@@ -40,7 +40,7 @@
   <!-- login/bell -->
   <div class="top_account" style="margin:0;">
     {% if request.user.is_authenticated %}
-    <a class="top_account_img" href="{% url 'accounts:profile' user.pk %}">{{ request.user.fullname }}</a>
+    <a class="top_account_img fullname-img" href="{% url 'accounts:profile' user.pk %}"><b>{{ request.user.fullname }}</b>님의 오늘은 어떤가요?</a>
     <a class="top_account_img" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" style="height:30px; width:30px;"></a>
     {% else %}
     <a class="top_account_img" href="{% url 'accounts:login' %}"><img src="{% static 'images/login.png' %}" alt="logo" style="height:30px; width:30px;"></a>

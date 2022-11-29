@@ -45,5 +45,10 @@
 
 .fullname-img:hover{
     transform: scale(1.1);
-    filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
+    filter: opacity(0.5) drop-shadow(White);
+}
+
+.fullname-img{
+    text-decoration:none;
+    color: black;
 }
