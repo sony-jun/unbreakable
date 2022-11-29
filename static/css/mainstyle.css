@@ -9,11 +9,6 @@
     filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
 }
 
-.nav-img{
-    height: 40px; 
-    width: 40px;
-}
-
 .nav-img:hover{
     transform: scale(1.1);
     filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
@@ -24,7 +19,7 @@
     flex-direction: row; 
     justify-content: space-around; 
     align-items: center;
-    padding: 1.2rem 1.7rem;
+    padding: 1rem 1.7rem;
     background-color: rgba(198, 198, 198, 0.5);
     border-top-left-radius: 20px; 
     border-top-right-radius: 20px; 
