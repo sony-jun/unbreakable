@@ -31,13 +31,13 @@
 <body>
 
 <!-- header -->
-<div style="display:flex; justify-content:center; align-items:center; height:6rem;">
+<div class="header-text" >
   <!-- logo -->
   <div>
-    <a href="{% url 'main' %}"><img class="logo-img" src="{% static 'images/logo.png' %}" alt="logo" style="height:80px; width:80px;"></a>
+    <a href="{% url 'main' %}"><img class="logo-img" src="{% static 'images/logo.png' %}" alt="logo" style="height:70px; width:70px;"></a>
   </div>
   <!-- login/bell -->
-  <div class="top_account" style="margin:0;">
+  <div class="top_account" style="margin:0; position:fixed; right:0;">
     {% if request.user.is_authenticated %}
     <a class="top_account_user" href="{% url 'accounts:profile' user.pk %}"><b>{{ request.user.fullname }}</b>님의 오늘은 어떤가요?</a>
     <a class="top_account_img" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" style="height:30px; width:30px;"></a>
