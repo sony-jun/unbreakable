@@ -1,11 +1,12 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ArticlesForm
+from .forms import ArticlesForm, CommentForm
+from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
+
 
 # Create your views here.
 
-from .models import Articles
+from .models import Articles, Comment
 from django.contrib.auth.decorators import login_required
 
 def calendar_1(request):
@@ -43,6 +44,8 @@ def articles_detail(request, articles_pk):
     articles = get_object_or_404(Articles, pk=articles_pk)
     context = {
         "articles": articles,
+        "comment_form": CommentForm(),
+        "comments": articles.comment_set.all(),
     }
     return render(request, "articles/articles_detail.html", context)
 
@@ -77,3 +80,63 @@ def articles_update(request, articles_pk):
     else:
         messages.warning(request, "작성자만 수정 할 수 있습니다.")
         return redirect("articles:articles_index")
+
+
+def comment_create(request, articles_pk):
+    articles = get_object_or_404(Articles, pk=articles_pk)
+    result = request.POST["parent"]
+
+    if request.method == "POST":  # POST요청이고
+        if request.user.is_authenticated:  # 로그인된 상태면
+            # 댓글일 때
+            if int(result) == 0:
+                comment_form = CommentForm(request.POST)  # POST으로 요청온 정보를 받아서
+                if comment_form.is_valid():  # 유효성 검사하고
+                    comment = comment_form.save(commit=False)  # 저장 멈춰
+                    # 외래키 입력
+                    comment.articles = articles
+                    comment.user = request.user
+                    # 저장
+                    comment.save()
+
+                    context = {
+                        "articles_pk": articles_pk,
+                        "comment_pk": comment.pk,
+                        "content": comment.content,
+                        "userName": comment.user.username,
+                    }
+                    return JsonResponse(context)
+
+            elif int(result) > 0:
+                comment_form = CommentForm(request.POST)  # POST으로 요청온 정보를 받아서
+                if comment_form.is_valid():  # 유효성 검사하고
+                    comment = comment_form.save(commit=False)  # 저장 멈춰
+                    # 외래키 입력
+                    comment.articles = articles
+                    comment.user = request.user
+                    comment.parent_id = result
+                    # 저장
+                    comment.save()
+
+                    context = {
+                        "articles_pk": articles_pk,
+                        "comment_pk": comment.pk,
+                        "content": comment.content,
+                        "userName": comment.user.username,
+                    }
+                    return JsonResponse(context)
+        else:
+            return HttpResponse(status=403)
+    else:
+        return redirect("accounts:login")
+
+
+@login_required
+def comment_delete(request, articles_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    if request.user == comment.user:
+        if request.method == "POST":
+            comment.delete()
+
+    data = {}
+    return JsonResponse(data)
