@@ -38,7 +38,12 @@
     margin-right: 1rem;
 }
 
-.top_account_img{
+.top_account_img:hover{
     transform: scale(1);
+    filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
+}
+
+.fullname-img:hover{
+    transform: scale(1.1);
     filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
 }
