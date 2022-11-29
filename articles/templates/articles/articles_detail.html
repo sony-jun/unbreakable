@@ -38,6 +38,9 @@
             </div>
           </form>
           {% endif %}
+          {% if request.user != articles.user %}
+            <a href="{% url 'accounts:message_create' articles.user.pk articles.pk %}">메시지 보내기</a>
+          {% endif %}
         </div>
       </div>
       {% comment %} 댓글 작성 {% endcomment %}

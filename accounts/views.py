@@ -9,6 +9,8 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth import update_session_auth_hash
 import requests
 import json
+from .models import *
+from articles.models import *
 # Create your views here.
 
 # 임시
@@ -58,12 +60,12 @@ def logout(request):
 def update(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST, instance=user)
+        form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect("accounts:profile", user_pk)
     else:
-        form = CustomUserCreationForm(instance=user)
+        form = CustomUserChangeForm(instance=user)
     context = {
         "form": form,
     }
@@ -72,8 +74,12 @@ def update(request, user_pk):
 @login_required
 def profile(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
+    articles = user.articles_set.filter(user=user.pk)
+    messages = Message.objects.filter(receiver_id=user.pk)
     context = {
         'user':user,
+        'articles':articles,
+        'messages':messages,
     }
     return render(request, 'accounts/profile.html', context)
 
@@ -141,3 +147,25 @@ def kakao_callback(request):
         kakao_user = get_user_model().objects.get(username=kakao_id)
     auth_login(request, kakao_user, backend="django.contrib.auth.backends.ModelBackend")
     return redirect(request.GET.get("next") or "accounts:index")
+
+
+def message_create(request, user_pk, articles_pk):
+    articles = Articles.objects.get(pk=articles_pk)
+    receiver = User.objects.get(pk=user_pk)
+    print(user_pk)
+    if request.method == "POST":
+        message_form = MessageForm(request.POST)
+        if message_form.is_valid:
+            message = message_form.save(commit=False)
+            message.sender = request.user
+            message.receiver = receiver
+            message.articles = articles
+            message.save()
+            return redirect('articles:articles_index')
+    else:
+        message_form = MessageForm()
+    context = {
+        'receiver':receiver,
+        'message_form':message_form,
+    }
+    return render(request, 'accounts/message_create.html',context)

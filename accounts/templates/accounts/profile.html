@@ -2,4 +2,14 @@
 
 {% block content %}
 <h1>{{ user.username }}님의 프로필</h1>
+<!-- 내가 쓴 일기 -->
+<h4>내가 쓴 글</h4>
+{% for article in articles %}
+<p>{{ article.content }}</p>
+{% endfor %}
+<!-- 받은 메시지 -->
+<h4>내가 받은 메시지</h4>
+{% for message in messages %}
+<p>{{ message.content }}</p>
+{% endfor %}
 {% endblock content %}
