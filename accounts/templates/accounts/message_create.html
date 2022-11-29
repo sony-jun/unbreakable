@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<h1>메시지 작성</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form message_form %}
+    <input type="submit">
+</form>
+{% endblock content %}

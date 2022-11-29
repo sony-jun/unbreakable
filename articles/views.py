@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ArticlesForm
 from django.contrib import messages
+from accounts.models import Message
 
 # Create your views here.
 
