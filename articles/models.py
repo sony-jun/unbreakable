@@ -3,11 +3,26 @@ from imagekit.models import ProcessedImageField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from imagekit.processors import ResizeToFill
 from django.conf import settings
+import re
+
+from django.forms import ValidationError
+
+
+with open("badwords.txt", encoding="UTF8") as file:
+    CENSORED_WORDS = file.read().splitlines()
+
+
+def validate_text(text):
+    words = set(re.sub("[^\w]", " ", text).split())
+    for censored in words:
+        if censored in CENSORED_WORDS:
+            raise ValidationError(f"{censored}은(는) 쓰지 말아주세요!!")
+
 
 # Create your models here.
 class Articles(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField()
+    content = models.TextField(validators=[validate_text])
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     picture = ProcessedImageField(
         null=True,
@@ -29,7 +44,7 @@ class Articles(models.Model):
 
 
 class Comment(models.Model):
-    content = models.CharField(max_length=160)
+    content = models.CharField(validators=[validate_text], max_length=160)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
