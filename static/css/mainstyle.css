@@ -1,0 +1,27 @@
+.logo-img{
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    margin-top:1.5rem;
+}
+
+.logo-img:hover{
+    filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
+}
+
+.nav-img:hover{
+    transform: scale(1.1);
+    filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
+}
+
+.nav-bar{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-around; 
+    align-items: center;
+    padding: 1rem 1.7rem;
+    background-color: rgba(198, 198, 198, 0.5);
+    border-top-left-radius: 20px; 
+    border-top-right-radius: 20px; 
+    box-shadow: 1px -4px 50px 2px gray;
+}
