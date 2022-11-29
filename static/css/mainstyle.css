@@ -19,9 +19,14 @@
     flex-direction: row; 
     justify-content: space-around; 
     align-items: center;
-    padding: 1rem 1.7rem;
-    background-color: rgba(198, 198, 198, 0.5);
+    height:4rem;
+    padding: 0 1.7rem;
+    background-color: rgba(205, 205, 205);
     border-top-left-radius: 20px; 
     border-top-right-radius: 20px; 
     box-shadow: 1px -4px 50px 2px gray;
+    position:fixed; 
+    bottom:0; 
+    left:0; 
+    right:0;
 }
