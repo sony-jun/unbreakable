@@ -26,4 +26,7 @@
     align-items: center;
     padding: 1.2rem 1.7rem;
     background-color: rgba(198, 198, 198, 0.5);
+    border-top-left-radius: 20px; 
+    border-top-right-radius: 20px; 
+    box-shadow: 1px -4px 50px 2px gray;
 }
