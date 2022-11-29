@@ -31,22 +31,21 @@
 <body>
 
 <!-- header -->
-
-<div>
+<div style="display:flex; justify-content:center; align-items:center; height:6rem;">
   <!-- logo -->
-  <div class="logo-img">
-    <img src="{% static 'images/logo.png' %}" href="{% url 'main' %}" alt="logo" style="height:80px; width:80px;">
+  <div>
+    <a href="{% url 'main' %}"><img class="logo-img" src="{% static 'images/logo.png' %}" alt="logo" style="height:80px; width:80px;"></a>
   </div>
   <!-- login/bell -->
   <div class="top_account" style="margin:0;">
     {% if request.user.is_authenticated %}
     <a class="top_account_user" href="{% url 'accounts:profile' user.pk %}"><b>{{ request.user.fullname }}</b>님의 오늘은 어떤가요?</a>
     <a class="top_account_img" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" style="height:30px; width:30px;"></a>
+    <a class="top_account_img" href="#"><img src="{% static 'images/bell.png' %}" alt="bell" style="height:30px; width:30px;"></a>
     {% else %}
     <a class="top_account_img" href="{% url 'accounts:login' %}"><img src="{% static 'images/login.png' %}" alt="logo" style="height:30px; width:30px;"></a>
     <a class="top_account_img" href="{% url 'accounts:signup' %}"><img src="{% static 'images/signup.png' %}" alt="logo" style="height:30px; width:30px;"></a>
     {% endif %}
-    <a class="top_account_img" href="#"><img src="{% static 'images/bell.png' %}" alt="bell" style="height:30px; width:30px;"></a>
   </div>
 </div>
 
