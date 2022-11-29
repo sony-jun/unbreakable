@@ -7,20 +7,24 @@
 {% endblock css %}
 
 {% block content %}
-<h3 class="mt-5" align="center" style="font-size:20px; font-weight:lighter;">여길 보시오~★!!따용이의 달력!!★~여길 보시오</h3>
+
+
+    <h3 class="mt-5 title_is_user" align="center">{{ user.fullname }}님만의 음악일기♬</h3>
+
+
 <table id="calendar" border="3" align="center" style="border: 0;">
     <tr><!-- label은 마우스로 클릭을 편하게 해줌 -->
         <td><label onclick="prevCalendar()" style="font-weight:bold;"><</label></td>
-        <td align="center" id="tbCalendarYM" colspan="5">yyyy년 m월</td>
+        <td align="center" id="tbCalendarYM" colspan="5" style="font-weight:bold;">yyyy년 m월</td>
         <td><label onclick="nextCalendar()" style="font-weight:bold;">></label></td>
     </tr>
     <tr>
         <td align="center"><font color ="#F79DC2">일</td>
-        <td align="center" style="font-weight:bold;">월</td>
-        <td align="center" style="font-weight:bold;">화</td>
-        <td align="center" style="font-weight:bold;">수</td>
-        <td align="center" style="font-weight:bold;">목</td>
-        <td align="center" style="font-weight:bold;">금</td>
+        <td align="center">월</td>
+        <td align="center">화</td>
+        <td align="center">수</td>
+        <td align="center">목</td>
+        <td align="center">금</td>
         <td align="center"><font color ="skyblue">토</td>
     </tr> 
 </table>
