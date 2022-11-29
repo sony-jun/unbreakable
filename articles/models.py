@@ -26,3 +26,12 @@ class Articles(models.Model):
         ("😊", "😊"),
     )
     feelings = models.CharField(max_length=2, choices=feelings_choices)
+
+
+class Comment(models.Model):
+    content = models.CharField(max_length=160)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True)  # 대댓글

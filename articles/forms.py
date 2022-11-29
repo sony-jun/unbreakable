@@ -1,5 +1,5 @@
 from django import forms
-from .models import Articles
+from .models import Articles, Comment
 from django.forms import Select, FileInput
 
 
@@ -36,4 +36,26 @@ class ArticlesForm(forms.ModelForm):
                     "style": "background: transparent;",
                 }
             ),
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            "content",
+        ]
+
+        widgets = {
+            "content": forms.Textarea(
+                attrs={
+                    "rows": 2,
+                    "style": "background: transparent;",
+                    "class": "border border-2 border-dark bg-white rounded-1 text-dark p-3 font-space shadow-sm scroll-none",
+                }
+            ),
+        }
+
+        labels = {
+            "content": "",
         }
