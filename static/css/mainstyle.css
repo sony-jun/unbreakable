@@ -43,6 +43,11 @@
     filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
 }
 
+.fullname-img{
+    text-decoration:none;
+    color: black;
+}
+
 .fullname-img:hover{
     transform: scale(1.1);
     filter: opacity(0.5) drop-shadow(White);
@@ -51,4 +56,13 @@
 .fullname-img{
     text-decoration:none;
     color: black;
+}
+
+.top_account_user{
+    text-decoration:none;
+    color:black;
+}
+
+.top_account_user:hover{
+    color:#a8634c;
 }
