@@ -7,9 +7,9 @@
 {% endblock css %}
 
 {% block content %}
-<div class="box" style="width: 35%;">
+<div class="box" style="padding-bottom:5rem;">
     {% if user.is_authenticated %}
-        <h3 class="mt-5 title_is_user d-flex justify-content-center"><b>{{ user.fullname }}님의 다이어리</b></h3>
+        <h3 class="mt-5 title_is_user d-flex justify-content-center"><b>{{ user.fullname }}님의 음악일기🎵</b></h3>
     {% else %}
         <h3 class="title_not_user d-flex justify-content-center"><a class="title_not_user_link" href="{% url 'accounts:login' %}">로그인 해 주세요!</a></h3>
     {% endif %}
