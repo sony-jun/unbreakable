@@ -1,8 +1,8 @@
 td {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
     color:rgb(34, 34, 34);
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: lighter;
@@ -25,5 +25,23 @@ td {
 }
 
 .title_not_user_link:hover{
-    color:#ba9082;
+
+    color:#a8634c;
+}
+
+.direction{
+    text-decoration:none;
+    color:black;
+}
+
+.direction:hover{
+    transform: scale(1.3);
+    filter: opacity(0.5) drop-shadow(0 0 0 #9e4715);
+}
+
+.box {
+    border:1px solid;
+    padding:10px;
+    border-radius: 15px;
+    color: midnightblue;
 }

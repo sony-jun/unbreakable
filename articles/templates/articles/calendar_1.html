@@ -7,30 +7,31 @@
 {% endblock css %}
 
 {% block content %}
-
-{% if user.is_authenticated %}
-    <h3 class="mt-5 title_is_user" align="center">{{ user.fullname }}님만의 음악일기♬</h3>
-{% else %}
-    <h3 class="title_not_user" align="center"><a class="title_not_user_link" href="{% url 'accounts:login' %}">로그인 해 주세요!</a></h3>
-{% endif %}
-
-
-<table id="calendar" border="3" align="center" style="border: 0;">
-    <tr><!-- label은 마우스로 클릭을 편하게 해줌 -->
-        <td><label onclick="prevCalendar()" style="font-weight:bold;"><</label></td>
-        <td align="center" id="tbCalendarYM" colspan="5" style="font-weight:bold;">yyyy년 m월</td>
-        <td><label onclick="nextCalendar()" style="font-weight:bold;">></label></td>
-    </tr>
-    <tr>
-        <td align="center"><font color ="#F79DC2">일</td>
-        <td align="center">월</td>
-        <td align="center">화</td>
-        <td align="center">수</td>
-        <td align="center">목</td>
-        <td align="center">금</td>
-        <td align="center"><font color ="skyblue">토</td>
-    </tr> 
-</table>
+<div class="box" style="width: 35%;">
+    {% if user.is_authenticated %}
+        <h3 class="mt-5 title_is_user d-flex justify-content-center"><b>{{ user.fullname }}님의 다이어리</b></h3>
+    {% else %}
+        <h3 class="title_not_user d-flex justify-content-center"><a class="title_not_user_link" href="{% url 'accounts:login' %}">로그인 해 주세요!</a></h3>
+    {% endif %}
+    
+    
+    <table id="calendar" class="d-flex justify-content-center">
+        <tr><!-- label은 마우스로 클릭을 편하게 해줌 -->
+            <td><label onclick="prevCalendar()" style="font-weight:bold;"><img class="direction" src="{% static 'images/back-arrow.png' %}" alt="" style="width: 20px; height: 17px;"></label></td>
+            <td id="tbCalendarYM" colspan="5" style="font-weight:bold;">yyyy년 m월</td>
+            <td><label onclick="nextCalendar()" style="font-weight:bold;"><img class="direction" src="{% static 'images/forward-arrow.png' %}" alt="" style="width: 20px; height: 17px;"></label></td>
+        </tr>
+        <tr>
+            <td style="color: #F79DC2;">SUN</td>
+            <td>MON</td>
+            <td>TUE</td>
+            <td>WED</td>
+            <td>THU</td>
+            <td>FRI</td>
+            <td style="color: skyblue;">SAT</td>
+        </tr> 
+    </table>
+</div>
 
 <script type="text/javascript">
         var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
@@ -111,7 +112,7 @@
                  && today.getMonth() == date.getMonth()
                  && i == date.getDate()) {
                   //달력에 있는 년,달과 내 컴퓨터의 로컬 년,달이 같고, 일이 오늘의 일과 같으면
-                cell.bgColor = "lightgray";//셀의 배경색을 노랑으로 
+                cell.bgColor = "lightgray";//셀의 배경색 
                }
              }
         }
