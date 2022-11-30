@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/accounts.css">
+{% endblock css %}
+
 {% block content %}
+
+<!-- signup -->
+<div class="text-center signup-box">
+    <h1 style="font-size:20px;">회원가입</h1>
+    <form class="form-signin" action="{% url 'accounts:signup' %}" method="POST" style="padding:1rem 0;">
+        {% csrf_token %}
+        
+    </form>
+</div>
+
+
 <div style="padding:5vh; padding-bottom:15vh;">
-    <h1>회원가입</h1>
     <form action="{% url 'accounts:signup' %}" method="POST">
         {% csrf_token %}
         {% bootstrap_form form %}
