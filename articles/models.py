@@ -41,6 +41,8 @@ class Articles(models.Model):
         ("😊", "😊"),
     )
     feelings = models.CharField(max_length=2, choices=feelings_choices)
+    music_url = models.TextField()
+    music_start = models.IntegerField(default=0)
 
 
 class Comment(models.Model):
