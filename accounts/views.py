@@ -75,11 +75,13 @@ def update(request, user_pk):
 def profile(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
     articles = user.articles_set.filter(user=user.pk)
-    messages = Message.objects.filter(receiver_id=user.pk)
+    messages = Message.objects.filter(receiver_id=user.pk).order_by('-articles')
+
     context = {
         'user':user,
         'articles':articles,
         'messages':messages,
+
     }
     return render(request, 'accounts/profile.html', context)
 
@@ -146,7 +148,7 @@ def kakao_callback(request):
         kakao_login_user.save()
         kakao_user = get_user_model().objects.get(username=kakao_id)
     auth_login(request, kakao_user, backend="django.contrib.auth.backends.ModelBackend")
-    return redirect(request.GET.get("next") or "accounts:index")
+    return redirect(request.GET.get("next") or "main")
 
 
 def message_create(request, user_pk, articles_pk):
