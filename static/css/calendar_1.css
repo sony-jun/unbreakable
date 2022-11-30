@@ -39,8 +39,10 @@ td {
     filter: opacity(0.5) drop-shadow(0 0 0 #9e4715);
 }
 
-.box {
-    border:1px solid;
+.box{
+    /* style, width 가 안됨 */
+    border-style: solid; 
+    border-width: 6px;
     padding:10px;
     border-radius: 15px;
     color: midnightblue;
