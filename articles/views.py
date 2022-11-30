@@ -4,17 +4,22 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from accounts.models import Message
 
+from django.db.models.functions import Replace
+from django.db.models import Value
 
 # Create your views here.
 
 from .models import Articles, Comment
 from django.contrib.auth.decorators import login_required
 
+
 def calendar_1(request):
     return render(request, "articles/calendar_1.html")
 
+
 def calendar(request):
     return render(request, "articles/calendar.html")
+
 
 def articles_index(request):
     articles = Articles.objects.order_by("-created_at")

@@ -11,12 +11,16 @@ class ArticlesForm(forms.ModelForm):
             "picture",
             "disclosure",
             "feelings",
+            "music_url",
+            "music_start",
         ]
         labels = {
             "content": "내용",
             "picture": "이미지",
             "disclosure": "공개여부",
             "feelings": "감정표현",
+            "music_url": "유튜브URL",
+            "music_start": "시작지점(초)",
         }
         widgets = {
             "content": forms.Textarea(
