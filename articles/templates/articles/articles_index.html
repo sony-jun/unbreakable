@@ -2,11 +2,13 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-<h2 class="m-3">일기들</h2>
+<h2 class="m-3">지금 우리들은?</h2>
+
 <div class="card row m-2" style="width: 18rem;">
   {% for article in articles %}
   {% if article.picture %}
 
+  <a href="{% url 'articles:articles_detail' article.pk %}">
   <div class="d-flex justify-content-center">
     <img src="{{ article.picture.url }}" alt="{{ article.picture }}" class="container px-0">
   </div>
@@ -15,11 +17,14 @@
     <img src="" alt="">
   </div>
   {% endif %}
+  </a>
 
   <div class="card-body">
+    <a href="">{{ article.user.fullname }}</a>
     <p class="card-text">{{ article.content }}</p>
   </div>
   <div>{{ article.feelings }}</div>
+  <div>{{ article.created_at }}</div>
 
   {% endfor %}
 </div>
