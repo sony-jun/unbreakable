@@ -2,12 +2,14 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-<!-- 로그인 -->
-<h1>로그인</h1>
-<form action="{% url 'accounts:login' %}" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <input type="submit">
-</form>
-<a class="btn btn-outline-dark" href="{% url 'accounts:signup' %}"><button>회원가입</button></a>
+<div style="margin-bottom:10rem; padding:10vh;">
+    <!-- 로그인 -->
+    <h1>로그인</h1>
+    <form action="{% url 'accounts:login' %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit">
+    </form>
+    <a class="btn btn-outline-dark" href="{% url 'accounts:signup' %}"><button>회원가입</button></a>
+</div>
 {% endblock content %}
