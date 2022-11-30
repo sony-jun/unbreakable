@@ -1,24 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{ user.username }}님의 프로필</h1>
-<!-- 내가 쓴 일기 -->
 
-{% for article in articles %}
-    <h2>내 일기</h4>
-    <h3>{{ article.content }} </h3>
-    <h6>내가 받은 메시지</h5>
-    {% for message in messages %}
-        {% if article.pk == message.articles.pk %}
-            <p>{{ message.content }}</p>
-        {% endif %}
-    {% endfor %}
-{% endfor %}
-<!-- 받은 메시지 -->
-<!--
-<h5>내가 받은 메시지</h4>
-{% for message in messages %}
-<p>{{ message.content }}</p>
-{% endfor %}
--->
+<div class="container" style="padding:5rem; border:1px solid black; border-radius:15px; margin-bottom:5rem;">
+    <h1>{{ user.username }}님의 프로필</h1>
+
+    <!-- 개인정보 -->
+    <div>
+        <p><span style="font-weight:bold;">이름 : </span>{{ user.fullname }}</p>
+        <p><span style="font-weight:bold;">전화번호 : </span>{{ user.phone_number }}</p>
+        <p><span style="font-weight:bold;">생일 : </span>{{ user.birthday }}</p>
+    </div>
+
+    <div style="display:flex;">
+        <!-- 내가 쓴 일기 -->
+        <div style="display:flex; flex-direction:column; padding-right:10rem;">
+            <h4>내가 쓴 글</h4>
+            {% if articles %}
+                {% for article in articles %}
+                <p>{{ article.content }}</p>
+                {% endfor %}
+            {% else %}
+                <p>작성한 음악일기가 없습니다.</p>
+            {% endif %}
+        </div>
+
+        <!-- 받은 메시지 -->
+        <div style="display:flex; flex-direction:column;">
+            <h4>내가 받은 메시지</h4>
+            {% if messages %}
+                {% for message in messages %}
+                <p>{{ message.content }}</p>
+                {% endfor %}
+            {% else %}
+                <p>받은 메시지가 없습니다.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock content %}

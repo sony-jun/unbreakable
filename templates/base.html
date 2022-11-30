@@ -31,22 +31,22 @@
 <body>
 
 <!-- header -->
-
-<div>
+<div class="header-text" style="padding:2vh 0;">
+  <!-- blank -->
+  <div style="width:30%; padding-left:5vh;"></div>
   <!-- logo -->
-  <div class="logo-img">
-    <a href="{% url 'main' %}"><img src="{% static 'images/logo.png' %}" alt="logo" style="height:80px; width:80px;"></a>
+  <div>
+    <a href="{% url 'main' %}"><img class="logo-img" src="{% static 'images/logo.png' %}" alt="logo" style="height:70px; width:70px;"></a>
   </div>
   <!-- login/bell -->
-  <div class="top_account" style="margin:0;">
+  <div class="top_account" style="margin:0; width:30%; padding-right:5vh;">
     {% if request.user.is_authenticated %}
-    <a class="top_account_img" href="{% url 'accounts:profile' user.pk %}">{{ request.user.fullname }}</a>
     <a class="top_account_img" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" style="height:30px; width:30px;"></a>
+    <a class="top_account_img" href="#"><img src="{% static 'images/bell.png' %}" alt="bell" style="height:30px; width:30px;"></a>
     {% else %}
     <a class="top_account_img" href="{% url 'accounts:login' %}"><img src="{% static 'images/login.png' %}" alt="logo" style="height:30px; width:30px;"></a>
     <a class="top_account_img" href="{% url 'accounts:signup' %}"><img src="{% static 'images/signup.png' %}" alt="logo" style="height:30px; width:30px;"></a>
     {% endif %}
-    <a class="top_account_img" href="#"><img src="{% static 'images/bell.png' %}" alt="bell" style="height:30px; width:30px;"></a>
   </div>
 </div>
 
@@ -57,7 +57,7 @@
   <!-- nav bar -->
   <div class="nav-bar fixed-bottom">
     <a href="{% url 'articles:calendar_1' %}"><img class="nav-img" src="{% static 'images/calendar2.png' %}" alt="" style="height:32px; width:32px;"></a>
-    <a href="#"><img class="nav-img" src="{% static 'images/diary2.png' %}" alt="" style="height:35px; width:35px;"></a>
+    <a href="{% url 'articles:articles_create' %}"><img class="nav-img" src="{% static 'images/diary2.png' %}" alt="" style="height:35px; width:35px;"></a>
     <a href="{% url 'main' %}"><img class="nav-img" src="{% static 'images/community2.png' %}" alt="" style="height:40px; width:40px;"></a>
     {% if user.is_authenticated %}
     <a href="{% url 'accounts:profile' user.pk %}"><img class="nav-img" src="{% static 'images/user2.png' %}" alt="" style="height:30px; width:30px;"></a>

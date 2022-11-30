@@ -1,7 +1,7 @@
-.logo-img{
+.header-text{
     display:flex; 
-    justify-content:center; 
-    align-items:center; 
+    flex-direction:row;
+    justify-content:space-between;
 }
 
 .logo-img:hover{
@@ -39,11 +39,30 @@
 }
 
 .top_account_img:hover{
-    transform: scale(1);
+    transform: scale(1.1);
     filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
+}
+
+.top_account_user{
+    text-decoration:none;
+    color:black;
+}
+
+.top_account_user:hover{
+    color:#ba9082;
+}
+
+.fullname-img{
+    text-decoration:none;
+    color: black;
 }
 
 .fullname-img:hover{
     transform: scale(1.1);
-    filter: opacity(0.5) drop-shadow(0 0 0 #1800ca);
+    filter: opacity(0.5) drop-shadow(White);
+}
+
+.fullname-img{
+    text-decoration:none;
+    color: black;
 }
