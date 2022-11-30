@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/login.css">
+{% endblock css %}
+
 {% block content %}
+
+<!-- version1. -->
 <div style="margin-bottom:10rem; padding:5vh;">
     <!-- 로그인 -->
     <h1>로그인</h1>
@@ -10,6 +16,50 @@
         {% bootstrap_form form %}
         <input type="submit">
     </form>
+    <a href="{% url 'accounts:kakao' %}">
+        카카오 간편 로그인
+    </a>
     <a class="btn btn-outline-dark" href="{% url 'accounts:signup' %}"><button>회원가입</button></a>
 </div>
+
+
+<!-- version2. -->
+<div style="margin-bottom:10rem; padding:5vh;">
+    <!-- 로그인 -->
+    <h1 align="center">로그인</h1>
+    <form action="{% url 'accounts:login' %}" method="POST">
+        {% csrf_token %}
+        <div style="display:flex; flex-direction:column;">
+            <div style="display:flex; flex-direction:row;">
+                <label for="id">아이디</label>
+                <input style="background-color: transparent; border: none; border-bottom: 1px solid #363062; font-size: 18px; outline: none;" type="text" name="username" id="id" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+            </div>
+            <div>
+                <label for="pw">패스워드</label>
+                <input style="background-color: transparent; border: none; border-bottom: 1px solid #363062; font-size: 18px; outline: none;" type="password" name="password" id="pw" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+            </div>
+        </div>
+        <button class="btn btn-outline-dark" type="submit">로그인</button>
+    </form>
+    <a href="{% url 'accounts:kakao' %}">
+        카카오 간편 로그인
+    </a>
+    <a class="btn btn-outline-dark" href="{% url 'accounts:signup' %}"><button>회원가입</button></a>
+</div>
+
+<!-- versoin3. -->
+<div class="text-center" style="margin-bottom:10rem;">
+    <h1>로그인</h1>
+    <form class="form-signin">
+        <div>
+            <label for="id" class="sr-only">아이디</label>
+            <input style="background-color: transparent;" type="text" name="username" id="id" class="form-control" placeholder="아이디" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+        </div>
+        <div>
+            <label for="pw" class="sr-only">패스워드</label>
+            <input style="background-color:transparent;" type="password" name="password" id="pw" class="form-control" placeholder="패스워드" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+        </div>
+    </form>
+</div>
+
 {% endblock content %}
