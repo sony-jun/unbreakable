@@ -8,6 +8,10 @@ import re
 from django.forms import ValidationError
 
 
+from django.db.models.functions import Replace
+from django.db.models import Value
+
+
 with open("badwords.txt", encoding="UTF8") as file:
     CENSORED_WORDS = file.read().splitlines()
 
