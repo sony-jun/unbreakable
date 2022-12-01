@@ -173,3 +173,20 @@
     filter:opacity(0.5) drop-shadow(0 0 0 gray);
     opacity: 1;
 }
+
+.signup-submit{
+    border:1px solid rgb(23, 23, 23);
+    background-color:rgb(23, 23, 23);
+    color:white;
+}
+
+.signup-submit:hover{
+    background-color:#363062;
+    color:white;
+}
+
+.signup-submit:active{
+    background-color:#363062!important;
+    color:white!important;
+    border:1px solid #363062!important;
+}
