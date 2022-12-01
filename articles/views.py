@@ -101,6 +101,7 @@ def articles_create(request):
         articles_form = ArticlesForm(request.POST, request.FILES)
 
         if articles_form.is_valid():
+            print('dadsadasdas')
             articles = articles_form.save(commit=False)
             articles.user = request.user
             articles.save()
