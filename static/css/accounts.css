@@ -82,7 +82,7 @@
     font-weight:bold;
 }
 
-.signup-link:active{
+.signup-link:active {
     color:#363062!important;
     font-weight:bold!important;
 }
@@ -92,4 +92,84 @@
 .signup-box{
     margin-bottom:20vh; 
     padding:2rem 0;
+}
+
+.input-signup{
+    background-color: transparent; 
+    width:40vw; 
+    border:1.5px solid rgb(51, 51, 51);
+    height:10vh;
+    padding-left:1.5rem;
+    border-top-left-radius: 8px; 
+    border-top-right-radius: 8px; 
+    border-bottom-left-radius: 8px; 
+    border-bottom-right-radius: 8px; 
+}
+
+.input-signup::placeholder{
+    color:rgb(42, 42, 42);
+}
+
+.input-signup:focus{
+    border:1.5px solid rgb(51, 51, 51)!important;
+    outline: none;
+}
+
+.input-signup.invalid{
+    border:2px solid #8a0e0566;
+}
+
+.tab{
+    display: none
+}
+
+.all-steps{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.step{
+    height: 40px;
+    width: 40px;
+    margin: 0 2px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    opacity: 0.5;
+}
+
+.step.active{
+    filter:opacity(0.5) drop-shadow(0 0 0 wheat);
+    opacity:1;
+}
+
+.step.finish{
+    filter:opacity(0.5) drop-shadow(0 0 0 wheat);
+    opacity: 1;
+}
+
+.step-button{
+    height:3rem;
+    padding: 10px 10px;
+    cursor: pointer;
+    filter:opacity(0.5) drop-shadow(0 0 0 #363062);
+}
+
+.step-button:hover{
+    opacity: 0.8
+}
+
+.step-button:focus{
+    outline: none !important;
+}
+
+#prevBtn{
+    filter:opacity(0.5) drop-shadow(0 0 0 gray);
+    opacity: 1;
 }
