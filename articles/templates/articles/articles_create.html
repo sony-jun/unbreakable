@@ -6,54 +6,45 @@
 {% endblock css %}
 
 {% block content %}
-<div class="wrapper rounded d-flex align-items-stretch">
-  <div class="bg-yellow">
-      <div class="text-white">
-          <span class="far fa-envelope"></span>
-      </div>
-      <div class="pt-5">
-          <b>{{ user.fullname }}님</b>님의<br>오늘은 어떤가요?
-      </div>
-      <div class="pt-sm-5 pt-5 mt-sm-5">
-          음악과 감정으로<br>표현하세요!
-      </div>
-  </div>
-  <div class="contact-form">
-      <div class="h3">Hire Us</div>
-      <form>
-          <div class="form-group pt-3">
-              <label for="message">Text</label>
-              <textarea name="message" class="form-control" required></textarea>
-          </div>
-          <div class="d-flex align-items-center flex-wrap justify-content-between pt-4">
-              <div class="form-group pt-lg-2 pt-3">
-                <label for="formFileMultiple" class="form-label">files</label>
-                <input class="form-control" type="file" id="formFileMultiple" multiple>
+<div style="height:100vh;">
+    <div class="wrapper rounded d-flex align-items-stretch">
+      <div class="bg-yellow">
+        <div class="pt-sm-5 pt-5">{{ user.fullname }}님의<br>오늘은 어떤가요?</div>
+    </div>
+    <div class="contact-form">
+          <div class="h3">음악과 감정으로 표현하세요!</div>
+          <form action="" method="POST">
+            {% csrf_token %}
+              <div class="form-group pt-3">
+                  <label for="message">Text</label>
+                  <textarea name="content" class="form-control" required></textarea>
               </div>
-              <div class="form-group pt-lg-2 pt-3 mt-3">
-                  <label for="name">Your Filling</label>
-                  <select class="form-select" aria-label="Default select example" required>
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+              <div class="d-flex align-items-center flex-wrap justify-content-between pt-4">
+                  <div class="form-group pt-lg-2 pt-3">
+                    <label for="formFileMultiple" class="form-label">files</label>
+                    <input class="form-control" type="file" name="picture" id="formFileMultiple" multiple>
+                  </div>
+                  <div class="form-group pt-lg-2 pt-3 mt-3">
+                      <label for="name">Your Feeling</label>
+                      <select class="form-select" aria-label="Default select example" required>
+                        <option selected>감정을 표현하세요</option>
+                        <option name="feelings" value="👿">👿</option>
+                        <option name="feelings" value="😞">😞</option>
+                        <option name="feelings" value="😊">😊</option>
+                      </select>
+                  </div>
+                  <div class="form-group pt-lg-2 pt-3">
+                    <label for="name">Music</label>
+                    <input type="text" name="music_url" class="form-control" required>
+                </div>
               </div>
-              <div class="form-group pt-lg-2 pt-3">
-                <label for="name">Music</label>
-                <input type="text" name="Musci" class="form-control" required>
-            </div>
-          </div>
-          <div class="d-flex align-items-center flex-wrap justify-content-between pt-lg-5 mt-lg-4 mt-5">
-              <div class="btn btn-default">
-                  돌아가기
+              <div class="d-flex align-items-center flex-wrap justify-content-between pt-lg-5 mt-lg-4 mt-5">
+                  <a class="btn btn-default" href="{% url 'main' %}">돌아가기</a>
+                  <input class="btn btn-primary" type="submit" value="작성완료">
               </div>
-              <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                작성완료
-            </div>
-          </div>
-      </form>
-  </div>
+          </form>
+      </div>
+    </div>
 </div>
 <!-- Modal -->
 <!-- <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
