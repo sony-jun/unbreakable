@@ -13,8 +13,9 @@
 <div class="d-flex justify-content-center py-2">
     <div class="second py-2 px-2">
         <a class="text-decoration-none" href="{% url 'articles:articles_detail' article.pk %}">
-            <span><img src="{{ article.picture.url }}" alt="{{ article.picture }}" width="125"></span>
+            <span><img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}" width="125"></span>
             <span class="text1">{{ article.content }}</span>
+            <!-- 3줄 넘으면 더보기로 보이게 -->
         </a>
         <div class="d-flex justify-content-between py-1 pt-2">
             <div>
