@@ -6,7 +6,6 @@ app_name = "articles"
 urlpatterns = [
     path("calendar", views.calendar, name="calendar"),
     path("calendar_1", views.calendar_1, name="calendar_1"),
-    path("search/", views.search, name="search"),
     path("", views.articles_index, name="articles_index"),
     path("articles_create/", views.articles_create, name="articles_create"),
     path(
