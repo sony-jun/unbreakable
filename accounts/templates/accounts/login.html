@@ -11,6 +11,7 @@
 
 <div class="text-center login-box" style="height:100vh;">
     <h1 style="font-size:20px;">로그인</h1>
+
     <form class="form-signin" action="{% url 'accounts:login' %}" method="POST" style="padding:1rem 0;">
         {% csrf_token %}
         <div class="input-text">
