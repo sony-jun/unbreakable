@@ -13,33 +13,33 @@
     </div>
     <div class="contact-form">
           <div class="h3">음악과 감정으로 표현하세요!</div>
-          <form action="" method="POST">
+          <form action="{% url 'articles:articles_index' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
               <div class="form-group pt-3">
-                  <label for="message">Text</label>
-                  <textarea name="content" class="form-control" required></textarea>
+                  <label for="content">Text</label>
+                  <input name="content" class="form-control" required></input>
               </div>
               <div class="d-flex align-items-center flex-wrap justify-content-between pt-4">
                   <div class="form-group pt-lg-2 pt-3">
                     <label for="formFileMultiple" class="form-label">files</label>
-                    <input class="form-control" type="file" name="picture" id="formFileMultiple" multiple>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple>
                   </div>
                   <div class="form-group pt-lg-2 pt-3 mt-3">
-                      <label for="name">Your Feeling</label>
-                      <select class="form-select" aria-label="Default select example" required>
+                      <label for="feelings">Your Feeling</label>
+                      <select name="feelings" class="form-select" aria-label="Default select example" required>
                         <option selected>감정을 표현하세요</option>
-                        <option name="feelings" value="👿">👿</option>
-                        <option name="feelings" value="😞">😞</option>
-                        <option name="feelings" value="😊">😊</option>
+                        <option value="👿">👿</option>
+                        <option value="😞">😞</option>
+                        <option value="😊">😊</option>
                       </select>
                   </div>
-                  <div class="form-group pt-lg-2 pt-3">
-                    <label for="name">Music</label>
-                    <input type="text" name="music_url" class="form-control" required>
-                </div>
+                    {% comment %} <div class="form-group pt-lg-2 pt-3">
+                        <label for="name">Music</label>
+                        <input type="text" name="music_url" class="form-control" required>
+                    </div> {% endcomment %}
               </div>
               <div class="d-flex align-items-center flex-wrap justify-content-between pt-lg-5 mt-lg-4 mt-5">
-                  <a class="btn btn-default" href="{% url 'main' %}">돌아가기</a>
+                  <a class="btn btn-default" href="{% url 'main' %}">HOME</a>
                   <input class="btn btn-primary" type="submit" value="작성완료">
               </div>
           </form>
