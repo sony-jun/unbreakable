@@ -30,7 +30,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request,user)
-            return redirect(request.GET.get('next') or 'accounts:index')
+            return redirect(request.GET.get('next') or 'main')
     else:
         form = CustomUserCreationForm()
     context = {

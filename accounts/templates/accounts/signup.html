@@ -8,7 +8,7 @@
 
 {% block content %}
 
-<!-- signup version1. -->
+<!-- signup -->
 <div class="container">
     <div class="row login-box d-flex justify-content-center align-items-center">
         <div class="col-md-8">
@@ -68,9 +68,11 @@
                 <div style="overflow:auto;" id="nextprevious">
                     <div style="float:right; padding:3vw;">
                         <img class="step-button" id="prevBtn" onclick="nextPrev(-1)" src="{% static 'images/left-arrow.png' %}" alt="">
-                        <img class="step-button" type="nextBtn" id="nextBtn" onclick="nextPrev(1)" src="{% static 'images/right-arrow.png' %}" alt="">
+                        <img class="step-button" id="nextBtn" onclick="nextPrev(1)" src="{% static 'images/right-arrow.png' %}" alt="">
                     </div>
                 </div>
+
+                <input type="submit">
             </form>
         </div>
     </div>
@@ -78,7 +80,7 @@
 <script>
     var currentTab = 0;
     document.addEventListener("DOMContentLoaded", function(event) {
-    showTab(currentTab);
+        showTab(currentTab);
     });
 
     function showTab(n) {
@@ -103,10 +105,10 @@
     x[currentTab].style.display = "none";
     currentTab = currentTab + n;
     if (currentTab >= x.length) {
-    document.getElementById("nextprevious").style.display = "none";
-    document.getElementById("all-steps").style.display = "none";
-    document.getElementById("register").style.display = "none";
-    document.getElementById("text-message").style.display = "block";
+        document.getElementById("nextprevious").style.display = "none";
+        document.getElementById("all-steps").style.display = "none";
+        document.getElementById("register").style.display = "none";
+        document.getElementById("text-message").style.display = "block";
     }
     showTab(currentTab);
     }
@@ -136,13 +138,4 @@
     }
 </script>
 
-
-<!-- signup version2. -->
-<div style="padding:5vh; padding-bottom:15vh;">
-    <form action="{% url 'accounts:signup' %}" method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit">
-    </form>
-</div>
 {% endblock content %}
