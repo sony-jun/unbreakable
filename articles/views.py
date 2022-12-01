@@ -3,6 +3,8 @@ from .forms import ArticlesForm, CommentForm
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from accounts.models import Message
+from .models import Articles
+from django.utils import timezone
 
 # search
 import requests
@@ -36,37 +38,25 @@ def articles_index(request):
     return render(request, "articles/articles_index.html", context)
 
 
-# @login_required
-# def articles_create(request):
-#     if request.method == "POST":
-#         articles_form = ArticlesForm(request.POST, request.FILES)
-
-#         if articles_form.is_valid():
-#             articles = articles_form.save(commit=False)
-#             articles.user = request.user
-#             articles.save()
-#             Articles.objects.filter().update(
-#                 music_url=Replace("music_url", Value("https://youtu.be/"), Value(""))
-#             )
-#             return redirect("articles:articles_index")  # 수정 할 예정임(어디로 보낼까?)
-#     else:
-#         articles_form = ArticlesForm()
-#     context = {
-#         "articles_form": articles_form,
-#     }
-#     return render(request, "articles/articles_create.html", context)
-
 @login_required
 def articles_create(request):
-
-    if request.method == 'POST':
+    if request.method == "POST":
         articles = Articles()
         articles.content = request.POST['content']
-        articles.picture = request.POST['picture']
-        articles.feelings_choices = request.POST['feelings_choices']
+        articles.created_at = timezone.now()
+        articles.picture = request.FILES['picture']
+        articles.feelings = request.POST['feelings']
+        articles.music_url = request.POST['music_url']
+        articles.music_start = request.POST['music_start']
+        articles.user = request.user
         articles.save()
-
-    return redirect('articles:articles_create')
+        return redirect("main")  # 수정 할 예정임(어디로 보낼까?)
+    else:
+        articles_form = ArticlesForm()
+    context = {
+        "articles_form": articles_form,
+    }
+    return render(request, "articles/articles_create.html", context)
 
 
 def articles_detail(request, articles_pk):
