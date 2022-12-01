@@ -134,3 +134,6 @@ MEDIA_URL = "/media/"
 AUTH_USER_MODEL = "accounts.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+YOUTUBE_DATA_API_KEY = "AIzaSyCPZ6GiJbcRC6nC9h7eSBay2hZNt4R_LsE"
