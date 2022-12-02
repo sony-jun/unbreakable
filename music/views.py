@@ -71,9 +71,9 @@ def search(request):
 # END Search
 
 def create(request):
-    print(request.POST)
     if request.method == 'POST':
         songform = SongForm(request.POST, request.FILES)
+        print(request.POST)
         if songform.is_valid():
             songform.save()
     return redirect('music:search')
