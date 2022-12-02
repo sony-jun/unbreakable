@@ -31,12 +31,20 @@ def signup(request):
             user = form.save()
             auth_login(request,user)
             return redirect(request.GET.get('next') or 'main')
+        else:
+            form = CustomUserCreationForm()
+            context = {
+                "form":form,
+                "validate":1,
+            }
+            return render(request, 'accounts/signup.html', context)
     else:
         form = CustomUserCreationForm()
-    context = {
-        "form":form,
-    }
-    return render(request, 'accounts/signup.html', context)
+        context = {
+            "form":form,
+            "validate":0,
+        }
+        return render(request, 'accounts/signup.html', context)
 
 def login(request):
     if request.method == "POST":
