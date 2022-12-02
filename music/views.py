@@ -73,6 +73,7 @@ def search(request):
 def create(request):
     if request.method == 'POST':
         songform = SongForm(request.POST, request.FILES)
+        print(request.POST)
         if songform.is_valid():
             songform.save()
     return HttpResponse('<script type="text/javascript">window.close()</script>')

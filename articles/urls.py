@@ -4,6 +4,7 @@ from . import views
 app_name = "articles"
 
 urlpatterns = [
+    path('test/', views.test, name="test"),
     path("calendar", views.calendar, name="calendar"),
     path("calendar_1", views.calendar_1, name="calendar_1"),
     path("", views.articles_index, name="articles_index"),
