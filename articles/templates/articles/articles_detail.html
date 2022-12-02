@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/articles_detail.css">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="stopwatch.js"></script>
+
+{% endblock css %}
+
+<meta charset="UTF-8">
+<title>StopWatch</title>
+
+
 
 {% block content %}
 <div class="row justify-content-center padding-page">
@@ -49,13 +64,19 @@
 
 
       <!-- 1. The < iframe > (and video player) will replace this < div > tag. -->
-      <div class="fullwidth">
-        <button id="play-button">PLAY</button>
-        <button id="pause-button">PAUSE</button>
-        <button id="stop-button">STOP</button>
+      <div id='box' class="box">
+        <div id='timerBox' class="timerBox">
+          <div id="time" class="time">00:00:00</div>
+        </div>
+        <div class="btnBox">
+          <i id="play-button" class="fa fa-play" aria-hidden="true"></i>
+          <i id="pause-button" class="fa fa-pause" aria-hidden="true"></i>
+          <i id="stop-button" class="fa fa-stop" aria-hidden="true"></i>
+        </div>
       </div>
+    
+    
       <div id="player"></div>
-      
       
       
       <script>
@@ -82,13 +103,13 @@
       
           player = new YT.Player('player', {
       
-            height: '150',
+            height: '0',
       
-            width: '150',
+            width: '0',
       
-            videoId: '{{ articles.music_url }}',
+            videoId: '{{ articles.song.song_url }}',
       
-            playerVars: { 'controls': 2, 'autohide': 1, 'playlist': '{{ articles.music_url }}', 'loop': 1, 'start': '{{ articles.music_start }}' },
+            playerVars: { 'controls': 2, 'autohide': 1, 'playlist': '{{ articles.song.song_url }}', 'loop': 1, 'start': '{{ articles.music_start }}' },
       
             events: {
       
@@ -156,6 +177,91 @@
         }
       
       </script>
+
+      <!--스톱워치-->
+
+      <script>
+        var time = 0;
+        var starFlag = true;
+        $(document).ready(function () {
+          buttonEvt();
+        });
+    
+        function init() {
+          document.getElementById("time").innerHTML = "00:00:00";
+        }
+    
+        function buttonEvt() {
+          var hour = 0;
+          var min = 0;
+          var sec = 0;
+          var timer;
+    
+          // start btn
+          $("#play-button").click(function () {
+    
+            if (starFlag) {
+              $(".fa").css("color", "#FAED7D")
+              this.style.color = "#4C4C4C";
+              starFlag = false;
+    
+              if (time == 0) {
+                init();
+              }
+    
+              timer = setInterval(function () {
+                time++;
+    
+                min = Math.floor(time / 60);
+                hour = Math.floor(min / 60);
+                sec = time % 60;
+                min = min % 60;
+    
+                var th = hour;
+                var tm = min;
+                var ts = sec;
+                if (th < 10) {
+                  th = "0" + hour;
+                }
+                if (tm < 10) {
+                  tm = "0" + min;
+                }
+                if (ts < 10) {
+                  ts = "0" + sec;
+                }
+    
+                document.getElementById("time").innerHTML = th + ":" + tm + ":" + ts;
+              }, 1000);
+            }
+          });
+    
+          // pause btn
+          $("#pause-button").click(function () {
+            if (time != 0) {
+              $(".fa").css("color", "#FAED7D")
+              this.style.color = "#4C4C4C";
+              clearInterval(timer);
+              starFlag = true;
+            }
+          });
+    
+          // stop btn
+          $("#stop-button").click(function () {
+            if (time != 0) {
+              $(".fa").css("color", "#FAED7D")
+              this.style.color = "#4C4C4C";
+              clearInterval(timer);
+              starFlag = true;
+              time = 0;
+              init();
+            }
+          });
+        }
+    
+      </script>
+
+      <!--스톱워치 끝-->
+
 
       <!--음악 부분입니다 (임시 테스트!!!!) 마지막 부분-->
 

@@ -6,6 +6,7 @@ from accounts.models import Message
 from .models import Articles
 from django.utils import timezone
 from music.models import Song
+
 # search
 import requests
 from django.conf import settings
@@ -18,8 +19,6 @@ from django.contrib.auth.decorators import login_required
 
 from django.db.models import Value
 from django.db.models.functions import Replace
-
-
 
 
 def calendar_1(request):
@@ -42,11 +41,11 @@ def articles_index(request):
 def articles_create(request):
     if request.method == "POST":
         articles = Articles()
-        articles.music_url = request.POST['music_url']
-        articles.music_start = request.POST['music_start']
-        articles.content = request.POST['content']
-        articles.feelings_choices = request.POST['feelings']
-        articles.picture = request.FILES['picture']
+        articles.music_url = request.POST["music_url"]
+        articles.music_start = request.POST["music_start"]
+        articles.content = request.POST["content"]
+        articles.feelings_choices = request.POST["feelings"]
+        articles.picture = request.FILES["picture"]
         articles.created_at = timezone.now()
         articles.user = request.user
         articles.save()
@@ -58,7 +57,9 @@ def articles_create(request):
     }
     return render(request, "articles/articles_create.html", context)
 
+
 # test
+
 
 def articles_create2(request):
     if request.method == "POST":
@@ -69,13 +70,14 @@ def articles_create2(request):
             articles.song = so
             articles.user = request.user
             articles.save()
-            return redirect('articles:index')
+            return redirect("articles:articles_index")
     else:
         articles_form = ArticlesForm()
         context = {
-            'articles_form':articles_form,
+            "articles_form": articles_form,
         }
-    return render(request, 'articles/articles_create2.html', context)
+    return render(request, "articles/articles_create2.html", context)
+
 
 def song_search(request):
     search_data = request.GET.get("search", "")
@@ -97,7 +99,9 @@ def song_search(request):
     }
     return JsonResponse(context)
 
+
 # test
+
 
 def articles_detail(request, articles_pk):
     articles = get_object_or_404(Articles, pk=articles_pk)
