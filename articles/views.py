@@ -23,10 +23,6 @@ from django.db.models.functions import Replace
 def test(request):
     return render(request, "articles/test.html")
 
-def calendar_1(request):
-    return render(request, "articles/calendar_1.html")
-
-
 def calendar(request):
     return render(request, "articles/calendar.html")
 
