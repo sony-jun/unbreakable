@@ -10,3 +10,5 @@ class Song(models.Model):
     song_url = models.CharField(max_length=400)
     # 이미지 필드
     song_thumbnail = models.CharField(max_length=400)
+    # 재생 시간
+    song_runtime = models.CharField(max_length=10)
