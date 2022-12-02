@@ -32,19 +32,13 @@ class Articles(models.Model):
         null=True,
         upload_to="images/",
         blank=True,
-        processors=[ResizeToFill(1200, 960)],
         format="JPEG",
         options={"quality": 90},
     )
 
     disclosure = models.BooleanField(default=True)
     # True가 공개, False가 비공개
-    feelings_choices = (
-        ("👿", "👿"),
-        ("😞", "😞"),
-        ("😊", "😊"),
-    )
-    feelings = models.CharField(max_length=2, choices=feelings_choices)
+    feelings = models.CharField(max_length=10)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     music_start = models.IntegerField(default=0)
 
