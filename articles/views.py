@@ -5,7 +5,7 @@ from django.contrib import messages
 from accounts.models import Message
 from .models import Articles
 from django.utils import timezone
-
+from music.models import Song
 # search
 import requests
 from django.conf import settings
@@ -58,6 +58,46 @@ def articles_create(request):
     }
     return render(request, "articles/articles_create.html", context)
 
+# test
+
+def articles_create2(request):
+    if request.method == "POST":
+        articles_form = ArticlesForm(request.POST, request.FILES)
+        so = Song.objects.get(song_title=request.POST["song"])
+        if articles_form.is_valid():
+            articles = articles_form.save(commit=False)
+            articles.song = so
+            articles.user = request.user
+            articles.save()
+            return redirect('articles:index')
+    else:
+        articles_form = ArticlesForm()
+        context = {
+            'articles_form':articles_form,
+        }
+    return render(request, 'articles/articles_create2.html', context)
+
+def song_search(request):
+    search_data = request.GET.get("search", "")
+    print(search_data)
+    song = Song.objects.filter(song_title__icontains=search_data).all()
+    song_list = []
+    for s in song:
+        song_list.append(
+            {
+                "name": s.song_title,
+                "url": s.song_url,
+                "thumbnail": s.song_thumbnail,
+                "id": s.pk,
+            }
+        )
+        print(s)
+    context = {
+        "song_list": song_list,
+    }
+    return JsonResponse(context)
+
+# test
 
 def articles_detail(request, articles_pk):
     articles = get_object_or_404(Articles, pk=articles_pk)

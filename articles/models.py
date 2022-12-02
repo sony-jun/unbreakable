@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from imagekit.processors import ResizeToFill
 from django.conf import settings
 import re
-
+from music.models import Song
 from django.forms import ValidationError
 
 
@@ -45,7 +45,7 @@ class Articles(models.Model):
         ("😊", "😊"),
     )
     feelings = models.CharField(max_length=2, choices=feelings_choices)
-    music_url = models.TextField(null=True)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
     music_start = models.IntegerField(default=0)
 
 
