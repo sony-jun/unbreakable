@@ -69,7 +69,7 @@ def articles_create2(request):
             articles.song = so
             articles.user = request.user
             articles.save()
-            return redirect('articles:index')
+            return redirect('articles:articles_index')
     else:
         articles_form = ArticlesForm()
         context = {

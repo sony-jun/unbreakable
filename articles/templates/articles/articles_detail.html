@@ -82,13 +82,13 @@
       
           player = new YT.Player('player', {
       
-            height: '150',
+            height: '0',
       
-            width: '150',
+            width: '0',
       
-            videoId: '{{ articles.music_url }}',
+            videoId: '{{ articles.song.song_url }}',
       
-            playerVars: { 'controls': 2, 'autohide': 1, 'playlist': '{{ articles.music_url }}', 'loop': 1, 'start': '{{ articles.music_start }}' },
+            playerVars: { 'controls': 2, 'autohide': 1, 'playlist': '{{ articles.song.song_url }}', 'loop': 1, 'start': '{{ articles.music_start }}' },
       
             events: {
       
