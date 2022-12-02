@@ -15,7 +15,14 @@
     <div class="d-flex justify-content-center py-2">
         <div class="second py-2 px-2">
             <a class="text-decoration-none" href="{% url 'articles:articles_detail' article.pk %}">
-                <span><img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}" width="125"></span>
+                {% if article.picture %}
+                    <span><img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}" width="125"></span>
+                {% else %}
+                    <div class="d-flex justify-content-center">
+                        <img src="" alt="">
+                    </div>
+                {% endif %}
+                
                 <span class="text1">{{ article.content }}</span>
                 <!-- 3줄 넘으면 더보기로 보이게 -->
             </a>
