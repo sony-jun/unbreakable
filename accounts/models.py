@@ -13,3 +13,4 @@ class Message(models.Model):
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
     content = models.CharField(max_length=100)
+    

@@ -8,6 +8,10 @@ urlpatterns = [
     path("calendar_1", views.calendar_1, name="calendar_1"),
     path("", views.articles_index, name="articles_index"),
     path("articles_create/", views.articles_create, name="articles_create"),
+    #test
+    path('articles_create2/', views.articles_create2, name="articles_create2"),
+    path('song_search/', views.song_search, name="song_search"),
+    #test
     path(
         "<int:articles_pk>/articles_detail/",
         views.articles_detail,

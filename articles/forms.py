@@ -1,5 +1,5 @@
 from django import forms
-from .models import Articles, Comment
+from .models import *
 from django.forms import Select, FileInput
 
 
@@ -11,7 +11,6 @@ class ArticlesForm(forms.ModelForm):
             "picture",
             "disclosure",
             "feelings",
-            "music_url",
             "music_start",
         ]
         labels = {
@@ -19,7 +18,6 @@ class ArticlesForm(forms.ModelForm):
             "picture": "이미지",
             "disclosure": "공개여부",
             "feelings": "감정표현",
-            "music_url": "유튜브URL",
             "music_start": "시작지점(초)",
         }
         widgets = {
