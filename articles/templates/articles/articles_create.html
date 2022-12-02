@@ -3,6 +3,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="/static/css/articles_create.css">
+<link rel="stylesheet" href="/static/css/btn.css">
 {% endblock css %}
 
 {% block content %}
@@ -35,18 +36,12 @@
       <label for="picture" class="form-label">Moment</label>
       <input class="form-control" type="file" name="picture" multiple>
     </div>
-    <div class="mt-3">
-      <label>
-        <input type="radio" name="choice-radio">
-        공개
-      </label>
-      <label>
-        <input type="radio" name="choice-radio">
-        비공개
-      </label>
+    <div class="toggle mt-3">
+      <input type="checkbox" name="toggle1" id="toggle1" value="1">
+      <label for="toggle1">공개하기</label>
     </div>
     <div class="mt-3">
-      <input type="submit">
+      <input class="btn-two purple" type="submit">
     </div>
 </div>
 </form>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.http import HttpResponse
 # search
 import requests
 from django.conf import settings
@@ -76,7 +76,7 @@ def create(request):
         print(request.POST)
         if songform.is_valid():
             songform.save()
-    return redirect('music:search')
+    return HttpResponse('<script type="text/javascript">window.close()</script>')
 
 def songs(request):
     songs = Song.objects.all()

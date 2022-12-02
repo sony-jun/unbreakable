@@ -20,6 +20,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Value
 from django.db.models.functions import Replace
 
+def test(request):
+    return render(request, "articles/test.html")
 
 def calendar_1(request):
     return render(request, "articles/calendar_1.html")
@@ -70,6 +72,7 @@ def articles_create2(request):
             articles.song = so
             articles.user = request.user
             articles.save()
+
             return redirect("articles:articles_index")
     else:
         articles_form = ArticlesForm()
