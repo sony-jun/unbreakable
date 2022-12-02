@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
 
         ('music', '0002_song_song_runtime'),
-
+    ]
 
     operations = [
         migrations.CreateModel(
