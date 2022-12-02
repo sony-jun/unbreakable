@@ -12,6 +12,14 @@
 <div class="container">
     <div class="row login-box d-flex justify-content-center align-items-center">
         <div class="col-md-8">
+            {% if validate == 1 %}
+                <div class="alert-align">
+                    <div class="alert-box">
+                        <h1 align="center" class="alert-text">제출양식을 다시 확인해주세요.</h1>
+                    </div>
+                </div>
+            {% else %}
+            {% endif %}
             <form action="{% url 'accounts:signup' %}" method="POST">
                 {% csrf_token %}
                 <h1 align="center" style="font-size:25px;">회원가입</h1>
@@ -24,42 +32,42 @@
                     <img class="step" src="{% static 'images/heart.png' %}" alt=""> 
                 </div>
                 <div class="tab">
-                    <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">이름을 알려주세요.</h1>
+                    <h1 align="center" class="input-title">이름을 알려주세요.</h1>
                     <div class="input-text">
                         <input type="text" class="input-signup" placeholder="ex) 홍길동" name="fullname" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
-                    <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">생년월일을 알려주세요.</h1>
+                    <h1 align="center" class="input-title">생년월일을 알려주세요.</h1>
                     <div class="input-text">
                         <input type="text" class="input-signup" placeholder="ex) 2022-11-24" name="birthday" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
-                    <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">전화번호를 알려주세요.</h1>
+                    <h1 align="center" class="input-title">전화번호를 알려주세요.</h1>
                     <div class="input-text">
                         <input type="text" class="input-signup" placeholder="ex) 01012345678" name="phone_number" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
-                    <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">사용할 아이디를 입력하세요.</h1>
+                    <h1 align="center" class="input-title">사용할 아이디를 입력하세요.</h1>
                     <div class="input-text">
                         <input type="text" class="input-signup" placeholder="지금, 우린 에서 사용할 아이디를 입력하세요." name="username" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
-                    <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">사용할 비밀번호를 입력하세요.</h1>
+                    <h1 align="center" class="input-title">사용할 비밀번호를 입력하세요.</h1>
                     <div class="input-text">
                         <input type="password" class="input-signup" placeholder="최소 8자 이상으로, 숫자로만 이루어진 비밀번호는 사용할 수 없습니다." name="password1" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
-                    <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">비밀번호를 한번 더 입력하세요.</h1>
+                    <h1 align="center" class="input-title">비밀번호를 한번 더 입력하세요.</h1>
                     <div class="input-text">
                         <input type="password" class="input-signup" placeholder="한번 더 입력하세요" name="password2" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
@@ -67,9 +75,9 @@
 
                 <div style="overflow:auto;" id="nextprevious">
                     <div style="float:right; padding:3vw;">
-                        <img class="step-button" style="position:absolute; top: 27rem; right:30vw;" id="prevBtn" onclick="nextPrev(-1)" src="{% static 'images/left-arrow.png' %}" alt="">
-                        <img class="step-button" style="position:absolute; top: 27rem; right:17vw;" id="nextBtn" onclick="nextPrev(1)" src="{% static 'images/right-arrow.png' %}" alt="">
-                        <button style="position:absolute; top: 26.9rem; right:16vw; border:none; background:none; display:none;" id="signup-submit" type="submit"><img class="step-button" src="{% static 'images/right-arrow.png' %}" alt=""></button>
+                        <img class="step-button prev" id="prevBtn" onclick="nextPrev(-1)" src="{% static 'images/left-arrow.png' %}" alt="">
+                        <img class="step-button next" id="nextBtn" onclick="nextPrev(1)" src="{% static 'images/right-arrow.png' %}" alt="">
+                        <button class="final" id="signup-submit" type="submit"><img class="step-button" src="{% static 'images/right-arrow.png' %}" alt=""></button>
                     </div>
                 </div>
 
@@ -168,5 +176,7 @@
     })
 
 </script>
+
+<div style="height:10rem;"></div>
 
 {% endblock content %}

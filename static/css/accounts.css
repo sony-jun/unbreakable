@@ -94,6 +94,12 @@
     padding:2rem 0;
 }
 
+.input-title{
+    font-weight:lighter; 
+    font-size:20px; 
+    margin-bottom:1rem;
+}
+
 .input-signup{
     background-color: transparent; 
     width:30rem; 
@@ -190,4 +196,44 @@
     background-color:#363062!important;
     color:white!important;
     border:1px solid #363062!important;
+}
+
+.prev{
+    position:absolute; 
+    top: 33rem; 
+    right:30vw;
+}
+
+.next{
+    position:absolute; 
+    top: 33rem; 
+    right:17vw;
+}
+
+.final{
+    position:absolute; 
+    top: 33rem; 
+    right:16vw; 
+    border:none; 
+    background:none; 
+    display:none;
+}
+
+.alert-text{
+    color:rgb(208, 78, 78); 
+    font-weight:lighter; 
+    font-size:20px; 
+    margin:0;
+}
+
+.alert-box{
+    background-color:rgb(255, 238, 238); 
+    width:20rem;
+}
+
+.alert-align{
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    padding-bottom:2rem;
 }
