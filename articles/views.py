@@ -42,12 +42,12 @@ def articles_index(request):
 def articles_create(request):
     if request.method == "POST":
         articles = Articles()
-        articles.content = request.POST['content']
-        articles.created_at = timezone.now()
-        articles.picture = request.FILES['picture']
-        articles.feelings = request.POST['feelings']
         articles.music_url = request.POST['music_url']
         articles.music_start = request.POST['music_start']
+        articles.content = request.POST['content']
+        articles.feelings_choices = request.POST['feelings']
+        articles.picture = request.FILES['picture']
+        articles.created_at = timezone.now()
         articles.user = request.user
         articles.save()
         return redirect("main")  # 수정 할 예정임(어디로 보낼까?)

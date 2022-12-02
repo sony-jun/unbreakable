@@ -6,15 +6,49 @@
 {% endblock css %}
 
 {% block content %}
-
-<form action="" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column; padding:5rem;">
-  {% csrf_token %}
-  <textarea placeholder="내용" name="content" id="" cols="30" rows="10"></textarea><br>
-  <input type="file" name="picture"><br>
-  <input placeholder="감정" type="text" name="feelings"><br>
-  <input placeholder="음악" type="text" name="music_url" id=""><br>
-  <input placeholder="음악 시작위치" type="number" name="music_start"><br>
-  <input type="submit">
+<div class="d-flex justify-content-center" style="height:100vh;">
+  <form action="" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column; padding:5rem;">
+    {% csrf_token %}
+    <div>
+      <label for="">음악</label><br>
+      <input class="wd" placeholder="음악 아직 하는중" type="text" name="music_url" id="">
+    </div>
+    <div class="mt-3">
+      <input class="wd" placeholder="음악 시작위치" type="number" name="music_start">
+    </div>
+    <div class="mt-3">
+      <textarea class="wdt" placeholder="내용" name="content" id="" cols="30" rows="10"></textarea>
+    </div>
+    <div class="mt-3">
+      <input placeholder="감정" type="text" name="feelings">
+      <!-- <select class="wd" aria-label="Default select example">
+        <option selected>감정을 표현하세요</option>
+        <option value="😊">😊</option>
+        <option value="😞">😞</option>
+        <option value="👿">👿</option>
+        <option value="😭">😭</option>
+        <option value="😍">😍</option>
+        <option value="😒">😒</option>
+      </select> -->
+    </div>
+    <div class="mt-3">
+      <label for="picture" class="form-label">Moment</label>
+      <input class="form-control" type="file" name="picture" multiple>
+    </div>
+    <div class="mt-3">
+      <label>
+        <input type="radio" name="choice-radio">
+        공개
+      </label>
+      <label>
+        <input type="radio" name="choice-radio">
+        비공개
+      </label>
+    </div>
+    <div class="mt-3">
+      <input type="submit">
+    </div>
+</div>
 </form>
 
 {% endblock content %}
