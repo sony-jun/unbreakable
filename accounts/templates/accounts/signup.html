@@ -26,53 +26,53 @@
                 <div class="tab">
                     <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">이름을 알려주세요.</h1>
                     <div class="input-text">
-                        <input type="text" class="input-signup" placeholder="Name..." name="fullname" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+                        <input type="text" class="input-signup" placeholder="ex) 홍길동" name="fullname" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
                     <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">생년월일을 알려주세요.</h1>
                     <div class="input-text">
-                        <input type="text" class="input-signup" placeholder="Birthday..." name="birthday" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+                        <input type="text" class="input-signup" placeholder="ex) 2022-11-24" name="birthday" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
                     <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">전화번호를 알려주세요.</h1>
                     <div class="input-text">
-                        <input type="text" class="input-signup" placeholder="PhoneNumber..." name="phone_number" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+                        <input type="text" class="input-signup" placeholder="ex) 01012345678" name="phone_number" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
                     <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">사용할 아이디를 입력하세요.</h1>
                     <div class="input-text">
-                        <input type="text" class="input-signup" placeholder="ID..." name="username" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+                        <input type="text" class="input-signup" placeholder="지금, 우린 에서 사용할 아이디를 입력하세요." name="username" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
                     <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">사용할 비밀번호를 입력하세요.</h1>
                     <div class="input-text">
-                        <input type="password" class="input-signup" placeholder="Password..." name="password1" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+                        <input type="password" class="input-signup" placeholder="최소 8자 이상으로, 숫자로만 이루어진 비밀번호는 사용할 수 없습니다." name="password1" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div class="tab">
                     <h1 align="center" style="font-weight:lighter; font-size:20px; margin-bottom:1rem;">비밀번호를 한번 더 입력하세요.</h1>
                     <div class="input-text">
-                        <input type="password" class="input-signup" placeholder="Password..." name="password2" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+                        <input type="password" class="input-signup" placeholder="한번 더 입력하세요" name="password2" required autofocus readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                 </div>
 
                 <div style="overflow:auto;" id="nextprevious">
                     <div style="float:right; padding:3vw;">
-                        <img class="step-button" id="prevBtn" onclick="nextPrev(-1)" src="{% static 'images/left-arrow.png' %}" alt="">
-                        <img class="step-button" id="nextBtn" onclick="nextPrev(1)" src="{% static 'images/right-arrow.png' %}" alt="">
+                        <img class="step-button" style="position:absolute; top: 27rem; right:30vw;" id="prevBtn" onclick="nextPrev(-1)" src="{% static 'images/left-arrow.png' %}" alt="">
+                        <img class="step-button" style="position:absolute; top: 27rem; right:17vw;" id="nextBtn" onclick="nextPrev(1)" src="{% static 'images/right-arrow.png' %}" alt="">
+                        <button style="position:absolute; top: 26.9rem; right:16vw; border:none; background:none; display:none;" id="signup-submit" type="submit"><img class="step-button" src="{% static 'images/right-arrow.png' %}" alt=""></button>
                     </div>
                 </div>
 
-                <button class="btn signup-submit" type="submit">가입하기</button>
             </form>
         </div>
     </div>
@@ -107,8 +107,6 @@
     if (currentTab >= x.length) {
         document.getElementById("nextprevious").style.display = "none";
         document.getElementById("all-steps").style.display = "none";
-        document.getElementById("register").style.display = "none";
-        document.getElementById("text-message").style.display = "block";
     }
     showTab(currentTab);
     }
@@ -136,6 +134,39 @@
         }
         x[n].className += " active";
     }
+
+    var count = 0;
+    console.log(count)
+
+    x = document.getElementById("prevBtn")
+    y = document.getElementById("nextBtn")
+
+    x.addEventListener('click', function() {
+        count -=1
+        console.log(count)
+        if (count == 5) {
+            document.querySelector('#signup-submit').style.display = "block";
+            document.querySelector('#nextBtn').style.display = "none";
+        }
+        else {
+            document.querySelector('#signup-submit').style.display = "none";
+            document.querySelector('#nextBtn').style.display = "block";
+        }
+    })
+
+    y.addEventListener('click', function() {
+        count += 1
+        console.log(count)
+        if (count == 5) {
+            document.querySelector('#signup-submit').style.display = "block";
+            document.querySelector('#nextBtn').style.display = "none";
+        }
+        else {
+            document.querySelector('#signup-submit').style.display = "none";
+            document.querySelector('#nextBtn').style.display = "block";
+        }
+    })
+
 </script>
 
 {% endblock content %}
