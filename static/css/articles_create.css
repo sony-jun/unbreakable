@@ -1,9 +1,9 @@
 .wd{
-    min-width: 350px;
+    min-width: 300px;
 }
 
 .wdt{
-    min-width: 350px;
+    min-width: 300px;
     height: 100px;
 }
 
@@ -16,6 +16,7 @@
 .toggle {
     position: relative;
     display: inline-block;
+    width:20rem!important;
 }
 
 .toggle input {
@@ -41,7 +42,7 @@
 .toggle label::before { /* 배경 */
     width: 13%;
     height: 100%;
-    background-color: #dedede;
+    background-color: rgb(156, 156, 156);
     border-radius: 1em;
     -webkit-transition: background-color 0.25s ease;
     transition: background-color 0.25s ease;/* 배경색 애니메이션*/
@@ -60,11 +61,11 @@
 }
 
 .toggle input:checked + label::before {
-    background-color: skyblue; /* 켠 상태 배경색 */
+    background-color: #363062; /* 켠 상태 배경색 */
 }
 
 .toggle input:checked + label::after { /* 켠 상태 스위치 위치 */
-    left: 3.5vw;
+    left: 24px;
 }
 
 .input-box{
@@ -76,7 +77,7 @@
 }
 
 .input-box::placeholder{
-    color:rgb(212, 212, 212);
+    color:rgb(116, 116, 116);
     font-weight:lighter;
     font-size:15px;
 }
@@ -91,7 +92,7 @@
 }
 
 .input-text::placeholder{
-    color:rgb(212, 212, 212);
+    color:rgb(116, 116, 116);
     font-weight:lighter;
     font-size:15px;
 }
