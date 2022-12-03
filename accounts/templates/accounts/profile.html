@@ -28,13 +28,7 @@
         <!-- 받은 메시지 -->
         <div style="display:flex; flex-direction:column;">
             <h4>내가 받은 메시지</h4>
-            {% if messages %}
-                {% for message in messages %}
-                <p>{{ message.content }}</p>
-                {% endfor %}
-            {% else %}
-                <p>받은 메시지가 없습니다.</p>
-            {% endif %}
+            <a href="{% url 'accounts:message_receive' %}">M</a>
         </div>
     </div>
 </div>
