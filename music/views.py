@@ -72,9 +72,14 @@ def search(request):
 
 def create(request):
     if request.method == 'POST':
+        check = Song.objects.filter(song_url = request.POST['song_url'])
+        if check:
+            return HttpResponse('<script type="text/javascript">window.close()</script>')
         songform = SongForm(request.POST, request.FILES)
         if songform.is_valid():
-            songform.save()
+            song = songform.save(commit=False)
+            song.song_title = song.song_title.replace('\"', '\'')
+            song.save()
     return HttpResponse('<script type="text/javascript">window.close()</script>')
 
 def songs(request):
