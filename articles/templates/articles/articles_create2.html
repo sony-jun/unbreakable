@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/search.css">
+
+{% endblock css %}
 {% block content %}
 <div class="container" style="padding:5rem;">
   <h1 class="text-start fs-5 mb-4 fw-bold font-space">글 작성</h1>
@@ -63,6 +68,7 @@
         <div onclick="add_song()" data-name-id="${song_list[i].name}"  data-song_name-id="${song_list[i].id}"  id="song_${song_list[i].id}">
         <hr class='m-0'>
           <div class='search-box'  data-name-id="${song_list[i].name}">
+            <img  onclick="add_keyboard()" data-name-id="${song_list[i].name}" class="search-thumbnail" src="${song_list[i].thumbnail}" style="height: 100px;">
             <div class="search-box-mini">  
               <p onclick="add_song()" data-name-id="${song_list[i].name}" >${song_list[i].name}</p> 
             </div>

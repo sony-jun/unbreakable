@@ -17,9 +17,11 @@
     position: relative;
     display: inline-block;
 }
+
 .toggle input {
     display: none;
 }
+
 .toggle label {
     display: block;
     width: 25px;
@@ -27,6 +29,7 @@
     text-indent: -250%; /* 라벨 텍스트 왼쪽으로 이동*/
     user-select: none; /* 라벨 텍스트 선택 차단 */
 }
+
 .toggle label::before,
 .toggle label::after {
     content: "";
@@ -34,6 +37,7 @@
     position: absolute;
     cursor: pointer;
 }
+
 .toggle label::before { /* 배경 */
     width: 13%;
     height: 100%;
@@ -42,6 +46,7 @@
     -webkit-transition: background-color 0.25s ease;
     transition: background-color 0.25s ease;/* 배경색 애니메이션*/
 }
+
 .toggle label::after { /* 스위치 */
     top: 0;
     left: 0;
@@ -53,9 +58,60 @@
     -webkit-transition: left 0.25s ease;
     transition: left 0.25s ease; /* 스위치 이동 애니메이션 */
 }
+
 .toggle input:checked + label::before {
     background-color: skyblue; /* 켠 상태 배경색 */
 }
+
 .toggle input:checked + label::after { /* 켠 상태 스위치 위치 */
     left: 24px;
+}
+
+.input-box{
+    background-color: transparent; 
+    width:40vw; 
+    border:1.5px solid rgb(51, 51, 51);
+    height:10vh;
+    padding-left:1.5rem;
+}
+
+.input-box::placeholder{
+    color:rgb(212, 212, 212);
+    font-weight:lighter;
+    font-size:15px;
+}
+
+.input-text{
+    background-color: transparent; 
+    width:40vw; 
+    border:1.5px solid rgb(51, 51, 51);
+    height:30vh;
+    padding-left:1.5rem;
+    padding-top:1rem;
+}
+
+.input-text::placeholder{
+    color:rgb(212, 212, 212);
+    font-weight:lighter;
+    font-size:15px;
+}
+
+.submit-btn{
+    width:40vw; 
+    margin-top:3vh;
+    height:8vh;
+    border:1px solid rgb(23, 23, 23);
+    background-color:rgb(23, 23, 23);
+    color:white;
+}
+
+.submit-btn:hover{
+    background-color:#363062;
+    color:white;
+}
+
+.submit-btn:active{
+    background-color:#363062!important;
+    color:white!important;
+    border:1px solid #363062!important;
 }
