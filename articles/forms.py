@@ -28,11 +28,6 @@ class ArticlesForm(forms.ModelForm):
                     "placeholder": "리뷰를 입력해주세요",
                 }
             ),
-            "feelings": Select(
-                attrs={
-                    "style": "background: transparent;",
-                }
-            ),
             "picture": FileInput(
                 attrs={
                     "style": "background: transparent;",
