@@ -94,6 +94,23 @@ def profile(request, user_pk):
     return render(request, 'accounts/profile.html', context)
 
 @login_required
+def message_receive(request):
+    messages = Message.objects.filter(receiver_id=request.user).order_by('-articles')
+
+    print(messages)
+    if messages:
+        context = {
+            'messages':messages,
+        }
+    else:
+        context = {
+            'messages': 1,
+        }
+    print(context)
+
+    return render(request, 'accounts/message_receive.html', context)
+
+@login_required
 def delete(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
     user.delete()

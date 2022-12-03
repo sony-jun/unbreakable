@@ -19,4 +19,5 @@ urlpatterns = [
     path('kakao/login/', views.kakao_request, name="kakao"),
     # 메시지(쪽지)
     path('<int:user_pk>/<int:articles_pk>/message_create/', views.message_create, name="message_create"),
+    path('message_receive/', views.message_receive, name="message_receive"),
 ]
