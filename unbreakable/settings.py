@@ -138,6 +138,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 
+
 YOUTUBE_DATA_API_KEY = "AIzaSyDz8UI5NEZ4H1gQQqEamJW2VlmiJQjubEk"
+
 
 

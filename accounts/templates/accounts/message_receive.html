@@ -12,9 +12,14 @@
             {% if messages == 1 %}
                 <p>받은 메시지가 없습니다.</p>
             {% else %}
+            <form action="{% url 'accounts:message_delete' %}" method="POST">
+                {% csrf_token %}
                 {% for message in messages %}
-                    <p>{{ message.content }}</p>
+                <input type="checkbox" id="selected" name="selected" value="{{message.id}}">
+                <p>{{ message.content }}</p>
                 {% endfor %}
+                <button type="submit">삭제</button>
+            </form>
             {% endif %}
         </div>
     </div>

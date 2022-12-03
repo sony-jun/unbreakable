@@ -97,7 +97,6 @@ def profile(request, user_pk):
 def message_receive(request):
     messages = Message.objects.filter(receiver_id=request.user).order_by('-articles')
 
-    print(messages)
     if messages:
         context = {
             'messages':messages,
@@ -106,7 +105,6 @@ def message_receive(request):
         context = {
             'messages': 1,
         }
-    print(context)
 
     return render(request, 'accounts/message_receive.html', context)
 
@@ -179,7 +177,6 @@ def kakao_callback(request):
 def message_create(request, user_pk, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
     receiver = User.objects.get(pk=user_pk)
-    print(user_pk)
     if request.method == "POST":
         message_form = MessageForm(request.POST)
         if message_form.is_valid:
@@ -196,3 +193,13 @@ def message_create(request, user_pk, articles_pk):
         'message_form':message_form,
     }
     return render(request, 'accounts/message_create.html',context)
+
+def message_delete(request):
+    messages = Message.objects.filter(receiver_id=request.user).order_by('-articles')
+    if request.method =="POST":
+        selected = request.POST.getlist('selected')
+        for m in messages:
+            for s in selected:
+                if m.id == int(s):
+                    m.delete()
+    return redirect('accounts:message_receive')
