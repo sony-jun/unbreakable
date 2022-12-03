@@ -64,7 +64,7 @@
 }
 
 .toggle input:checked + label::after { /* 켠 상태 스위치 위치 */
-    left: 24px;
+    left: 3.5vw;
 }
 
 .input-box{

@@ -15,14 +15,14 @@
     <form class="form-signin" action="{% url 'accounts:login' %}" method="POST" style="padding:1rem 0;">
         {% csrf_token %}
         <div class="input-text">
-            <input class="input-box input-id" type="text" name="username" id="id" class="form-control" placeholder="아이디" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+            <input class="input-box input-id" style="min-width: 300px;" type="text" name="username" id="id" class="form-control" placeholder="아이디" required autofocus readonly onfocus="this.removeAttribute('readonly');">
         </div>
         <div class="input-text">
-            <input class="input-box input-password" type="password" name="password" id="pw" class="form-control" placeholder="비밀번호" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+            <input class="input-box input-password" style="min-width: 300px;" type="password" name="password" id="pw" class="form-control" placeholder="비밀번호" required autofocus readonly onfocus="this.removeAttribute('readonly');">
         </div>
-        <button class="btn login-btn" type="submit">로그인</button>
+        <button class="btn login-btn" style="min-width: 300px;" type="submit">로그인</button>
     </form>
-    <a href="{% url 'accounts:kakao' %}"><button class="btn kakao-btn">카카오 로그인</button></a><br>
+    <a href="{% url 'accounts:kakao' %}"><button class="btn kakao-btn" style="min-width: 300px;">카카오 로그인</button></a><br>
     <div style="padding-top:3vh;">
         <a align="center" class="signup-link" href="{% url 'accounts:signup' %}">회원가입 하러가기</a>
     </div>
