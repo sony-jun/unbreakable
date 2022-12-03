@@ -39,11 +39,12 @@ def articles_index(request):
 def articles_create(request):
     if request.method == "POST":
         articles = Articles()
-        articles.music_url = request.POST["music_url"]
+        articles.song_id = request.POST["music_url"]
         articles.music_start = request.POST["music_start"]
         articles.content = request.POST["content"]
-        articles.feelings_choices = request.POST["feelings"]
+        articles.feelings = request.POST["feelings"]
         articles.picture = request.FILES["picture"]
+        articles.disclosure = request.POST.get('toggle1', False)
         articles.created_at = timezone.now()
         articles.user = request.user
         articles.save()
