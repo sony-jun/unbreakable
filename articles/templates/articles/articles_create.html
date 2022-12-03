@@ -7,21 +7,25 @@
 {% endblock css %}
 
 {% block content %}
-<div class="d-flex justify-content-center" style="height:100vh;">
-  <form action="" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column; padding:5rem;">
+<h3 class="mt-3 d-flex justify-content-center align-items-center" style="font-weight:lighter; font-size:20px;"><b><span style="font-weight:bold;">{{ user.fullname }}</span>님의 오늘은 어떠신가요?</b></h3>
+<div class="d-flex justify-content-center align-items-center" style="height:100vh;">
+  <form action="" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column;">
     {% csrf_token %}
     <div>
-      <label for="">음악</label><br>
-      <input class="wd" placeholder="음악 아직 하는중" type="text" name="music_url" id="">
+      <label>오늘의 음악</label><br>
+      <input class="wd" placeholder="당신의 하루를 나타내는 음악을 선택해주세요." type="number" name="music_url" id="">
     </div>
     <div class="mt-3">
-      <input class="wd" placeholder="음악 시작위치" type="number" name="music_start">
+      <label>음악 시작위치</label><br>
+      <input class="wd" placeholder="음악을 재생할 위치를 정해주세요." type="number" name="music_start">
     </div>
     <div class="mt-3">
-      <textarea class="wdt" placeholder="내용" name="content" id="" cols="30" rows="10"></textarea>
+      <label>오늘의 하루</label><br>
+      <textarea class="wdt" placeholder="당신의 오늘을 이야기해주세요." name="content" id="" cols="30" rows="10"></textarea>
     </div>
     <div class="mt-3">
-      <input placeholder="감정" type="text" name="feelings">
+      <label>오늘의 감정</label><br>
+      <input placeholder="오늘의 기분을 말해주세요." type="text" name="feelings">
       <!-- <select class="wd" aria-label="Default select example">
         <option selected>감정을 표현하세요</option>
         <option value="😊">😊</option>
@@ -33,17 +37,19 @@
       </select> -->
     </div>
     <div class="mt-3">
-      <label for="picture" class="form-label">Moment</label>
+      <label>오늘의 사진</label><br>
       <input class="form-control" type="file" name="picture" multiple>
     </div>
     <div class="toggle mt-3">
-      <input type="checkbox" name="toggle1" id="toggle1" value="1">
-      <label for="toggle1">공개하기</label>
+      <input type="checkbox" name="toggle1" id="toggle1" value=1>
+      <label for="toggle1">공개여부</label>
     </div>
     <div class="mt-3">
       <input class="btn-two purple" type="submit">
     </div>
 </div>
 </form>
+
+<div style="height:10rem;"></div>
 
 {% endblock content %}

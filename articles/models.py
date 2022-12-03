@@ -35,11 +35,10 @@ class Articles(models.Model):
         format="JPEG",
         options={"quality": 90},
     )
-
-    disclosure = models.BooleanField(default=True)
+    disclosure = models.BooleanField(default=False)
     # True가 공개, False가 비공개
     feelings = models.CharField(max_length=10)
-    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE, null=True)
     music_start = models.IntegerField(default=0)
 
 
