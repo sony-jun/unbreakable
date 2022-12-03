@@ -1,0 +1,28 @@
+
+.search-off {
+  display: none;
+
+}
+
+.search-on {
+  display: block;
+
+}
+
+.search-wrap {
+  position: relative;
+}
+
+.search-div {
+  position: absolute;
+  bottom: 1;
+  width: 700px;
+  height: 300px;
+  background-color: rgb(249, 249, 249);
+  overflow: scroll;
+  z-index: 100;
+  overflow-x: hidden;
+  border-radius: 10px;
+  border: var(--my-gray) solid 1px;
+  opacity: 1;
+}
