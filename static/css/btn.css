@@ -1,11 +1,11 @@
 .btn.purple, .btn-two.purple {
-    background-color: #8255b2;
+    background-color: #8c60ba;
 }
 .btn-two {
     text-decoration: none;
     font-size: 15px;
 	color: white;	
-	padding: 10px 15px;
+	padding: 5px 10px;
 	display: inline-block;
     border-radius: 10px;
 	border: 2px solid rgba(0,0,0,0.21);
