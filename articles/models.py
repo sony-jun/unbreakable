@@ -49,3 +49,15 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True)  # 대댓글
+
+class Declaration(models.Model):
+    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    content = models.CharField(max_length=100)
+    
+    class Meta:
+        constraints = [
+        models.UniqueConstraint(
+            fields=["reporter", "articles"], name="only_one_report"
+        )
+    ]

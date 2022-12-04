@@ -56,3 +56,13 @@ class CommentForm(forms.ModelForm):
         labels = {
             "content": "",
         }
+
+class DeclarationForm(forms.ModelForm):
+    class Meta:
+        model = Declaration
+        fields = [
+            'content',
+        ]
+        labels = {
+            'content':'신고내용',
+        }

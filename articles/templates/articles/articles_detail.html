@@ -76,11 +76,32 @@
           {% endif %}
           {% if request.user != articles.user %}
           <a href="{% url 'accounts:message_create' articles.user.pk articles.pk %}">메시지 보내기</a>
+          <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">게시글 신고하기</a>
           {% endif %}
         </div>
+
+        <!-- 신고 Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">신고하기</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="{% url 'articles:articles_declaration' articles.pk %}" method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form declaration_form %}
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-danger">신고하기</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
-
-
 
 
       {% comment %} 댓글 작성 {% endcomment %}
