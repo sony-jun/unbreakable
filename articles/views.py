@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ArticlesForm, CommentForm
+from .forms import ArticlesForm, CommentForm, DeclarationForm
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from accounts.models import Message
@@ -108,6 +108,7 @@ def articles_detail(request, articles_pk):
         "articles": articles,
         "comment_form": CommentForm(),
         "comments": articles.comment_set.all(),
+        'declaration_form':DeclarationForm(),
     }
     return render(request, "articles/articles_detail.html", context)
 
@@ -202,3 +203,30 @@ def comment_delete(request, articles_pk, comment_pk):
 
     data = {}
     return JsonResponse(data)
+
+
+#게시글 신고
+from django.db import IntegrityError
+
+@login_required
+def articles_declaration(request, articles_pk):
+    articles = Articles.objects.get(pk=articles_pk)
+    if request.method == "POST":
+        declaration_form = DeclarationForm(request.POST)
+        if declaration_form.is_valid():
+            try:
+                declaration = declaration_form.save(commit=False)
+                declaration.reporter = request.user
+                declaration.articles = articles
+                declaration_form.save()
+                messages.warning(request, "신고되었습니다.")
+                return redirect('articles:articles_detail', articles_pk)
+            except IntegrityError:
+                messages.info(request, '이미 신고한 게시글입니다.')
+                return redirect('articles:articles_detail', articles_pk)
+    else:
+        declaration_form = DeclarationForm()
+    context = {
+        'declaration_form':declaration_form,
+    }
+    return render(request, 'articles/articles_detail.html',context)
