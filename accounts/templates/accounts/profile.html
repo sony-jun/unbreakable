@@ -1,35 +1,32 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/profile.css">
+<link rel="stylesheet" href="/static/css/btn.css">
+{% endblock css %}
+
 {% block content %}
-
-<div class="container" style="padding:5rem; border:1px solid black; border-radius:15px; margin-bottom:5rem;">
-    <h1>{{ user.username }}님의 프로필</h1>
-
-    <!-- 개인정보 -->
-    <div>
-        <p><span style="font-weight:bold;">이름 : </span>{{ user.fullname }}</p>
-        <p><span style="font-weight:bold;">전화번호 : </span>{{ user.phone_number }}</p>
-        <p><span style="font-weight:bold;">생일 : </span>{{ user.birthday }}</p>
-    </div>
-
-    <div style="display:flex;">
-        <!-- 내가 쓴 일기 -->
-        <div style="display:flex; flex-direction:column; padding-right:10rem;">
-            <h4>내가 쓴 글</h4>
-            {% if articles %}
-                {% for article in articles %}
-                <p>{{ article.content }}</p>
-                {% endfor %}
-            {% else %}
-                <p>작성한 음악일기가 없습니다.</p>
-            {% endif %}
+<div class="container d-flex justify-content-center">
+    <div class="card mt-5 px-4 pt-5 pb-4">
+      <div>
+        <h2 class="d-flex justify-content-center">{{ user.fullname }}님의 프로필</h2>
+        <div class="mt-4">
+            <p class="d-flex justify-content-center"><span style="font-weight:bold;">아이디 : </span>{{ user.username }}</p>
+            <p class="d-flex justify-content-center"><span style="font-weight:bold;">전화번호 : </span>{{ user.phone_number }}</p>
+            <p class="d-flex justify-content-center"><span style="font-weight:bold;">생일 : </span>{{ user.birthday }}</p>
         </div>
-
-        <!-- 받은 메시지 -->
-        <div style="display:flex; flex-direction:column;">
-            <h4>내가 받은 메시지</h4>
-            <a href="{% url 'accounts:message_receive' %}">M</a>
+        <div class="d-flex flex-row justify-content-center mt-4 pr-4">
+          <div class="d-flex flex-column align-items-center mx-3"><small class="text-muted">나의 일기</small><h6 ><a class="text-decoration-none" style="color: black;" href="{% url 'main' %}">{{ articles.count }}개</a></h6></div>
+          <div class="d-flex flex-column align-items-center mx-3"><small class="text-muted">받은 메세지</small><h6><a class="text-decoration-none" style="color: black;" href="{% url 'accounts:message_receive' %}">{{ messages.count }}개</a></h6></div>
+          <div class="d-flex flex-column align-items-center mx-3"><small class="text-muted">좋아하는 글</small><h6><a class="text-decoration-none" style="color: black;" href="#">개</a></h6></div>
         </div>
+        <div class="d-flex justify-content-end mt-3">
+            <a class="btn-two purple" href="#">수정</a>
+            <a class="btn-two purple mx-2" href="#">탈퇴</a>
+            <a class="btn-two purple" href="#">비밀번호 변경</a>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+
 {% endblock content %}

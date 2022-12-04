@@ -1,9 +1,9 @@
 .wd{
-    min-width: 350px;
+    min-width: 300px;
 }
 
 .wdt{
-    min-width: 350px;
+    min-width: 300px;
     height: 100px;
 }
 
@@ -16,12 +16,11 @@
 .toggle {
     position: relative;
     display: inline-block;
+    width:20rem!important;
 }
-
 .toggle input {
     display: none;
 }
-
 .toggle label {
     display: block;
     width: 25px;
@@ -29,7 +28,6 @@
     text-indent: -250%; /* 라벨 텍스트 왼쪽으로 이동*/
     user-select: none; /* 라벨 텍스트 선택 차단 */
 }
-
 .toggle label::before,
 .toggle label::after {
     content: "";
@@ -37,16 +35,14 @@
     position: absolute;
     cursor: pointer;
 }
-
 .toggle label::before { /* 배경 */
     width: 13%;
     height: 100%;
-    background-color: #dedede;
+    background-color: rgb(156, 156, 156);
     border-radius: 1em;
     -webkit-transition: background-color 0.25s ease;
     transition: background-color 0.25s ease;/* 배경색 애니메이션*/
 }
-
 .toggle label::after { /* 스위치 */
     top: 0;
     left: 0;
@@ -58,11 +54,9 @@
     -webkit-transition: left 0.25s ease;
     transition: left 0.25s ease; /* 스위치 이동 애니메이션 */
 }
-
 .toggle input:checked + label::before {
-    background-color: skyblue; /* 켠 상태 배경색 */
+    background-color: #363062; /* 켠 상태 배경색 */
 }
-
 .toggle input:checked + label::after { /* 켠 상태 스위치 위치 */
     left: 24px;
 }
@@ -76,7 +70,7 @@
 }
 
 .input-box::placeholder{
-    color:rgb(212, 212, 212);
+    color:rgb(116, 116, 116);
     font-weight:lighter;
     font-size:15px;
 }
@@ -91,7 +85,7 @@
 }
 
 .input-text::placeholder{
-    color:rgb(212, 212, 212);
+    color:rgb(116, 116, 116);
     font-weight:lighter;
     font-size:15px;
 }

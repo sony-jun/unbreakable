@@ -1,27 +1,31 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/articles_index.css">
+{% endblock css %}
+
 {% block content %}
-
-<div class="container" style="padding:5rem; border:1px solid black; border-radius:15px; margin-bottom:5rem;">
-    <h1>{{ user.username }}님에게 보내는 위로메세지</h1>
-
-    <div style="display:flex;">
-        <!-- 받은 메시지 -->
-        <div style="display:flex; flex-direction:column;">
-            <h4>내가 받은 메시지</h4>
-            {% if messages == 1 %}
-                <p>받은 메시지가 없습니다.</p>
-            {% else %}
+<div style="height:100vh;">
+    <h4>내가 받은 메시지</h4>
+    {% if messages == 1 %}
+    <p>받은 메시지가 없습니다.</p>
+    {% else %}
+    {% for message in messages %}
+    <div class="d-flex justify-content-center py-2 mb-2">
+        <div class="second py-2 px-2">
             <form action="{% url 'accounts:message_delete' %}" method="POST">
                 {% csrf_token %}
-                {% for message in messages %}
                 <input type="checkbox" id="selected" name="selected" value="{{message.id}}">
                 <p>{{ message.content }}</p>
-                {% endfor %}
                 <button type="submit">삭제</button>
             </form>
-            {% endif %}
+            <div>
+                <span class="text5">받은 시간</span>
+            </div>
         </div>
     </div>
+    {% endfor %}
+    {% endif %}
 </div>
+
 {% endblock content %}

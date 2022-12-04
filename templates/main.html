@@ -6,21 +6,39 @@
 {% endblock css %}
 
 {% block content %}
-<h1>내 활동</h1>
-<div style="height:100vh;">
+<div style="height:100vh; ">
     <div class="d-flex justify-content-center pt-3 pb-2">
         <a class="form-control addtxt btn btn-light" href="{% url 'articles:articles_create' %}"> +  Add a note</a>
     </div>
+    <div class="containter">
+        {% for article in articles %}
+        <div style="margin-bottom:2rem; padding:0;  ">
+            <div class="row" style="margin:4rem; box-shadow:5px 5px 30px 5px #363062;">
+                <div class="col-md-6 col-sm-12" style="background-color:rgb(239, 239, 239, 0.8); border:1px solid black;">
+                    <div style="padding:2rem;">
+                        <div style="background-color:black; height:20vh;"></div>
+                    </div>
+                    {% if article.picture %}
+                        <img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}" style="height:300px; width:100%; padding:0 2rem 2rem 2rem;">
+                    {% endif %}
+                </div>
+                <div class="col-md-6 col-sm-12" style="background-color:rgb(239, 239, 239, 0.8); border:1px solid black;">hello</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+
+
     {% for article in articles %}
     <div class="d-flex justify-content-center py-2">
-        <div class="second py-2 px-2">
+        <div class="second py-2 px-2" style="background-color:rgb(239, 239, 239, 0.8); box-shadow:5px 5px 30px 5px #363062; border-radius:15px;">
             <a class="text-decoration-none" href="{% url 'articles:articles_detail' article.pk %}">
                 {% if article.picture %}
-                    <span><img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}" width="125"></span>
-                {% else %}
-                    <div class="d-flex justify-content-center">
-                        <img src="" alt="">
-                    </div>
+                    <span><img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}"></span>
                 {% endif %}
                 
                 <span class="text1">{{ article.content }}</span>

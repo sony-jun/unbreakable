@@ -37,7 +37,30 @@ class Articles(models.Model):
     )
     disclosure = models.BooleanField(default=False)
     # True가 공개, False가 비공개
-    feelings = models.CharField(max_length=10)
+    felling_choices = (
+        ("😃", "😃"),
+        ("😄", "😄"),
+        ("🤣", "🤣"),
+        ("😍", "😍"),
+        ("🥴", "🥴"),
+        ("🤪", "🤪"),
+        ("😐", "😐"),
+        ("🙄", "🙄"),
+        ("😔", "😔"),
+        ("😪", "😪"),
+        ("😦", "😦"),
+        ("😰", "😰"),
+        ("😭", "😭"),
+        ("😱", "😱"),
+        ("😣", "😣"),
+        ("😩", "😩"),
+        ("😤", "😤"),
+        ("🥱", "🥱"),
+        ("🥵", "🥵"),
+        ("🥶", "🥶"),
+    )
+    feelings = models.CharField(max_length=10, choices=felling_choices)
+
     song = models.ForeignKey(Song, on_delete=models.CASCADE, null=True)
     music_start = models.IntegerField(default=0)
 
