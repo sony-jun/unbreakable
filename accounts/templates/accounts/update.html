@@ -2,13 +2,17 @@
 {% load django_bootstrap5 %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/btn.css">
+{% endblock css %}
+
 {% block content %}
 
-<h1>회원 수정</h1>
-<form action="" method="POST">
+<h1 class="mx-5">회원 수정</h1>
+<form class="mx-5 mb-5" action="" method="POST">
   {% csrf_token %}
   {% bootstrap_form form %}
-  <input type="submit" value="확인">
+  <input class="btn-two purple" type="submit" value="확인">
 </form>
 
 {% endblock content %}
