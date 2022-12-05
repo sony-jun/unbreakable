@@ -73,14 +73,29 @@ class Comment(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True)  # 대댓글
 
-class Declaration(models.Model):
-    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+class ArticlesDeclaration(models.Model):
+    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="articles_reporter")
+    reported = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="articles_writer")
     articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
     content = models.CharField(max_length=100)
     
     class Meta:
         constraints = [
         models.UniqueConstraint(
-            fields=["reporter", "articles"], name="only_one_report"
+            fields=["reporter", "articles"], name="only_one_report1"
         )
     ]
+
+class CommentDeclaration(models.Model):
+    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comment_reporter")
+    reported = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comment_writer')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    content = models.CharField(max_length=100)
+    
+    class Meta:
+        constraints = [
+        models.UniqueConstraint(
+            fields=["reporter", "comment"], name="only_one_report2"
+        )
+    ]
+    
