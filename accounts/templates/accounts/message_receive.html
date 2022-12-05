@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load django_bootstrap5 %}
 {% block css %}
 <link rel="stylesheet" href="/static/css/articles_index.css">
 {% endblock css %}
@@ -13,19 +13,40 @@
     {% for message in messages %}
     <div class="d-flex justify-content-center py-2 mb-2">
         <div class="second py-2 px-2">
+            <p>{{ message.content }}</p>
             <form action="{% url 'accounts:message_delete' %}" method="POST">
                 {% csrf_token %}
                 <input type="checkbox" id="selected" name="selected" value="{{message.id}}">
-                <p>{{ message.content }}</p>
                 <button type="submit">삭제</button>
             </form>
-            <div>
-                <span class="text5">받은 시간</span>
+            <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3">메시지 신고하기</a>
+            <span class="text5">받은 시간</span>
+        </div>
+    </div>
+    <!-- 메시지 신고 Modal -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel3">신고하기</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'accounts:message_declaration' message.pk %}" method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form message_declaration_form %}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">신고하기</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     {% endfor %}
     {% endif %}
+
 </div>
 
 {% endblock content %}

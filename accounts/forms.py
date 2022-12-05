@@ -32,3 +32,11 @@ class MessageForm(forms.ModelForm):
         labels = {
             'content': '내용',
         }
+
+class MessageDeclarationForm(forms.ModelForm):
+    class Meta:
+        model = MessageDeclaration
+        fields = ['content']
+        labels = {
+            'content':'신고내용',
+        }
