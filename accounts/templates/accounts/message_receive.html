@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% block css %}
-<link rel="stylesheet" href="/static/css/articles_index.css">
+<link rel="stylesheet" href="/static/css/message_receive.css">
+<link rel="stylesheet" href="/static/css/btn.css">
 {% endblock css %}
 
 {% block content %}
@@ -13,11 +14,11 @@
     {% for message in messages %}
     <div class="d-flex justify-content-center py-2 mb-2">
         <div class="second py-2 px-2">
-            <p>{{ message.content }}</p>
+            <p class="text-center" style="font-size: 20px;">{{ message.content }}</p>
             <form action="{% url 'accounts:message_delete' %}" method="POST">
                 {% csrf_token %}
                 <input type="checkbox" id="selected" name="selected" value="{{message.id}}">
-                <button type="submit">삭제</button>
+                <button class="btn-two purple" type="submit">삭제</button>
             </form>
             <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3">메시지 신고하기</a>
             <span class="text5">받은 시간</span>
