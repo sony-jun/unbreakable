@@ -23,9 +23,11 @@ from django.db.models.functions import Replace
 def test(request):
     return render(request, "articles/test.html")
 
+def calendar2(request):
+    return render(request, "articles/calendar2.html")
+
 def calendar(request):
     return render(request, "articles/calendar.html")
-
 
 def articles_index(request):
     articles = Articles.objects.order_by("-created_at")

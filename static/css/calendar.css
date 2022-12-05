@@ -1,112 +1,49 @@
-/* section calendar */
-
-.sec_cal {
-    width: 360px;
-    margin: 0 auto;
-    font-family: "NotoSansR";
-}
-
-.sec_cal .cal_nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 700;
-    font-size: 48px;
-    line-height: 78px;
-}
-
-.sec_cal .cal_nav .year-month {
-    width: 300px;
+td {
+    width: 70px;
+    height: 70px;
     text-align: center;
-    line-height: 1;
+    font-size: 20px;
+    color:rgb(34, 34, 34);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: lighter;
 }
 
-.sec_cal .cal_nav .nav {
-    display: flex;
-    border: 1px solid #333333;
-    border-radius: 5px;
+.title_is_user{
+    font-size:20px; 
+    font-weight:lighter;
 }
 
-.sec_cal .cal_nav .go-prev,
-.sec_cal .cal_nav .go-next {
-    display: block;
-    width: 50px;
-    height: 78px;
-    font-size: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.title_not_user{
+    font-size:20px; 
+    color:black; 
+    font-weight:lighter;
 }
 
-.sec_cal .cal_nav .go-prev::before,
-.sec_cal .cal_nav .go-next::before {
-    content: "";
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid #000;
-    border-width: 3px 3px 0 0;
-    transition: border 0.1s;
+.title_not_user_link{
+    text-decoration:none;
+    color:black;
 }
 
-.sec_cal .cal_nav .go-prev:hover::before,
-.sec_cal .cal_nav .go-next:hover::before {
-    border-color: #ed2a61;
+.title_not_user_link:hover{
+
+    color:#a8634c;
 }
 
-.sec_cal .cal_nav .go-prev::before {
-    transform: rotate(-135deg);
+.direction{
+    text-decoration:none;
+    color:black;
 }
 
-.sec_cal .cal_nav .go-next::before {
-    transform: rotate(45deg);
+.direction:hover{
+    transform: scale(1.3);
+    filter: opacity(0.5) drop-shadow(0 0 0 #9e4715);
 }
 
-.sec_cal .cal_wrap {
-    padding-top: 40px;
-    position: relative;
-    margin: 0 auto;
-}
-
-.sec_cal .cal_wrap .days {
-    display: flex;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-.sec_cal .cal_wrap::after {
-    top: 368px;
-}
-
-.sec_cal .cal_wrap .day {
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    width: calc(100% / 7);
-    text-align: left;
-    color: #999;
-    font-size: 12px;
-    text-align: center;
-    border-radius:5px
-}
-
-.current.today {background: rgb(242 242 242);}
-
-.sec_cal .cal_wrap .dates {
-    display: flex;
-    flex-flow: wrap;
-    height: 290px;
-}
-
-.sec_cal .cal_wrap .day:nth-child(7n -1) {
-    color: #3c6ffa;
-}
-
-.sec_cal .cal_wrap .day:nth-child(7n) {
-    color: #ed2a61;
-}
-
-.sec_cal .cal_wrap .day.disable {
-    color: #ddd;
+.box{
+    /* style, width 가 안됨 */
+    border-style: solid; 
+    border-width: 6px;
+    padding:10px;
+    border-radius: 15px;
+    color: midnightblue;
 }
