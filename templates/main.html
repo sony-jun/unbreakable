@@ -6,6 +6,13 @@
 {% endblock css %}
 
 {% block content %}
+{% if messages %}
+	{% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">
+        {{message.message}}
+    </div>
+	{% endfor %}
+{% endif %}
 <div style="height:100vh; ">
     <div class="d-flex justify-content-center pt-3 pb-2">
         <a class="form-control addtxt btn btn-light" href="{% url 'articles:articles_create' %}"> +  Add a note</a>

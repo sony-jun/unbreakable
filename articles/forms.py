@@ -57,12 +57,22 @@ class CommentForm(forms.ModelForm):
             "content": "",
         }
 
-class DeclarationForm(forms.ModelForm):
+class ArticlesDeclarationForm(forms.ModelForm):
     class Meta:
-        model = Declaration
+        model = ArticlesDeclaration
         fields = [
             'content',
         ]
         labels = {
+            'content':'신고내용',
+        }
+        
+class CommentDeclarationForm(forms.ModelForm):
+    class Meta:
+        model = CommentDeclaration
+        fields = [
+            'content',
+        ]
+        label = {
             'content':'신고내용',
         }
