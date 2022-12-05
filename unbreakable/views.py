@@ -3,7 +3,7 @@ from articles.models import Articles
 from music.models import Song
 
 def main(request):
-    articles = Articles.objects.filter(user=request.user.pk)
+    articles = Articles.objects.filter(disclosure=1)
     context = {
         'articles':articles,
     }
