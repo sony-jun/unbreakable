@@ -42,8 +42,9 @@ def articles_create(request):
         articles.song_id = request.POST["music_url"]
         articles.music_start = request.POST["music_start"]
         articles.content = request.POST["content"]
-        articles.feelings = request.POST["picture"]
-        articles.disclosure = request.POST.get('toggle1', False)
+        articles.picture = request.FILES.get("picture")
+        articles.feelings = request.POST["feelings"]
+        articles.disclosure = request.POST.get("toggle1", False)
         articles.created_at = timezone.now()
         articles.user = request.user
         articles.save()
