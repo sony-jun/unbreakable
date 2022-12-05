@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
+
 # search
 import requests
 from django.conf import settings
@@ -65,7 +67,7 @@ def search(request):
     context = {
         "videos": videos,
     }
-
+    messages.success(request, "검색 결과입니다.")
     return render(request, "music/search.html", context)
 
 # END Search

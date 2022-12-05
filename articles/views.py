@@ -65,10 +65,11 @@ def articles_create(request):
 def articles_create2(request):
     if request.method == "POST":
         articles_form = ArticlesForm(request.POST, request.FILES)
-        so = Song.objects.get(song_title=request.POST["song"])
         if articles_form.is_valid():
             articles = articles_form.save(commit=False)
-            articles.song = so
+            if request.POST['song']:
+                so = Song.objects.get(song_title=request.POST["song"])
+                articles.song = so
             articles.user = request.user
             articles.save()
 
@@ -137,6 +138,8 @@ def articles_update(request, articles_pk):
                 form = articles_form.save(commit=False)
                 form.user = request.user
                 form.save()
+            messages.warning(request, "123")
+            print(messages.get_messages(request))
             return redirect("articles:articles_detail", articles_pk)
         else:
             articles_form = ArticlesForm(instance=articles)
