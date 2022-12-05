@@ -11,6 +11,7 @@ import requests
 import json
 from .models import *
 from articles.models import *
+from django.contrib import messages
 # Create your views here.
 
 # 임시
@@ -51,7 +52,15 @@ def login(request):
         form = AuthenticationForm(request.POST, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get("next") or "main")
+            message_d = MessageDeclaration.objects.filter(reported=request.user.pk)
+            comment_d = CommentDeclaration.objects.filter(reported=request.user.pk)
+            articles_d = ArticlesDeclaration.objects.filter(reported=request.user.pk)
+            if len(message_d)+len(comment_d)+len(articles_d) >= 3:
+                auth_logout(request)
+                messages.add_message(request, messages.WARNING, '정지된 계정입니다. 운영자에게 문의해주세요.')
+                return redirect('main')
+            else:
+                return redirect(request.GET.get("next") or "main")
     else:
         form = AuthenticationForm()
     context = {
@@ -100,6 +109,7 @@ def message_receive(request):
     if messages:
         context = {
             'messages':messages,
+            'message_declaration_form':MessageDeclarationForm(),
         }
     else:
         context = {
@@ -206,3 +216,30 @@ def message_delete(request):
                 if m.id == int(s):
                     m.delete()
     return redirect('accounts:message_receive')
+
+# 메시지 신고
+from django.db import IntegrityError
+
+@login_required
+def message_declaration(request, message_pk):
+    message = Message.objects.get(pk=message_pk)
+    if request.method == "POST":
+        message_declaration_form = MessageDeclarationForm(request.POST)
+        if message_declaration_form.is_valid():
+            try:
+                declaration = message_declaration_form.save(commit=False)
+                declaration.reporter = request.user
+                declaration.reported = message.sender
+                declaration.message = message
+                message_declaration_form.save()
+                # messages.warning(request, "신고되었습니다.")
+                return redirect('accounts:message_receive')
+            except IntegrityError:
+                # messages.info(request, '이미 신고된 메시지입니다.')
+                return redirect('accounts:message_receive')
+    else:
+        message_declaration_form = MessageDeclarationForm()
+    context = {
+        'message_declaration_form':message_declaration_form,
+    }
+    return render(request, 'accounts/message_receive.html',context)

@@ -6,6 +6,13 @@
 {% endblock css %}
 
 {% block content %}
+{% if messages %}
+	{% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">
+        {{message.message}}
+    </div>
+	{% endfor %}
+{% endif %}
 <div style="height:100vh; ">
     <div class="d-flex justify-content-center pt-3 pb-2">
         <a class="form-control addtxt btn btn-light" href="{% url 'articles:articles_create' %}"> +  Add a note</a>
@@ -13,59 +20,42 @@
     <div class="containter">
         {% for article in articles %}
         <div style="margin-bottom:2rem; padding:0;  ">
-            <div class="row" style="margin:4rem; box-shadow:5px 5px 30px 5px #363062;">
-                <div class="col-md-6 col-sm-12" style="background-color:rgb(239, 239, 239, 0.8); border:1px solid black;">
-                    <div style="padding:2rem;">
-                        <div style="background-color:black; height:20vh;"></div>
+            <div class="row" style="margin:4rem; box-shadow:5px 5px 30px 5px #363062; background-color:rgb(239, 239, 239, 0.8); border-radius:15px;">
+                <div class="col-md-6 col-sm-12" style=" padding:2rem;">
+                    <div class="container" style="background-color:black; height:20vh; width:100%; display:flex; flex-direction:row;">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4" style="display:flex; justify-content:center; align-items:center;">
+                                <img src="{{ article.song.song_thumbnail }}" alt="" style="width:100%; padding:0;">
+                            </div>
+                            <div class="col-md-8 col-sm-8" style="display:flex; justify-content:center; align-items:center;">
+                                <p style="color:white; overflow:hidden; word-break:break-all; font-size:12px; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical;">{{ article.song.song_title }}</p>
+                            </div>
+                        </div>
                     </div>
                     {% if article.picture %}
-                        <img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}" style="height:300px; width:100%; padding:0 2rem 2rem 2rem;">
+                    <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}" style="height:300px; width:100%; padding-top:2rem;"></a>
+                    {% endif %}
+                    <span class="text5">{{ article.created_at }}</span>
+                </div>
+                <div class="col-md-6 col-sm-12" style="">
+                    {% if article.picture %}
+                    <div style="margin:2rem; height:72vh;">
+                        <h1 style="font-size:20px; margin:0; color:gray; background-color: rgb(255, 255, 255, 0.4);">누군가의 이야기</h1>
+                        <p class="text1 long">{{ article.content }}</p>
+                    </div>
+                    {% else %}
+                    <div style="margin:2rem; height:20vh; overflow:hidden; text-overflow:ellipsis;">
+                        <h1 style="font-size:20px; margin:0; color:gray; background-color: rgb(255, 255, 255, 0.4);">누군가의 이야기</h1>
+                        <p class="text1 short">{{ article.content }}</p>
+                    </div>
                     {% endif %}
                 </div>
-                <div class="col-md-6 col-sm-12" style="background-color:rgb(239, 239, 239, 0.8); border:1px solid black;">hello</div>
             </div>
             {% endfor %}
         </div>
     </div>
-
-
-
-
-
-
-    {% for article in articles %}
-    <div class="d-flex justify-content-center py-2">
-        <div class="second py-2 px-2" style="background-color:rgb(239, 239, 239, 0.8); box-shadow:5px 5px 30px 5px #363062; border-radius:15px;">
-            <a class="text-decoration-none" href="{% url 'articles:articles_detail' article.pk %}">
-                {% if article.picture %}
-                    <span><img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}"></span>
-                {% endif %}
-                
-                <span class="text1">{{ article.content }}</span>
-                <!-- 3줄 넘으면 더보기로 보이게 -->
-            </a>
-            <div class="d-flex justify-content-between py-1 pt-2">
-                <div>
-                    <img src="{% static 'images/face.png' %}" alt="" width="18">
-                    <span class="text2">
-                        <a href="{% url 'articles:articles_detail' article.pk %}">{{ article.user.fullname }}</a>님의 오늘 감정은  {{ article.feelings }}
-                    </span>
-                </div>
-                <div>
-                    <span class="text3">공감</span>
-                    <span class="thumbup">공감받은거</span> 
-                    <span class="text4">count</span>
-                </div>
-            </div>
-            <div>
-                <span class="text5">{{ article.created_at }}</span>
-            </div>
-            <div>
-                <span>Music: {{ article.music_url }}</span>
-            </div>
-        </div>
-    </div>
-      {% endfor %}
 </div>
+
+<div style="height:10rem;"></div>
 
 {% endblock content %}

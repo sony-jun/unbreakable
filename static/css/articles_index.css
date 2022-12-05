@@ -20,12 +20,23 @@
 	box-shadow: 10px 10px 5px #aaaaaa;
 }
 .text1{
-	font-size: 13px;
-    font-weight: 500;
+	font-size: 15px;
+    font-weight: lighter;
     color: #56575b;
-	margin-left: 25px;
-	margin-right: 25px;
-	text-overflow: ellipsis;
+	overflow:hidden;
+	word-break:break-all;
+}
+
+.short{
+	display:-webkit-box;
+	-webkit-line-clamp:4;
+	-webkit-box-orient:vertical;
+}
+
+.long{
+	display:-webkit-box;
+	-webkit-line-clamp:17;
+	-webkit-box-orient:vertical;
 }
 
 .hover{
@@ -33,7 +44,7 @@
 }
 
 .hover:hover{
-	transform: scale(1.14);
+	transform: scale(1.05);
 	transition-duration: 0.5s;
 }
 

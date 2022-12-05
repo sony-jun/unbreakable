@@ -15,3 +15,17 @@ class Message(models.Model):
     articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
     content = models.CharField(max_length=100)
     song = models.ForeignKey(Song, on_delete=models.SET_NULL, null=True)
+    
+    
+class MessageDeclaration(models.Model):
+    reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="message_reporter")
+    reported = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='message_writer')
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    content = models.CharField(max_length=100)
+    
+    class Meta:
+        constraints = [
+        models.UniqueConstraint(
+            fields=["reporter", "message"], name="only_one_report3"
+        )
+    ]
