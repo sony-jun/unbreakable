@@ -184,6 +184,9 @@ def message_create(request, user_pk, articles_pk):
             message.sender = request.user
             message.receiver = receiver
             message.articles = articles
+            if request.POST['song']:
+                song = Song.objects.get(song_title=request.POST['song'])
+                message.song = song
             message.save()
             return redirect('articles:articles_index')
     else:
