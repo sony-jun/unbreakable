@@ -60,8 +60,7 @@ class Articles(models.Model):
         ("🥶", "🥶"),
     )
     feelings = models.CharField(max_length=10, choices=felling_choices)
-
-    song = models.ForeignKey(Song, on_delete=models.CASCADE, null=True)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE, null=True, blank=True)
     music_start = models.IntegerField(default=0)
 
 
