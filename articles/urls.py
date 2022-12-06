@@ -45,4 +45,5 @@ urlpatterns = [
         views.comment_declaration,
         name="comment_declaration",
     ),
+    path("id-sort/", views.id_sort, name="id_sort"),
 ]
