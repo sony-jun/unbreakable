@@ -7,6 +7,11 @@
 {% block content %}
 <div class="container d-flex justify-content-center align-items-center">
   <div class="my-calendar clearfix">
+    {% if user.is_authenticated %}
+    <h3 class="mt-3 title_is_user d-flex justify-content-center align-items-center"><b><span style="font-weight:bold;">{{ user.fullname }}</span>님의 다이어리🎵</b></h3>
+    {% else %}
+      <h3 class="mt-3 title_not_user d-flex justify-content-center"><a class="title_not_user_link" href="{% url 'accounts:login' %}">로그인 해 주세요!</a></h3>
+    {% endif %}
     <div class="clicked-date">
       <div class="cal-day"></div>
       <div class="cal-date"></div>
@@ -86,6 +91,16 @@
   document.querySelector('.cal-date').textContent = date;
   document.querySelector('.cal-day').textContent = init.dayList[dayIn];
   }
+
+{% comment %}
+  박스에 내가 create한 게시글 확인하는 글을 불러옴
+  게시글이 있으면 게시글로 이동
+  없으면 없다고 나옴.
+{% endcomment %}
+
+{% comment %}
+  게시글이 있으면 해당하는 날짜에 표시.
+{% endcomment %}
 
   /**
    * @param {date} fullDate
