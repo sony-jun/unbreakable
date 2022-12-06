@@ -20,6 +20,7 @@ urlpatterns = [
     path('<int:user_pk>/<int:articles_pk>/message_create/', views.message_create, name="message_create"),
     path('message_receive/', views.message_receive, name="message_receive"),
     path('message_delete/', views.message_delete, name="message_delete"),
+    path('<int:message_pk>/message_detail/', views.message_detail, name="message_detail"),
     # 메시지 신고
     path('<int:message_pk>/message_declaration', views.message_declaration, name="message_declaration"),
 ]

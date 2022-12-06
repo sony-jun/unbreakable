@@ -56,7 +56,8 @@ def login(request):
             comment_d = CommentDeclaration.objects.filter(reported=request.user.pk)
             articles_d = ArticlesDeclaration.objects.filter(reported=request.user.pk)
             if len(message_d)+len(comment_d)+len(articles_d) >= 3:
-                auth_logout(request)
+                # 임시
+                # auth_logout(request)
                 messages.add_message(request, messages.WARNING, '정지된 계정입니다. 운영자에게 문의해주세요.')
                 return redirect('main')
             else:
@@ -198,7 +199,7 @@ def message_create(request, user_pk, articles_pk):
                 song = Song.objects.get(song_title=request.POST['song'])
                 message.song = song
             message.save()
-            return redirect('articles:articles_index')
+            return redirect('articles:articles_detail', articles_pk)
     else:
         message_form = MessageForm()
     context = {
@@ -213,11 +214,22 @@ def message_delete(request):
     if request.method =="POST":
         
         selected = request.POST.getlist('selected')
+        print(selected)
         for m in messages:
             for s in selected:
                 if m.id == int(s):
                     m.delete()
     return redirect('accounts:message_receive')
+
+def message_detail(request, message_pk):
+    message = Message.objects.get(pk=message_pk)
+    message.read = True
+    message.save()
+    context = {
+        'message':message,
+        'message_declaration_form':MessageDeclarationForm(),
+    }
+    return render(request, 'accounts/message_detail.html', context)
 
 # 메시지 신고
 from django.db import IntegrityError
@@ -235,13 +247,28 @@ def message_declaration(request, message_pk):
                 declaration.message = message
                 message_declaration_form.save()
                 # messages.warning(request, "신고되었습니다.")
-                return redirect('accounts:message_receive')
+                return redirect('accounts:message_detail', message_pk)
             except IntegrityError:
                 # messages.info(request, '이미 신고된 메시지입니다.')
-                return redirect('accounts:message_receive')
+                return redirect('accounts:message_detail', message_pk)
     else:
         message_declaration_form = MessageDeclarationForm()
     context = {
         'message_declaration_form':message_declaration_form,
     }
     return render(request, 'accounts/message_receive.html',context)
+
+def counter(request):
+    count = 0
+    try:
+        if request.user.is_authenticated:
+            messages = Message.objects.filter(receiver=request.user)
+            for message in messages:
+                if message.read == 0:
+                    count += 1
+        else:
+            pass
+    except Message.DoesNotExist:
+        count = 0
+    return {'count':count,}
+                    

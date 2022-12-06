@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 # search
 import requests
 from django.conf import settings
@@ -67,11 +67,11 @@ def search(request):
     context = {
         "videos": videos,
     }
-    messages.success(request, "검색 결과입니다.")
+    # messages.success(request, "검색 결과입니다.")
     return render(request, "music/search.html", context)
 
 # END Search
-
+@login_required
 def create(request):
     if request.method == 'POST':
         check = Song.objects.filter(song_url = request.POST['song_url'])

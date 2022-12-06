@@ -15,6 +15,7 @@ class Message(models.Model):
     articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
     content = models.CharField(max_length=100)
     song = models.ForeignKey(Song, on_delete=models.SET_NULL, null=True)
+    read = models.BooleanField(default=0)
     
     
 class MessageDeclaration(models.Model):
