@@ -6,13 +6,13 @@
 {% endblock css %}
 
 {% block content %}
-{% if messages %}
+<!-- {% if messages %}
 	{% for message in messages %}
     <div class="alert alert-{{message.tags}}" role="alert">
         {{message.message}}
     </div>
 	{% endfor %}
-{% endif %}
+{% endif %} -->
 <div style="height:100vh; ">
     <div class="d-flex justify-content-center pt-3 pb-2">
         <a class="form-control addtxt btn btn-light" href="{% url 'articles:articles_create' %}"> +  Add a note</a>
@@ -51,8 +51,15 @@
                     {% endif %}
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+        {% if not articles %}
+        {% if request.user.is_authenticated %}
+        <div>일기를 추가해보세요!</div>
+        {% else %}
+        <div>로그인을 하고 서비스를 이용해주세요.</div>
+        {% endif %}
+        {% endif %}
     </div>
 </div>
 <script>
