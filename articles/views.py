@@ -30,7 +30,7 @@ def calendar(request):
     return render(request, "articles/calendar.html")
 
 def articles_index(request):
-    articles = Articles.objects.order_by("-created_at")
+    articles = Articles.objects.filter(disclosure=True).order_by("-created_at")
     context = {
         "articles": articles,
     }
@@ -84,7 +84,6 @@ def articles_create2(request):
 
 def song_search(request):
     search_data = request.GET.get("search", "")
-    print(search_data)
     song = Song.objects.filter(song_title__icontains=search_data).all()
     song_list = []
     for s in song:
@@ -96,7 +95,6 @@ def song_search(request):
                 "id": s.pk,
             }
         )
-        print(s)
     context = {
         "song_list": song_list,
     }
@@ -135,9 +133,7 @@ def articles_update(request, articles_pk):
         if request.method == "POST":
             articles_form = ArticlesForm(request.POST, request.FILES, instance=articles)
             if articles_form.is_valid():
-                form = articles_form.save(commit=False)
-                form.user = request.user
-                form.save()
+                articles_form.save()
             messages.warning(request, "123")
             print(messages.get_messages(request))
             return redirect("articles:articles_detail", articles_pk)
@@ -151,7 +147,7 @@ def articles_update(request, articles_pk):
         messages.warning(request, "작성자만 수정 할 수 있습니다.")
         return redirect("articles:articles_index")
 
-
+@login_required
 def comment_create(request, articles_pk):
     articles = get_object_or_404(Articles, pk=articles_pk)
     result = request.POST["parent"]

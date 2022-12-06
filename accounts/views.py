@@ -183,7 +183,7 @@ def kakao_callback(request):
     auth_login(request, kakao_user, backend="django.contrib.auth.backends.ModelBackend")
     return redirect(request.GET.get("next") or "main")
 
-
+@login_required
 def message_create(request, user_pk, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
     receiver = User.objects.get(pk=user_pk)
@@ -207,9 +207,11 @@ def message_create(request, user_pk, articles_pk):
     }
     return render(request, 'accounts/message_create.html',context)
 
+@login_required
 def message_delete(request):
     messages = Message.objects.filter(receiver_id=request.user).order_by('-articles')
     if request.method =="POST":
+        
         selected = request.POST.getlist('selected')
         for m in messages:
             for s in selected:

@@ -3,7 +3,10 @@ from articles.models import Articles
 from music.models import Song
 
 def main(request):
-    articles = Articles.objects.filter(disclosure=1)
+    articles = []
+    if request.user.is_authenticated:
+        articles = Articles.objects.filter(user=request.user).order_by('-pk')
+    print(articles)
     context = {
         'articles':articles,
     }
