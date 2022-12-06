@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ArticlesForm, CommentForm, ArticlesDeclarationForm, CommentDeclarationForm
+from .forms import (
+    ArticlesForm,
+    CommentForm,
+    ArticlesDeclarationForm,
+    CommentDeclarationForm,
+)
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from accounts.models import Message
 from .models import Articles
 from django.utils import timezone
 from music.models import Song
+from django.views.generic.base import TemplateView
+
 
 # search
 import requests
@@ -20,14 +27,18 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Value
 from django.db.models.functions import Replace
 
+
 def test(request):
     return render(request, "articles/test.html")
+
 
 def calendar2(request):
     return render(request, "articles/calendar2.html")
 
+
 def calendar(request):
     return render(request, "articles/calendar.html")
+
 
 def articles_index(request):
     articles = Articles.objects.order_by("-created_at")
@@ -40,46 +51,22 @@ def articles_index(request):
 @login_required
 def articles_create(request):
     if request.method == "POST":
-        articles = Articles()
-        articles.song_id = request.POST["music_url"]
-        articles.music_start = request.POST["music_start"]
-        articles.content = request.POST["content"]
-        articles.picture = request.FILES.get("picture")
-        articles.feelings = request.POST["feelings"]
-        articles.disclosure = request.POST.get("toggle1", False)
-        articles.created_at = timezone.now()
-        articles.user = request.user
-        articles.save()
-        return redirect("main")  # 수정 할 예정임(어디로 보낼까?)
+        articles_form = ArticlesForm(request.POST, request.FILES)
+        if articles_form.is_valid():
+            articles = articles_form.save(commit=False)
+            if request.POST["song"]:
+                so = Song.objects.get(song_title=request.POST["song"])
+                articles.song = so
+            articles.user = request.user
+            articles.save()
+
+            return redirect("main")
     else:
         articles_form = ArticlesForm()
     context = {
         "articles_form": articles_form,
     }
     return render(request, "articles/articles_create.html", context)
-
-
-# test
-
-
-def articles_create2(request):
-    if request.method == "POST":
-        articles_form = ArticlesForm(request.POST, request.FILES)
-        if articles_form.is_valid():
-            articles = articles_form.save(commit=False)
-            if request.POST['song']:
-                so = Song.objects.get(song_title=request.POST["song"])
-                articles.song = so
-            articles.user = request.user
-            articles.save()
-
-            return redirect("articles:articles_index")
-    else:
-        articles_form = ArticlesForm()
-        context = {
-            "articles_form": articles_form,
-        }
-    return render(request, "articles/articles_create2.html", context)
 
 
 def song_search(request):
@@ -112,8 +99,8 @@ def articles_detail(request, articles_pk):
         "articles": articles,
         "comment_form": CommentForm(),
         "comments": articles.comment_set.all(),
-        'articles_declaration_form':ArticlesDeclarationForm(),
-        'comment_declaration_form':CommentDeclarationForm(),
+        "articles_declaration_form": ArticlesDeclarationForm(),
+        "comment_declaration_form": CommentDeclarationForm(),
     }
     return render(request, "articles/articles_detail.html", context)
 
@@ -212,8 +199,9 @@ def comment_delete(request, articles_pk, comment_pk):
     return JsonResponse(data)
 
 
-#게시글 신고
+# 게시글 신고
 from django.db import IntegrityError
+
 
 @login_required
 def articles_declaration(request, articles_pk):
@@ -228,16 +216,17 @@ def articles_declaration(request, articles_pk):
                 declaration.articles = articles
                 articles_declaration_form.save()
                 # messages.warning(request, "신고되었습니다.")
-                return redirect('articles:articles_detail', articles_pk)
+                return redirect("articles:articles_detail", articles_pk)
             except IntegrityError:
                 # messages.info(request, '이미 신고한 게시글입니다.')
-                return redirect('articles:articles_detail', articles_pk)
+                return redirect("articles:articles_detail", articles_pk)
     else:
         articles_declaration_form = ArticlesDeclarationForm()
     context = {
-        'articles_declaration_form':articles_declaration_form,
+        "articles_declaration_form": articles_declaration_form,
     }
-    return render(request, 'articles/articles_detail.html',context)
+    return render(request, "articles/articles_detail.html", context)
+
 
 @login_required
 def comment_declaration(request, articles_pk, comment_pk):
@@ -252,13 +241,13 @@ def comment_declaration(request, articles_pk, comment_pk):
                 declaration.comment = comment
                 comment_declaration_form.save()
                 # messages.warning(request, "신고되었습니다.")
-                return redirect('articles:articles_detail', articles_pk)
+                return redirect("articles:articles_detail", articles_pk)
             except IntegrityError:
                 # messages.info(request, '이미 신고한 댓글입니다.')
-                return redirect('articles:articles_detail', articles_pk)
+                return redirect("articles:articles_detail", articles_pk)
     else:
         comment_declaration_form = ArticlesDeclarationForm()
     context = {
-        'comment_declaration_form':comment_declaration_form,
+        "comment_declaration_form": comment_declaration_form,
     }
-    return render(request, 'articles/articles_detail.html',context)
+    return render(request, "articles/articles_detail.html", context)

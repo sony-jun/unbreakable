@@ -1,62 +1,114 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load static %}
 
 {% block css %}
+<link rel="stylesheet" href="/static/css/search.css">
 <link rel="stylesheet" href="/static/css/articles_create.css">
 <link rel="stylesheet" href="/static/css/btn.css">
 {% endblock css %}
-
 {% block content %}
 <div style="display:flex; justify-content:center; align-items:center;">
-  <div style="background-color:rgb(239, 239, 239, 0.8); box-shadow:5px 5px 30px 5px #363062; border-radius:15px; width:60vw; min-width: 350px;">
+  <div
+    style="background-color:rgb(239, 239, 239, 0.8); box-shadow:5px 5px 30px 5px #363062; border-radius:15px; width:60vw; min-width: 350px;">
     <div>
-      <h3 class="mt-3" align="center" style="font-weight:lighter; font-size:20px; padding-top:2rem;"><span style="font-weight:bold;">{{ user.fullname }}</span>님의 오늘은 어떠신가요?</h3>
+      <h3 class="mt-3" align="center" style="font-weight:lighter; font-size:20px; padding-top:2rem;"><span
+          style="font-weight:bold;">{{ user.fullname }}</span>님의 오늘은 어떠신가요?</h3>
+
     </div>
+
     <div class="d-flex justify-content-center align-items-center">
       <form action="" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column;">
-        {% csrf_token %}
         <div>
-          <label>오늘의 음악</label><br>
-          <input class="wd input-box" placeholder="당신의 하루를 나타내는 음악을 선택해주세요." type="number" name="music_url" id="" style="border-radius:15px;">
+          <label>오늘의 음악</label>
         </div>
-        <div class="mt-3">
-          <label>음악 시작위치</label><br>
-          <input class="wd input-box" placeholder="음악을 재생할 위치를 정해주세요." type="number" name="music_start" style="border-radius:15px;">
+        <input id="search_input" class="reviewcreate-userinfo" name="song" type="search "
+          placeholder="당신의 하루를 나타내는 음악을 선택해주세요." aria-label="Search" autocomplete="off"
+          style="border-radius:5px; background-color: transparent;">
+        <div class="search-off search-div " id="search_box"></div>
+        <div>원하는 노래가 없다면
+          <a class="text-decoration-none" href="{% url 'music:search' %}"
+            onclick="window.open(this.href, '_blank', 'width=800, height=600, toolbars=no, scrollbars=yes'); return false;">노래
+            추가</a>
         </div>
-        <div class="mt-3">
-          <label>오늘의 하루</label><br>
-          <textarea class="wdt input-text" placeholder="당신의 오늘을 이야기해주세요." name="content" id="" cols="30" rows="10" style="border-radius:15px;"></textarea>
-        </div>
-        <div class="mt-3">
-          <label>오늘의 감정</label><br>
-          <input class="wdt input-box" placeholder="오늘의 기분을 말해주세요." type="text" name="feelings" style="border-radius:15px;">
-          <!-- <select class="wd" aria-label="Default select example">
-            <option selected>감정을 표현하세요</option>
-            <option value="😊">😊</option>
-            <option value="😞">😞</option>
-            <option value="👿">👿</option>
-            <option value="😭">😭</option>
-            <option value="😍">😍</option>
-            <option value="😒">😒</option>
-          </select> -->
-        </div>
-        <div class="mt-3">
-          <label>오늘의 사진</label><br>
-          <input class="form-control" type="file" name="picture" multiple>
-        </div>
-        <p class="mt-3" style="margin-bottom:0;">공개하기</p>
-        <div class="toggle">
-          <input type="checkbox" name="toggle1" id="toggle1" value=1>
-          <label for="toggle1"></label>
-        </div>
-        <div class="mt-3" style="padding-bottom:2rem;">
+        <br>
+        {% csrf_token %}
+        {% bootstrap_form articles_form %}
+        <div class="mt-3" style="padding-bottom:2rem; display:flex; justify-content:center; align-items:center;">
           <button class="wdt btn submit-btn" type="submit">오늘의 일기 만들기</button>
         </div>
-      </form>
     </div>
+    </form>
+    <form id="search_form" action="{% url 'articles:song_search' %}" class="d-flex hidden" role="search"></form>
   </div>
-</div>
 
+</div>
 <div style="height:10rem;"></div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const search_input = document.querySelector('#search_input');
+  const search_box = document.querySelector('#search_box');
+  const input = document.createElement('input');
+  const side = document.querySelector('#side');
+  const box_open = false;
+
+  search_input.addEventListener('click', function (event) {
+    console.log("검색클릭");
+    search_box.classList.remove('search-off');
+    search_box.classList.add('search-on');
+    const box_open = true;
+    console.log("검색 열림");
+
+  });
+
+  document.addEventListener('click', function (e) {
+    console.log(e.target)
+    console.log(search_box.id)
+    if (box_open === true)
+      ;
+    {
+      if (e.target !== search_input) {
+        search_box.classList.remove('search-on');
+        search_box.classList.add('search-off');
+        console.log("검색디브 닫힘")
+      }
+    }
+  });
+  // 노래검색
+  window.onload = function () {
+    search_input.onkeyup = function () {
+      console.log("검색중")
+      axios({
+        method: 'get',
+        url: `/articles/song_search/?search=${search_input.value}`
+      })
+        .then(response => {
+          const search_box = document.querySelector('#search_box');
+          const song_list = response.data.song_list;
+          search_box.textContent = "";
+          for (let i = 0; i < song_list.length; i++) {
+            search_box.insertAdjacentHTML('beforeend', `
+        <div onclick="add_song()" data-name-id="${song_list[i].name}"  data-song_name-id="${song_list[i].id}"  id="song_${song_list[i].id}">
+        <hr class='m-0'>
+          <div class='search-box'  data-name-id="${song_list[i].name}">
+            <img  onclick="add_keyboard()" data-name-id="${song_list[i].name}" class="search-thumbnail" src="${song_list[i].thumbnail}" style="height: 100px;">
+            <div class="search-box-mini">  
+              <p onclick="add_song()" data-name-id="${song_list[i].name}" >${song_list[i].name}</p> 
+            </div>
+          </div>
+        </div>
+        `);
+          }
+        })
+    }
+  }
+
+  const add_song = (e) => {
+    const add_id = document.querySelector(`#song_${event.target.dataset.songId}`)
+    search_input.value = `${event.target.dataset.nameId}`
+    console.log(`${event.target.dataset.nameId}`)
+  }
+</script>
 {% endblock content %}
