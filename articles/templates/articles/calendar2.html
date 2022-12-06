@@ -1,87 +1,194 @@
 {% extends 'base.html' %}
-{% load django_bootstrap5 %}
-{% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/calendar2.css">
+  <link rel="stylesheet" href="/static/css/calendar2.css">
 {% endblock css %}
 
 {% block content %}
-<div class="text-center">
-    <div class='rap'>
-        <div class="header">
-           <div class="btn prevDay"></div>
-          <h2 class='dateTitle'></h2>
-          <div class="btn nextDay"></div>
-        </div>
-        
-        <div class="grid dateHead">
-          <div>일</div>
-          <div>월</div>
-          <div>화</div>
-          <div>수</div>
-          <div>목</div>
-          <div>금</div>
-          <div>토</div>
-        </div>
-    
-        <div class="grid dateBoard"></div>
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="my-calendar clearfix">
+    {% if user.is_authenticated %}
+    <h3 class="mt-3 title_is_user d-flex justify-content-center align-items-center"><b><span style="font-weight:bold;">{{ user.fullname }}</span>님의 다이어리🎵</b></h3>
+    {% else %}
+      <h3 class="mt-3 title_not_user d-flex justify-content-center"><a class="title_not_user_link" href="{% url 'accounts:login' %}">로그인 해 주세요!</a></h3>
+    {% endif %}
+    <div class="clicked-date">
+      <div class="cal-day"></div>
+      <div class="cal-date"></div>
     </div>
+    <div class="calendar-box">
+      <div class="ctr-box clearfix">
+        <button type="button" title="prev" class="btn-cal prev">
+        </button>
+        <span class="cal-year"></span>
+        <span class="cal-month"></span>
+        <button type="button" title="next" class="btn-cal next">
+        </button>
+      </div>
+      <table class="cal-table">
+        <thead>
+          <tr>
+            <th>일</th>
+            <th>월</th>
+            <th>화</th>
+            <th>수</th>
+            <th>목</th>
+            <th>금</th>
+            <th>토</th>
+          </tr>
+        </thead>
+        <tbody class="cal-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <!-- // .my-calendar -->
 </div>
-<div style="height:8rem;"></div>
+
 
 <script>
-    // 달력 생성
-     const makeCalendar = (date) => {
-      // 현재 년도와 월 받아오기
-      const currentYear = new Date(date).getFullYear();
-      const currentMonth = new Date(date).getMonth() + 1;
-    
-      // 첫날의 요일 구하기 - 초기 시작위치를 위해서
-      const firstDay = new Date(date.setDate(1)).getDay();
-      // 마지막 날짜 구하기
-      const lastDay = new Date(currentYear, currentMonth, 0).getDate();
-    
-      // 남은 박스만큼 다음달 날짜 표시
-      const limitDay = firstDay + lastDay;
-      const nextDay = Math.ceil(limitDay / 7) * 7;
-    
-      let htmlDummy = '';
-    
-      // 한달전 날짜 표시하기
-      for (let i = 0; i < firstDay; i++) {
-        htmlDummy += `<div class="noColor"></div>`;
-      }
-  
-      // 이번달 날짜 표시하기
-      for (let i = 1; i <= lastDay; i++) {    
-        htmlDummy += `<div>${i}</div>`;
-      }
-
-      // 다음달 날짜 표시하기
-      for (let i = limitDay; i < nextDay; i++) {
-        htmlDummy += `<div class="noColor"></div>`;
-      }
-  
-      document.querySelector(`.dateBoard`).innerHTML = htmlDummy;
-      document.querySelector(`.dateTitle`).innerText = `${currentYear}년 ${currentMonth}월`;
+  const init = {
+  monList: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+  dayList: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+  today: new Date(),
+  monForChange: new Date().getMonth(),
+  activeDate: new Date(),
+  getFirstDay: (yy, mm) => new Date(yy, mm, 1),
+  getLastDay: (yy, mm) => new Date(yy, mm + 1, 0),
+  nextMonth: function () {
+    let d = new Date();
+    d.setDate(1);
+    d.setMonth(++this.monForChange);
+    this.activeDate = d;
+    return d;
+  },
+  prevMonth: function () {
+    let d = new Date();
+    d.setDate(1);
+    d.setMonth(--this.monForChange);
+    this.activeDate = d;
+    return d;
+  },
+  addZero: (num) => (num < 10) ? '0' + num : num,
+  activeDTag: null,
+  getIndex: function (node) {
+    let index = 0;
+    while (node = node.previousElementSibling) {
+      index++;
     }
+    return index;
+  }
+  };
 
+  const $calBody = document.querySelector('.cal-body');
+  const $btnNext = document.querySelector('.btn-cal.next');
+  const $btnPrev = document.querySelector('.btn-cal.prev');
 
-    const date = new Date();
+  /**
+   * @param {number} date
+   * @param {number} dayIn
+  */
+  function loadDate (date, dayIn) {
+  document.querySelector('.cal-date').textContent = date;
+  document.querySelector('.cal-day').textContent = init.dayList[dayIn];
+  }
 
-    makeCalendar(date);
+{% comment %}
+  박스에 내가 create한 게시글 확인하는 글을 불러옴
+  게시글이 있으면 게시글로 이동
+  없으면 없다고 나옴.
+{% endcomment %}
 
-    // 이전달 이동
-    document.querySelector(`.prevDay`).onclick = () => {
-    makeCalendar(new Date(date.setMonth(date.getMonth() - 1)));
+{% comment %}
+  게시글이 있으면 해당하는 날짜에 표시.
+{% endcomment %}
+
+  /**
+   * @param {date} fullDate
+   */
+  function loadYYMM (fullDate) {
+  let yy = fullDate.getFullYear();
+  let mm = fullDate.getMonth();
+  let firstDay = init.getFirstDay(yy, mm);
+  let lastDay = init.getLastDay(yy, mm);
+  let markToday;  // for marking today date
+
+  if (mm === init.today.getMonth() && yy === init.today.getFullYear()) {
+    markToday = init.today.getDate();
+  }
+
+  document.querySelector('.cal-month').textContent = init.monList[mm];
+  document.querySelector('.cal-year').textContent = yy + '년';
+
+  let trtd = '';
+  let startCount;
+  let countDay = 0;
+  for (let i = 0; i < 6; i++) {
+    trtd += '<tr>';
+    for (let j = 0; j < 7; j++) {
+      if (i === 0 && !startCount && j === firstDay.getDay()) {
+        startCount = 1;
+      }
+      if (!startCount) {
+        trtd += '<td>'
+      } else {
+        let fullDate = yy + '.' + init.addZero(mm + 1) + '.' + init.addZero(countDay + 1);
+        trtd += '<td class="day';
+        trtd += (markToday && markToday === countDay + 1) ? ' today" ' : '"';
+        trtd += ` data-date="${countDay + 1}" data-fdate="${fullDate}">`;
+      }
+      trtd += (startCount) ? ++countDay : '';
+      if (countDay === lastDay.getDate()) { 
+        startCount = 0; 
+      }
+      trtd += '</td>';
     }
+    trtd += '</tr>';
+  }
+  $calBody.innerHTML = trtd;
+  }
 
-    // 다음달 이동
-    document.querySelector(`.nextDay`).onclick = () => {
-    makeCalendar(new Date(date.setMonth(date.getMonth() + 1)));
+  /**
+  * @param {string} val
+  */
+  function createNewList (val) {
+  let id = new Date().getTime() + '';
+  let yy = init.activeDate.getFullYear();
+  let mm = init.activeDate.getMonth() + 1;
+  let dd = init.activeDate.getDate();
+  const $target = $calBody.querySelector(`.day[data-date="${dd}"]`);
+
+  let date = yy + '.' + init.addZero(mm) + '.' + init.addZero(dd);
+
+  let eventData = {};
+  eventData['date'] = date;
+  eventData['memo'] = val;
+  eventData['complete'] = false;
+  eventData['id'] = id;
+  init.event.push(eventData);
+  $todoList.appendChild(createLi(id, val, date));
+  }
+
+  loadYYMM(init.today);
+  loadDate(init.today.getDate(), init.today.getDay());
+
+  $btnNext.addEventListener('click', () => loadYYMM(init.nextMonth()));
+  $btnPrev.addEventListener('click', () => loadYYMM(init.prevMonth()));
+
+  $calBody.addEventListener('click', (e) => {
+  if (e.target.classList.contains('day')) {
+    if (init.activeDTag) {
+      init.activeDTag.classList.remove('day-active');
     }
+    let day = Number(e.target.textContent);
+    loadDate(day, e.target.cellIndex);
+    e.target.classList.add('day-active');
+    init.activeDTag = e.target;
+    init.activeDate.setDate(day);
+    reloadTodo();
+  }
+  });
 </script>
 
+<div style="height:10rem;"></div>
 
 {% endblock content %}

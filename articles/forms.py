@@ -1,37 +1,54 @@
 from django import forms
 from .models import *
-from django.forms import Select, FileInput
+from django.forms import FileInput, Select
 
 
 class ArticlesForm(forms.ModelForm):
     class Meta:
         model = Articles
         fields = [
+            "music_start",
             "content",
+            "feelings",
             "picture",
             "disclosure",
-            "feelings",
-            "music_start",
         ]
         labels = {
-            "content": "내용",
+            "content": "오늘의 하루",
             "picture": "이미지",
-            "disclosure": "공개여부",
             "feelings": "감정표현",
-            "music_start": "시작지점(초)",
+            "music_start": "음악을 재생할 위치를 정해주세요.(초)",
+            "disclosure": "공개하기",
         }
         widgets = {
             "content": forms.Textarea(
                 attrs={
-                    "class": "border border-2 border-dark rounded-1 mx-1",
-                    "style": "background: transparent;",
-                    "placeholder": "리뷰를 입력해주세요",
+                    "class": "border border-dark rounded-15 mx-1",
+                    "style": "background: transparent; border-radius:15px;",
+                    "placeholder": "당신의 오늘을 이야기해주세요.",
                 }
             ),
             "picture": FileInput(
                 attrs={
+                    "class": "border border-dark rounded-15 mx-1",
                     "style": "background: transparent;",
                 }
+            ),
+            "feelings": Select(
+                attrs={
+                    "class": "border border-dark rounded-15 mx-1",
+                    "style": "background: transparent;",
+                    "placeholder": "오늘의 기분을 말해주세요.",
+                }
+            ),
+            "music_start": forms.NumberInput(
+                attrs={
+                    "class": "border border-dark rounded-15 mx-1",
+                    "style": "background: transparent;",
+                }
+            ),
+            "disclosure": forms.CheckboxInput(
+                attrs={"class": "form-check-input", "id": "flexSwitchCheckChecked"}
             ),
         }
 
@@ -57,22 +74,24 @@ class CommentForm(forms.ModelForm):
             "content": "",
         }
 
+
 class ArticlesDeclarationForm(forms.ModelForm):
     class Meta:
         model = ArticlesDeclaration
         fields = [
-            'content',
+            "content",
         ]
         labels = {
-            'content':'신고내용',
+            "content": "신고내용",
         }
-        
+
+
 class CommentDeclarationForm(forms.ModelForm):
     class Meta:
         model = CommentDeclaration
         fields = [
-            'content',
+            "content",
         ]
         label = {
-            'content':'신고내용',
+            "content": "신고내용",
         }

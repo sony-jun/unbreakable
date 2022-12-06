@@ -1,78 +1,139 @@
-/* 달력 */
-.dateHead div {
-    background: #e31b20;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-  }
-  
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: 5px;
-  }
-  
-  .grid div {
-    padding: .6rem;
-    font-size: .9rem;
-    cursor: pointer;
-  }
-  
-  .dateBoard div {
-    color: #222;
-    font-weight: bold;
-    min-height: 6rem;
-    padding: .6rem .8rem;
-    border-radius: 5px;
-    border: 1px solid #eee;
-  }
-  
-  .noColor {
-    background: #eee;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-  }
-  
-  /* 좌우 버튼 */
-  .btn {
-   display: block;
-   width: 20px;
-   height: 20px;
-   border: 3px solid #000;
-   border-width: 3px 3px 0 0;
-   cursor: pointer;
-  }
-  
-  .prevDay {
-    transform: rotate(-135deg);
-  }
-  
-  .nextDay {
-    transform: rotate(45deg);
-  }
-  
-  /* ---- */
-  
-  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-  
-  * {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    box-sizing: border-box;  
-    font-family: Pretendard;
-  }
-  
-  .rap {
-    max-width: 820px;
-    padding: 0 1.4rem;
-    margin-top: 1.4rem;
-  }
-  
-  .dateHead {
-    margin: .4rem 0;
-  }
+html, body {
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight:lighter!important;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+  float: none;
+}
+
+/* ======== Calendar ======== */
+.my-calendar {
+  width: 900px;
+  margin: 30px;
+  padding: 20px 20px 10px;
+  text-align: center;
+  border:0px solid #363062!important;
+  background-color:rgb(239, 239, 239, 0.5);
+  border-radius: 15px;
+  cursor: default;
+  box-shadow:5px 5px 30px 5px #363062;
+}
+
+.my-calendar .clicked-date {
+  border-radius: 25px;
+  margin-top: 36px;
+  float: left;
+  width: 42%;
+  font-weight:400;
+  padding: 46px 0 26px;
+  background-color: #9892ce;
+}
+
+.my-calendar .calendar-box {
+  float: right;
+  width: 58%;
+  padding-left: 30px;
+}
+
+.clicked-date .cal-day {
+  font-size: 30px;
+}
+
+.clicked-date .cal-date {
+  font-size: 130px;
+}
+
+.ctr-box {
+  padding: 0 16px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight:300;
+}
+
+.ctr-box .btn-cal {
+  position: relative;
+  float: left;
+  width: 25px;
+  height: 25px;
+  margin-top: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.ctr-box .btn-cal:after {
+  content: '<';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.ctr-box .btn-cal.next {
+  float: right;
+}
+
+.ctr-box .btn-cal.next:after {
+  content: '>';
+}
+
+.cal-table {
+  width: 100%;
+}
+
+.cal-table th {
+  width: 14.2857%;
+  padding-bottom: 5px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.cal-table td {
+  padding: 3px 0;
+  height: 50px;
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+.cal-table td.day {
+  position: relative;
+  cursor: pointer;
+  padding:0;
+}
+
+.cal-table td.today {
+  background: #9892ce;
+  border-radius: 50%;
+  color: rgb(215, 215, 215);
+}
+
+.cal-table td.day-active {
+  background: #E9D5CA;
+  border-radius: 50%;
+  color: black;
+}
+
+.cal-table td.has-event:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: #FFC107;
+}
