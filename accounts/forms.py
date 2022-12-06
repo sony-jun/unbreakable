@@ -17,9 +17,8 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
-        fields = ["username","fullname","birthday","phone_number"]
+        fields = ["fullname","birthday","phone_number"]
         labels = {
-            'username':'ID',
             'fullname':'성함',
             'birthday':'생년월일',
             'phone_number':'전화번호',

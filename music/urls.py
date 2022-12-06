@@ -6,5 +6,4 @@ app_name = "music"
 urlpatterns = [
     path("search/", views.search, name="search"),
     path('create/', views.create, name='create'),
-    path('songs', views.songs, name='songs'),
 ]

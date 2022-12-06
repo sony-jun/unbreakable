@@ -1,90 +1,54 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
 {% load static %}
-<!doctype html>
-<html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <title>Search YouTube</title>
-  <!-- Bootstrap core CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-    
-  </style>
-  <!-- Custom styles for this template -->
-  <link href="{% static 'search/album.css' %}" rel="stylesheet">
-</head>
+{% block content %}
+<main role="main">
+<div style="min-height: 100vh;">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading mb-5">유튜브에서 음악 검색</h1>
+      <form method="POST">
+        <div class="input-group mb-3">
+          {% csrf_token %}
+          <input type="text" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;" name="search" placeholder="검색어에 따라 6개의 결과물을 출력해 줍니다." class="form-control" aria-label="Username">
+          <button type="submit" name="submit" value="search" class="btn btn-primary px-5">검색</button>
+        </div>
+      </form>
+    </div>
+  </section>
 
-<body>
-
-  <main role="main">
-
-    <section class="jumbotron text-center">
-      <div class="container">
-        <h1 class="jumbotron-heading">Search YouTube</h1>
-        <p class="lead text-muted">Get the top nine results on YouTube for your query!</p>
-        <form method="POST">
-          <div class="input-group mb-3">
+  <div class="album py-5">
+    <div class="container">
+      <div class="row">
+        {% for video in videos %}
+        <div class="col-6 col-md-4 mb-4">
+          <form class="h-100" action="{% url 'music:create' %}" method="post">
             {% csrf_token %}
-            <input type="text" name="search" class="form-control" aria-label="Username">
-          </div>
-          <p>
-            <button type="submit" name="submit" value="search" class="btn btn-primary my-2">YouTube Search</button>
-
-          </p>
-        </form>
-      </div>
-    </section>
-
-    <div class="album py-5 bg-light">
-      <div class="container">
-        <div class="row">
-          {% for video in videos %}
-          <div class="col-md-4 mb-4">
-            <form action="{% url 'music:create' %}" method="post">
-              {% csrf_token %}
-              <input name="song_title" style="display: none;" value='{{ video.title }}'></input>
-              <input name="song_url" style="display: none;" value='{{ video.id }}'></input>
-              <input name="song_thumbnail" style="display: none;" value='{{ video.thumbnail }}'></input>
-              <input name="song_runtime" style="display: none;" value="{{ video.duration }}"></input>
-            <div class="card shadow-sm h-100">
-                <iframe class="youtube-player-4f3f462072931" type="text/html" width="100%" height="225" src="http://www.youtube.com/embed/{{ video.id }}" frameborder="0"></iframe>
-              <div class="card-body">
-                <p class="card-text">{{ video.title }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <a type="button" href="{{ video.url }}" class="btn btn-sm btn-outline-secondary">View</a>
-                  </div>
-                  <small class="text-muted">{{ video.duration }} mins</small>
-                  <button type="submit">확인</button>
+            <input name="song_title" style="display: none;" value='{{ video.title }}'></input>
+            <input name="song_url" style="display: none;" value='{{ video.id }}'></input>
+            <input name="song_thumbnail" style="display: none;" value='{{ video.thumbnail }}'></input>
+            <input name="song_runtime" style="display: none;" value="{{ video.duration }}"></input>
+          <div class="card shadow-sm h-100">
+              <iframe class="youtube-player-4f3f462072931" type="text/html" width="100%" height="225" src="http://www.youtube.com/embed/{{ video.id }}" frameborder="0"></iframe>
+            <div class="card-body">
+              <p class="card-text">{{ video.title }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a type="button" href="{{ video.url }}" class="btn btn-sm btn-outline-secondary">View</a>
                 </div>
+                <small class="text-muted">{{ video.duration }} mins</small>
+                <button type="submit">확인</button>
               </div>
             </div>
-            </form>
           </div>
-          {% endfor %}
+          </form>
         </div>
+        {% endfor %}
       </div>
     </div>
-
-  </main>
-
-</body>
-
-</html>
+  </div>
+</div>
+</main>
+{% endblock %}

@@ -83,8 +83,3 @@ def create(request):
             song.song_title = song.song_title.replace('\"', '\'')
             song.save()
     return HttpResponse('<script type="text/javascript">window.close()</script>')
-
-@login_required
-def songs(request):
-    songs = Song.objects.all()
-    return render(request, 'music/songs.html', {'songs': songs})

@@ -212,6 +212,7 @@ def message_create(request, user_pk, articles_pk):
 def message_delete(request):
     messages = Message.objects.filter(receiver_id=request.user).order_by('-articles')
     if request.method =="POST":
+        
         selected = request.POST.getlist('selected')
         print(selected)
         for m in messages:

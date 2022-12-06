@@ -6,13 +6,13 @@
 {% endblock css %}
 
 {% block content %}
-{% if messages %}
+<!-- {% if messages %}
 	{% for message in messages %}
     <div class="alert alert-{{message.tags}}" role="alert">
         {{message.message}}
     </div>
 	{% endfor %}
-{% endif %}
+{% endif %} -->
 <div style="height:100vh; ">
     <div class="d-flex justify-content-center pt-3 pb-2">
         <a class="form-control addtxt btn btn-light" href="{% url 'articles:articles_create' %}"> +  Add a note</a>
@@ -51,10 +51,41 @@
                     {% endif %}
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+        {% if not articles %}
+        {% if request.user.is_authenticated %}
+        <div>일기를 추가해보세요!</div>
+        {% else %}
+        <div>로그인을 하고 서비스를 이용해주세요.</div>
+        {% endif %}
+        {% endif %}
     </div>
 </div>
+<script>
+    function timeForToday(value) {
+        const today = new Date(); //현재 시간
+        const timeValue = new Date(value); //글 작성시간
+
+        const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+        if (betweenTime < 1) return '방금전';
+        if (betweenTime < 60) {
+            return `${betweenTime}분전`;
+        }
+
+        const betweenTimeHour = Math.floor(betweenTime / 60);
+        if (betweenTimeHour < 24) {
+            return `${betweenTimeHour}시간전`;
+        }
+
+        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+        if (betweenTimeDay < 365) {
+            return `${betweenTimeDay}일전`;
+        }
+
+        return `${Math.floor(betweenTimeDay / 365)}년전`;
+    }
+</script>
 
 <div style="height:10rem;"></div>
 
