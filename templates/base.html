@@ -49,6 +49,7 @@
       {% if request.user.is_authenticated %}
       <a class="top_account_img" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" style="height:30px; width:30px;"></a>
       <a class="top_account_img mx-3" href="{% url 'accounts:message_receive' %}"><img src="{% static 'images/bell.png' %}" alt="bell" style="height:30px; width:30px;"></a>
+      <p class="text-white">{{ count }}</p>
       {% else %}
       <a class="top_account_img" href="{% url 'accounts:login' %}"><img src="{% static 'images/login.png' %}" alt="logo" style="height:30px; width:30px;"></a>
       <a class="top_account_img mx-3" href="{% url 'accounts:signup' %}"><img src="{% static 'images/signup.png' %}" alt="logo" style="height:30px; width:30px;"></a>

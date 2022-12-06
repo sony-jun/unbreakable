@@ -68,6 +68,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "accounts.views.counter",
             ],
         },
     },
@@ -140,7 +141,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 
-YOUTUBE_DATA_API_KEY = "AIzaSyDz8UI5NEZ4H1gQQqEamJW2VlmiJQjubEk"
+YOUTUBE_DATA_API_KEY = "AIzaSyD1FOwUsqUrzqG_G03FzWXOEDckbiSVA1M"
 
 
 
