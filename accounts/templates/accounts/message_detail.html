@@ -92,7 +92,7 @@
 
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-
+  var recorder = document.getElementById('recorder')
 
   // 3. This function creates an <iframe> (and YouTube player)
 
@@ -132,18 +132,22 @@
   function onPlayerReady(event) {
     var playButton = document.getElementById("play-button");
     playButton.addEventListener("click", function () {
+      recorder.classList.add('recorder')
+      recorder.classList.remove('anim-pause')
       event.target.setVolume(10);
       event.target.getVolume(10);
       player.playVideo(10);
     });
     var pauseButton = document.getElementById("pause-button");
     pauseButton.addEventListener("click", function () {
+      recorder.classList.add('anim-pause')
       event.target.setVolume(10);
       event.target.getVolume(10);
       player.pauseVideo(10);
     });
     var stopButton = document.getElementById("stop-button");
     stopButton.addEventListener("click", function () {
+      recorder.classList.remove('recorder')
       event.target.setVolume(10);
       event.target.getVolume(10);
       player.stopVideo(10);
