@@ -28,7 +28,7 @@
             <div>
                 <img src="{% static 'images/face.png' %}" alt="" width="18">
                 <span class="text2">
-                    <a href="{% url 'articles:articles_detail' article.pk %}">{{ article.user.fullname }}</a>님의 오늘 감정은  {{ article.feelings }}
+                    <a class="text-decoration-none" href="{% url 'articles:articles_detail' article.pk %}">{{ article.user.fullname }}</a>님의 오늘 감정은  {{ article.feelings }}
                 </span>
             </div>
             <div>

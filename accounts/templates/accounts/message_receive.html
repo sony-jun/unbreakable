@@ -38,8 +38,8 @@
         <button class="btn-two purple d-flex m-auto" type="submit">삭제</button>
         {% for message in messages %}
         <div class="d-flex justify-content-center py-2 mb-2">
-            <div class="second py-2 px-2">
-                <a href="{% url 'accounts:message_detail' message.pk %}"><p class="text-center" style="font-size: 20px;">{{ message.content }}</p></a>
+            <div class="second py-2 px-2 ">
+                <a class="text-decoration-none" href="{% url 'accounts:message_detail' message.pk %}"><p class="text-center" style="font-size: 20px; overflow:hidden;">{{ message.content }}</p></a>
                 <input type="checkbox" id="selected" name="selected" value="{{message.id}}">
                 <span class="text5">받은 시간</span>
             </div>
