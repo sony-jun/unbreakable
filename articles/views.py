@@ -271,4 +271,9 @@ def id_sort(request):
     return JsonResponse({'results': results})
 
 def calendar_detail(request, date):
-    return render(request, 'articles/calendar_detail.html')
+    temp_results_user = Articles.objects.all().filter(user=request.user)
+    temp_results = temp_results_user.filter(Q(created_at__contains=date))
+    context = {
+        'diaries': temp_results
+    }
+    return render(request, 'articles/calendar_detail.html', context)
