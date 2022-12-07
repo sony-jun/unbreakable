@@ -39,9 +39,9 @@
 	-webkit-box-orient:vertical;
 }
 
-.hover{
+/* .hover{
 	
-}
+} */
 
 .hover:hover{
 	transform: scale(1.05);
