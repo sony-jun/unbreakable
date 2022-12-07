@@ -127,6 +127,7 @@ def articles_update(request, articles_pk):
                     so = Song.objects.get(song_title=request.POST["song"])
                     articles.song = so
                 article.save()
+                
             return redirect("articles:articles_detail", articles_pk)
         else:
             articles_form = ArticlesForm(instance=articles)
