@@ -70,17 +70,20 @@ def logout(request):
 @login_required
 def update(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
-    if request.method == "POST":
-        form = CustomUserChangeForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect("accounts:profile", user_pk)
+    if user == request.user:
+        if request.method == "POST":
+            form = CustomUserChangeForm(request.POST, instance=user)
+            if form.is_valid():
+                form.save()
+                return redirect("accounts:profile", user_pk)
+        else:
+            form = CustomUserChangeForm(instance=user)
+        context = {
+            "form": form,
+        }
+        return render(request, "accounts/update.html", context)
     else:
-        form = CustomUserChangeForm(instance=user)
-    context = {
-        "form": form,
-    }
-    return render(request, "accounts/update.html", context)
+        return render(request, 'main.html')
 
 @login_required
 def profile(request, user_pk):

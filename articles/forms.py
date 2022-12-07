@@ -24,27 +24,27 @@ class ArticlesForm(forms.ModelForm):
             "content": forms.Textarea(
                 attrs={
                     "class": "border border-dark rounded-15 mx-1",
-                    "style": "background: transparent; border-radius:15px;",
+                    "style": "background: transparent; border-radius:15px; border:1.5px solid rgb(51, 51, 51)!important; box-shadow:none!important;",
                     "placeholder": "당신의 오늘을 이야기해주세요.",
                 }
             ),
             "picture": FileInput(
                 attrs={
                     "class": "border border-dark rounded-15 mx-1",
-                    "style": "background: transparent;",
+                    "style": "background: transparent; border:1.5px solid rgb(51, 51, 51)!important; box-shadow:none!important;",
                 }
             ),
             "feelings": Select(
                 attrs={
                     "class": "border border-dark rounded-15 mx-1",
-                    "style": "background: transparent;",
+                    "style": "background: transparent; border:1.5px solid rgb(51, 51, 51)!important; box-shadow:none!important;",
                     "placeholder": "오늘의 기분을 말해주세요.",
                 }
             ),
             "music_start": forms.NumberInput(
                 attrs={
                     "class": "border border-dark rounded-15 mx-1",
-                    "style": "background: transparent;",
+                    "style": "background: transparent;border:1.5px solid rgb(51, 51, 51)!important; box-shadow:none!important;",
                 }
             ),
             "disclosure": forms.CheckboxInput(
