@@ -8,7 +8,7 @@ from .forms import (
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from accounts.models import Message
-from .models import Articles
+from .models import Articles, Sympathy
 from django.utils import timezone
 from music.models import Song
 from django.views.generic.base import TemplateView
@@ -196,6 +196,26 @@ def comment_delete(request, articles_pk, comment_pk):
     data = {}
     return JsonResponse(data)
 
+# 공감 표현
+@login_required
+def sympathy(request, articles_pk):
+    articles = Articles.objects.get(pk=articles_pk)
+    sympathy = Sympathy.objects.filter(articles=articles, user=request.user)
+    if not sympathy:
+        Sympathy.objects.create(articles=articles, user=request.user)
+    if request.method == "POST":
+        sympathy = Sympathy.objects.get(articles=articles)
+        if request.POST['feeling']=='😊':
+            sympathy.feeling = 1
+        elif request.POST['feeling']=='😥':
+            sympathy.feeling = 2
+        elif request.POST['feeling']=='😡':
+            sympathy.feeling = 3  
+        else:
+            sympathy.feeling = 4
+        sympathy.save()
+        
+    return redirect('articles:articles_detail', articles_pk)
 
 # 게시글 신고
 from django.db import IntegrityError

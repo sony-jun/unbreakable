@@ -62,6 +62,7 @@ class Articles(models.Model):
     feelings = models.CharField(max_length=10, choices=felling_choices)
     song = models.ForeignKey(Song, on_delete=models.CASCADE, null=True, blank=True)
     music_start = models.IntegerField(default=0)
+    
 
 
 class Comment(models.Model):
@@ -97,4 +98,13 @@ class CommentDeclaration(models.Model):
             fields=["reporter", "comment"], name="only_one_report2"
         )
     ]
+    
+class Sympathy(models.Model):
+    articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    feeling = models.IntegerField(default=0)
+    # 1 : 좋아요
+    # 2 : 슬퍼요
+    # 3 : 화나요
+    # 4 : 웃겨요
     
