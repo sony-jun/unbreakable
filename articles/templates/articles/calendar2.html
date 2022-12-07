@@ -195,15 +195,18 @@ if (e.target.classList.contains('day')) {
     init.activeDTag.classList.remove('day-active');
     // 각 day 별 id값 접근
     target_id = e.target.getAttribute('id')
-    console.log(target_id)
     axios({
         method: 'post',
         url: '/articles/id-sort/',
         headers : {'X-CSRFTOKEN' : '{{ csrf_token }}'},
         data: {'target_id': target_id}
       }).then(response => {
-        document.querySelector('.cal-date').textContent = response.data.results;
         document.querySelector('.cal-day').textContent = '이날의 추억 보러가기';
+        if (response.data.results === 0) {
+          document.querySelector('.cal-date').textContent = '작성한 일기가 없습니다.';
+        } else{
+          document.querySelector('.cal-date').innerHTML = `<a href="articles/${target_id}/">작성한 일기 보러가기</a>`;
+        }
       })
   }
   let day = Number(e.target.textContent);

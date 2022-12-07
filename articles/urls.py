@@ -46,4 +46,5 @@ urlpatterns = [
         name="comment_declaration",
     ),
     path("id-sort/", views.id_sort, name="id_sort"),
+    path("calendar-detail/<str:date>/", views.calendar_detail, name="calendar_detail")
 ]
