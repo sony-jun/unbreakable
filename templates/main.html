@@ -55,7 +55,7 @@
             <div class="col-md-6 col-sm-12 p-4">
                 <div class="row row-cols-2">
                     {% if article.song %}
-                    <div class="d-flex ms-2 mt-2" style="background-color:black; width:97%; flex-direction:row; margin-bottom:2rem;">
+                    <div class="d-flex ms-2 mt-2 rounded" style="background-color:black; width:97%; flex-direction:row; margin-bottom:2rem;">
                         <div class="col-5" style="display:flex; justify-content:center; align-items:center;">
                             <img src="{{ article.song.song_thumbnail }}" alt="" style="width:100px; padding:0;">
                         </div>
@@ -66,22 +66,23 @@
                     {% endif %}
                 </div>
                 {% if article.picture %}
-                <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover" src="{{ article.picture.url }}" alt="{{ article.picture }}" style="height:300px; width:100%;"></a>
+                <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover rounded" src="{{ article.picture.url }}" alt="{{ article.picture }}" style="height:300px; width:100%;"></a>
                 {% else %}
-                <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover" src="" alt="" style="height:300px; width:100%;"></a>
+                <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover rounded" src="" alt="" style="height:300px; width:100%;"></a>
                 {% endif %}
-                <span class="text5">{{ article.created_at }}</span>
             </div>
             <div class="col-md-6 col-sm-12">
                 {% if article.picture %}
                 <div style="margin:2rem;">
-                    <h1 style="font-size:20px; margin:0; color:gray; background-color: rgb(255, 255, 255, 0.4);">누군가의 이야기</h1>
+                    <h1 style="font-size:20px; margin:0; color:gray; background-color: rgb(255, 255, 255, 0.4);" class="mb-2">누군가의 이야기</h1>
+                    <p class="text5 text-end">{{ article.created_at }}</p>
                     <a class="text-decoration-none text-dark" href="{% url 'articles:articles_detail' article.pk %}"><p class="text1 long">{{ article.content | linebreaksbr }}</p></a>
                 </div>
                 {% else %}
                 <div style="margin:2rem; height:20vh; overflow:hidden; text-overflow:ellipsis;">
-                    <h1 style="font-size:20px; margin:0; color:gray; background-color: rgb(255, 255, 255, 0.4);">누군가의 이야기</h1>
-                     <a class="text-decoration-none text-dark" href="{% url 'articles:articles_detail' article.pk %}"><p class="text1 short">{{ article.content | linebreaksbr }}</p></a>
+                    <h1 style="font-size:20px; margin:0; color:gray; background-color: rgb(255, 255, 255, 0.4);" class="mb-2">누군가의 이야기</h1>
+                    <p class="text5 text-end">{{ article.created_at }}</p>
+                    <a class="text-decoration-none text-dark" href="{% url 'articles:articles_detail' article.pk %}"><p class="text1 short">{{ article.content | linebreaksbr }}</p></a>
                 </div>
                 {% endif %}
             </div>

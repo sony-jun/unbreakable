@@ -122,7 +122,12 @@ def articles_update(request, articles_pk):
         if request.method == "POST":
             articles_form = ArticlesForm(request.POST, request.FILES, instance=articles)
             if articles_form.is_valid():
-                articles_form.save()
+                article = articles_form.save(commit=False)
+                if request.POST["song"]:
+                    so = Song.objects.get(song_title=request.POST["song"])
+                    articles.song = so
+                article.save()
+                
             return redirect("articles:articles_detail", articles_pk)
         else:
             articles_form = ArticlesForm(instance=articles)
@@ -280,8 +285,6 @@ def id_sort(request):
     else:
         results = 0
         
-    print(results)
-
     context = {
         'results': results,
     }
