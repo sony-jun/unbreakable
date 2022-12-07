@@ -8,37 +8,39 @@
 <div class="container d-flex justify-content-center align-items-center">
   <div class="my-calendar clearfix">
     {% if user.is_authenticated %}
-    <h3 class="mt-3 title_is_user d-flex justify-content-center align-items-center"><b><span style="font-weight:bold;">{{ user.fullname }}</span>님의 다이어리🎵</b></h3>
+    <h3 class="mt-3 title_is_user d-flex justify-content-center align-items-center" style="padding-bottom:1rem;"><span style="font-weight:bold;">{{ user.fullname }}</span>님의 다이어리🎵</h3>
     {% else %}
-      <h3 class="mt-3 title_not_user d-flex justify-content-center"><a class="title_not_user_link" href="{% url 'accounts:login' %}">로그인 해 주세요!</a></h3>
+      <h3 class="mt-3 title_not_user d-flex justify-content-center" style="padding-bottom:1rem;"><a class="title_not_user_link" href="{% url 'accounts:login' %}">로그인 해 주세요!</a></h3>
     {% endif %}
-    <div class="clicked-date">
-      <div class="cal-day"></div>
-      <div class="cal-date"></div>
-    </div>
-    <div class="calendar-box">
-      <div class="ctr-box clearfix">
-        <button type="button" title="prev" class="btn-cal prev">
-        </button>
-        <span class="cal-year"></span>
-        <span class="cal-month"></span>
-        <button type="button" title="next" class="btn-cal next">
-        </button>
+    <div class="row">
+      <div class="calendar-box col-md-6 col-sm-12">
+        <div class="ctr-box clearfix">
+          <button type="button" title="prev" class="btn-cal prev">
+          </button>
+          <span class="cal-year"></span>
+          <span class="cal-month"></span>
+          <button type="button" title="next" class="btn-cal next">
+          </button>
+        </div>
+        <table class="cal-table">
+          <thead>
+            <tr>
+              <th>일</th>
+              <th>월</th>
+              <th>화</th>
+              <th>수</th>
+              <th>목</th>
+              <th>금</th>
+              <th>토</th>
+            </tr>
+          </thead>
+          <tbody class="cal-body"></tbody>
+        </table>
       </div>
-      <table class="cal-table">
-        <thead>
-          <tr>
-            <th>일</th>
-            <th>월</th>
-            <th>화</th>
-            <th>수</th>
-            <th>목</th>
-            <th>금</th>
-            <th>토</th>
-          </tr>
-        </thead>
-        <tbody class="cal-body"></tbody>
-      </table>
+      <div class="clicked-date col-md-6 col-sm-12" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        <div class="cal-day" style="padding-bottom:1rem; font-size:20px;"></div>
+        <div class="cal-date" style="font-size:15px;"></div>
+      </div>
     </div>
   </div>
   <!-- // .my-calendar -->
@@ -84,30 +86,6 @@ const $calBody = document.querySelector('.cal-body');
 const $btnNext = document.querySelector('.btn-cal.next');
 const $btnPrev = document.querySelector('.btn-cal.prev');
 
-/**
- * @param {number} date
- * @param {number} dayIn
-*/
-function loadDate (date, dayIn) {
-  // 0이면 일기 없음
-  // 1이면 일기 보러가기
-  document.querySelector('.cal-date').textContent = '안녕';
-  document.querySelector('.cal-day').textContent = '이날의 추억 보러가기';
-}
-
-{% comment %}
-  박스에 내가 create한 게시글 확인하는 글을 불러옴
-  게시글이 있으면 게시글로 이동
-  없으면 없다고 나옴.
-{% endcomment %}
-
-{% comment %}
-  게시글이 있으면 해당하는 날짜에 표시.
-{% endcomment %}
-
-/**
- * @param {date} fullDate
- */
 function loadYYMM (fullDate) {
   let yy = fullDate.getFullYear();
   let mm = fullDate.getMonth();
@@ -154,14 +132,6 @@ for (let i = 0; i < 6; i++) {
 $calBody.innerHTML = trtd;
 }
 
-// const now_date = document.querySelector('#2022-12-06')
-// now_date.addEventListener('click', function() {
-//   alert('버튼이 클릭되었습니다');
-// })
-
-/**
-* @param {string} val
-*/
 function createNewList (val) {
   let id = new Date().getTime() + '';
   let yy = init.activeDate.getFullYear();
@@ -181,10 +151,9 @@ function createNewList (val) {
 }
 
 loadYYMM(init.today);
-loadDate(init.today.getDate(), init.today.getDay());
 
-document.querySelector('.cal-date').textContent = '안녕';
-document.querySelector('.cal-day').textContent = '이날의 추억 보러가기';
+document.querySelector('.cal-day').textContent = '내가 쓴 음악일기 보러가기';
+document.querySelector('.cal-date').textContent = '보고싶은 일자를 클릭해주세요';
 
 $btnNext.addEventListener('click', () => loadYYMM(init.nextMonth()));
 $btnPrev.addEventListener('click', () => loadYYMM(init.prevMonth()));
@@ -201,11 +170,10 @@ if (e.target.classList.contains('day')) {
         headers : {'X-CSRFTOKEN' : '{{ csrf_token }}'},
         data: {'target_id': target_id}
       }).then(response => {
-        document.querySelector('.cal-day').textContent = '이날의 추억 보러가기';
         if (response.data.results === 0) {
           document.querySelector('.cal-date').textContent = '작성한 일기가 없습니다.';
         } else{
-          document.querySelector('.cal-date').innerHTML = `<a href="calendar-detail/${target_id}/">작성한 일기 보러가기</a>`;
+          document.querySelector('.cal-date').innerHTML = `<a class="show-detail" href="calendar-detail/${target_id}/">작성한 일기 보러가기</a>`;
         }
       })
   }
