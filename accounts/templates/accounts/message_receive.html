@@ -12,7 +12,9 @@
     {% if messages == 1 %}
     <p class="text-center text-white">받은 메시지가 없습니다.</p>
     {% else %}
-    <a class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">전체 삭제</a>
+    <div class="d-flex justify-content-end mx-5">
+        <a class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">전체 삭제</a>
+    </div>
     <!-- 메시지 전체 삭제 Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
