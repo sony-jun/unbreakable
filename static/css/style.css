@@ -1,4 +1,9 @@
 body {
     background: linear-gradient(to bottom, #2a2668, #c6a08d);
-    height: 100vh;
+    background-attachment: fixed;
+    height: 100%;
+}
+
+html {
+    height: 100%;
 }
