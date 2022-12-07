@@ -10,7 +10,7 @@
 {% block content %}
 <div style="display:flex; justify-content:center; align-items:center;">
   <div
-    style="background-color:rgb(239, 239, 239, 0.8); box-shadow:5px 5px 30px 5px #363062; border-radius:15px; width:60vw; min-width: 350px;">
+    style="background-color:rgb(239, 239, 239, 0.5); box-shadow:5px 5px 30px 5px #363062; border-radius:15px; width:60vw; min-width: 350px;">
     <div>
       <h3 class="mt-3" align="center" style="font-weight:lighter; font-size:20px; padding-top:2rem;"><span
           style="font-weight:bold;">{{ user.fullname }}</span>님의 오늘은 어떠신가요?</h3>
@@ -25,11 +25,11 @@
         <input id="search_input" class="reviewcreate-userinfo" name="song" type="search "
           placeholder="당신의 하루를 나타내는 음악을 선택해주세요." aria-label="Search" autocomplete="off"
           style="border-radius:5px; background-color: transparent;">
-        <div class="search-off search-div " id="search_box"></div>
-        <div>원하는 노래가 없다면
-          <a class="text-decoration-none" href="{% url 'music:search' %}"
+          <div>원하는 노래가 없다면
+            <a class="text-decoration-none" href="{% url 'music:search' %}"
             onclick="window.open(this.href, '_blank', 'width=800, height=600, toolbars=no, scrollbars=yes'); return false;">노래
             추가</a>
+            <div class="search-off search-div " id="search_box"></div>
         </div>
         <br>
         {% csrf_token %}
@@ -91,11 +91,11 @@
           for (let i = 0; i < song_list.length; i++) {
             search_box.insertAdjacentHTML('beforeend', `
         <div onclick="add_song()" data-name-id="${song_list[i].name}"  data-song_name-id="${song_list[i].id}"  id="song_${song_list[i].id}">
-        <hr class='m-0'>
+          <hr class='m-0'>
           <div class='search-box'  data-name-id="${song_list[i].name}">
-            <img  onclick="add_keyboard()" data-name-id="${song_list[i].name}" class="search-thumbnail" src="${song_list[i].thumbnail}" style="height: 100px;">
-            <div class="search-box-mini">  
-              <p onclick="add_song()" data-name-id="${song_list[i].name}" >${song_list[i].name}</p> 
+            <div class="search-box-mini d-flex align-items-center" data-name-id="${song_list[i].name}">  
+              <img onclick="add_keyboard()" data-name-id="${song_list[i].name}" class="search-thumbnail" src="${song_list[i].thumbnail}" style="height: 100px;">
+              <div class="ms-3" onclick="add_song()" data-name-id="${song_list[i].name}" >${song_list[i].name}</div> 
             </div>
           </div>
         </div>
