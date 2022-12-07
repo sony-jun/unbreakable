@@ -2,18 +2,113 @@
 {% load django_bootstrap5 %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="/static/css/search.css">
+<link rel="stylesheet" href="/static/css/articles_create.css">
+<link rel="stylesheet" href="/static/css/btn.css">
+{% endblock css %}
 {% block content %}
+<div style="display:flex; justify-content:center; align-items:center;">
+  <div
+    style="background-color:rgb(239, 239, 239, 0.8); box-shadow:5px 5px 30px 5px #363062; border-radius:15px; width:60vw; min-width: 350px;">
+    <div>
+      <h3 class="mt-3" align="center" style="font-weight:lighter; font-size:20px; padding-top:2rem;"><span
+          style="font-weight:bold;">{{ user.fullname }}</span>님의 오늘은 어떠신가요?</h3>
 
-<div class="container">
-  <h1 class="text-start fs-5 mb-4 fw-bold font-space">글 수정</h1>
-  <form action="" method="POST" class="my-3 font-space fw-semibold" style="font-size: 15px;"
-    enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="font-space">
-      {% bootstrap_form articles_form %}
     </div>
-    {% bootstrap_button button_type="submit" button_class="btn btn-dark text-white w-100 rounded-0" content="리뷰 수정" %}
-  </form>
-</div>
 
+    <div class="d-flex justify-content-center align-items-center">
+      <form action="" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column;">
+        <div>
+          <label>오늘의 음악</label>
+        </div>
+        <input id="search_input" class="reviewcreate-userinfo" name="song" type="search "
+          placeholder="당신의 하루를 나타내는 음악을 선택해주세요." aria-label="Search" autocomplete="off"
+          style="border-radius:5px; background-color: transparent;">
+        <div class="search-off search-div " id="search_box"></div>
+        <div>원하는 노래가 없다면
+          <a class="text-decoration-none" href="{% url 'music:search' %}"
+            onclick="window.open(this.href, '_blank', 'width=800, height=600, toolbars=no, scrollbars=yes'); return false;">노래
+            추가</a>
+        </div>
+        <br>
+        {% csrf_token %}
+        {% bootstrap_form articles_form %}
+        <div class="mt-3" style="padding-bottom:2rem; display:flex; justify-content:center; align-items:center;">
+          <button class="wdt btn submit-btn" type="submit">수정하기</button>
+        </div>
+    </div>
+    </form>
+    <form id="search_form" action="{% url 'articles:song_search' %}" class="d-flex hidden" role="search"></form>
+  </div>
+
+</div>
+<div style="height:10rem;"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const search_input = document.querySelector('#search_input');
+  const search_box = document.querySelector('#search_box');
+  const input = document.createElement('input');
+  const side = document.querySelector('#side');
+  const box_open = false;
+
+  search_input.addEventListener('click', function (event) {
+    console.log("검색클릭");
+    search_box.classList.remove('search-off');
+    search_box.classList.add('search-on');
+    const box_open = true;
+    console.log("검색 열림");
+
+  });
+
+  document.addEventListener('click', function (e) {
+    console.log(e.target)
+    console.log(search_box.id)
+    if (box_open === true)
+      ;
+    {
+      if (e.target !== search_input) {
+        search_box.classList.remove('search-on');
+        search_box.classList.add('search-off');
+        console.log("검색디브 닫힘")
+      }
+    }
+  });
+  // 노래검색
+  window.onload = function () {
+    search_input.onkeyup = function () {
+      console.log("검색중")
+      axios({
+        method: 'get',
+        url: `/articles/song_search/?search=${search_input.value}`
+      })
+        .then(response => {
+          const search_box = document.querySelector('#search_box');
+          const song_list = response.data.song_list;
+          search_box.textContent = "";
+          for (let i = 0; i < song_list.length; i++) {
+            search_box.insertAdjacentHTML('beforeend', `
+        <div onclick="add_song()" data-name-id="${song_list[i].name}"  data-song_name-id="${song_list[i].id}"  id="song_${song_list[i].id}">
+        <hr class='m-0'>
+          <div class='search-box'  data-name-id="${song_list[i].name}">
+            <img  onclick="add_keyboard()" data-name-id="${song_list[i].name}" class="search-thumbnail" src="${song_list[i].thumbnail}" style="height: 100px;">
+            <div class="search-box-mini">  
+              <p onclick="add_song()" data-name-id="${song_list[i].name}" >${song_list[i].name}</p> 
+            </div>
+          </div>
+        </div>
+        `);
+          }
+        })
+    }
+  }
+
+  const add_song = (e) => {
+    const add_id = document.querySelector(`#song_${event.target.dataset.songId}`)
+    search_input.value = `${event.target.dataset.nameId}`
+    console.log(`${event.target.dataset.nameId}`)
+  }
+</script>
 {% endblock content %}
