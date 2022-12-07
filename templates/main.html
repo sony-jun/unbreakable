@@ -36,7 +36,7 @@
 {% if request.user.is_authenticated %}
     {% if not articles %}
         <div class="d-flex justify-content-center pt-3 pb-2">
-            <a class="form-control addtxt btn btn-light fs-6" href="{% url 'articles:articles_create' %}">일기를 추가해보세요!</a>
+            <a class="form-control addtxt btn btn-light fs-6" href="{% url 'articles:articles_create' %}">오늘의 일기 쓰러가기</a>
         </div>
     {% else %}
         <div class="d-flex justify-content-center pt-3 pb-2">
