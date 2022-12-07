@@ -123,8 +123,6 @@ def articles_update(request, articles_pk):
             articles_form = ArticlesForm(request.POST, request.FILES, instance=articles)
             if articles_form.is_valid():
                 articles_form.save()
-            messages.warning(request, "123")
-            print(messages.get_messages(request))
             return redirect("articles:articles_detail", articles_pk)
         else:
             articles_form = ArticlesForm(instance=articles)

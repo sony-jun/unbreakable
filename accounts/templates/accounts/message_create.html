@@ -13,9 +13,9 @@
       {% bootstrap_form message_form %}
       <input id="search_input" class="reviewcreate-userinfo" name="song" type="search" placeholder="클릭 후 노래를 검색하세요"
       aria-label="Search" autocomplete="off">
-      <div class="search-off search-div " id="search_box"></div>
       <div>원하는 노래가 없다면
         <a class="text-decoration-none" href="{% url 'music:search' %}" onclick="window.open(this.href, '_blank', 'width=800, height=600, toolbars=no, scrollbars=yes'); return false;">노래 추가</a>
+        <div class="search-off search-div " id="search_box"></div>
       </div>
       <input class="btn-two purple mt-3" type="submit">
   </form>
@@ -67,9 +67,9 @@
         <div onclick="add_song()" data-name-id="${song_list[i].name}"  data-song_name-id="${song_list[i].id}"  id="song_${song_list[i].id}">
         <hr class='m-0'>
           <div class='search-box'  data-name-id="${song_list[i].name}">
-            <img  onclick="add_keyboard()" data-name-id="${song_list[i].name}" class="search-thumbnail" src="${song_list[i].thumbnail}" style="height: 100px;">
-            <div class="search-box-mini">  
-              <p onclick="add_song()" data-name-id="${song_list[i].name}" >${song_list[i].name}</p> 
+            <div class="search-box-mini d-flex align-items-center" data-name-id="${song_list[i].name}">  
+              <img onclick="add_keyboard()" data-name-id="${song_list[i].name}" class="search-thumbnail" src="${song_list[i].thumbnail}" style="height: 100px;">
+              <div class="ms-3" onclick="add_song()" data-name-id="${song_list[i].name}" >${song_list[i].name}</div> 
             </div>
           </div>
         </div>
