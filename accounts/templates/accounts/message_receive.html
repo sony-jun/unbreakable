@@ -6,19 +6,42 @@
 {% endblock css %}
 
 {% block content %}
-<h4 class="text-center">내가 받은 메시지</h4>
-{% if messages == 1 %}
-<p>받은 메시지가 없습니다.</p>
-{% else %}
-<form class="" action="{% url 'accounts:message_delete' %}" method="POST">
-    {% csrf_token %}
-    <button class="btn-two purple d-flex m-auto" type="submit">삭제</button>
-    {% for message in messages %}
-    <div class="d-flex justify-content-center py-2 mb-2">
-        <div class="second py-2 px-2">
-            <a href="{% url 'accounts:message_detail' message.pk %}"><p class="text-center" style="font-size: 20px;">{{ message.content }}</p></a>
-            <input type="checkbox" id="selected" name="selected" value="{{message.id}}">
-            <span class="text5">받은 시간</span>
+
+
+    <h4 class="text-center text-white">내가 받은 메시지</h4>
+    {% if messages == 1 %}
+    <p class="text-center text-white">받은 메시지가 없습니다.</p>
+    {% else %}
+    <a class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">전체 삭제</a>
+    <!-- 메시지 전체 삭제 Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">전체 삭제</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>전체 삭제하시겠습니까?</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="{% url 'accounts:message_delete_all' %}" type="submit" class="btn btn-danger">삭제하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="" action="{% url 'accounts:message_delete' %}" method="POST">
+        {% csrf_token %}
+        <button class="btn-two purple d-flex m-auto" type="submit">삭제</button>
+        {% for message in messages %}
+        <div class="d-flex justify-content-center py-2 mb-2">
+            <div class="second py-2 px-2">
+                <a href="{% url 'accounts:message_detail' message.pk %}"><p class="text-center" style="font-size: 20px;">{{ message.content }}</p></a>
+                <input type="checkbox" id="selected" name="selected" value="{{message.id}}">
+                <span class="text5">받은 시간</span>
+            </div>
+
         </div>
     </div>
     {% endfor %}
