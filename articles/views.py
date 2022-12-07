@@ -39,7 +39,7 @@ def calendar2(request):
 
 
 def calendar(request):
-    return render(request, "articles/calendar.html")
+    return render(request, "articles/calendar2.html")
 
 
 def articles_index(request):
