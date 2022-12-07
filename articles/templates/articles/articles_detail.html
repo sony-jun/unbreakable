@@ -52,6 +52,13 @@
             {% endif %}
             <div class="fs-6 font-space m-2">{{ articles.content | linebreaksbr }}</div>
             <div style="font-size: 30pt;">{{ articles.feelings }}</div>
+            <form action="{% url 'articles:sympathy' articles.pk %}" method="POST">
+              {% csrf_token %}
+              <input type="submit" name="feeling" value="😊">
+              <input type="submit" name="feeling" value="😥">
+              <input type="submit" name="feeling" value="😡">
+              <input type="submit" name="feeling" value="🤣">
+            </form>
 
             {% if request.user == articles.user %}
             <form action="{% url 'articles:articles_delete' articles.pk %}" method="POST">
@@ -96,6 +103,7 @@
 
       </div>
       <div class="col-md-12 col-lg-4 my-2">
+        {% if articles.song %}
         <div class="d-plex bg-white p-1 rounded-5 review-card" style="top: 10rem;">
           <div class="d-flex justify-content-between align-items-center" style="flex-direction: column;">
             <!--썸네일 부분-->
@@ -122,6 +130,7 @@
           </div>
         </div>
         <br>
+        {% endif %}
         <div class="d-plex bg-white p-1 rounded-5 review-card" style="top: 10rem;">
 
           {% comment %} 댓글 작성 {% endcomment %}
