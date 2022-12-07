@@ -109,14 +109,14 @@ function loadDate (date, dayIn) {
  * @param {date} fullDate
  */
 function loadYYMM (fullDate) {
-let yy = fullDate.getFullYear();
-let mm = fullDate.getMonth();
-let firstDay = init.getFirstDay(yy, mm);
-let lastDay = init.getLastDay(yy, mm);
-let markToday;  // for marking today date
+  let yy = fullDate.getFullYear();
+  let mm = fullDate.getMonth();
+  let firstDay = init.getFirstDay(yy, mm);
+  let lastDay = init.getLastDay(yy, mm);
+  let markToday;  // for marking today date
 
-if (mm === init.today.getMonth() && yy === init.today.getFullYear()) {
-  markToday = init.today.getDate();
+  if (mm === init.today.getMonth() && yy === init.today.getFullYear()) {
+    markToday = init.today.getDate();
 }
 
 document.querySelector('.cal-month').textContent = init.monList[mm];
@@ -163,25 +163,28 @@ $calBody.innerHTML = trtd;
 * @param {string} val
 */
 function createNewList (val) {
-let id = new Date().getTime() + '';
-let yy = init.activeDate.getFullYear();
-let mm = init.activeDate.getMonth() + 1;
-let dd = init.activeDate.getDate();
-const $target = $calBody.querySelector(`.day[data-date="${dd}"]`);
+  let id = new Date().getTime() + '';
+  let yy = init.activeDate.getFullYear();
+  let mm = init.activeDate.getMonth() + 1;
+  let dd = init.activeDate.getDate();
+  const $target = $calBody.querySelector(`.day[data-date="${dd}"]`);
 
-let date = yy + '.' + init.addZero(mm) + '.' + init.addZero(dd);
+  let date = yy + '.' + init.addZero(mm) + '.' + init.addZero(dd);
 
-let eventData = {};
-eventData['date'] = date;
-eventData['memo'] = val;
-eventData['complete'] = false;
-eventData['id'] = id;
-init.event.push(eventData);
-$todoList.appendChild(createLi(id, val, date));
+  let eventData = {};
+  eventData['date'] = date;
+  eventData['memo'] = val;
+  eventData['complete'] = false;
+  eventData['id'] = id;
+  init.event.push(eventData);
+  $todoList.appendChild(createLi(id, val, date));
 }
 
 loadYYMM(init.today);
 loadDate(init.today.getDate(), init.today.getDay());
+
+document.querySelector('.cal-date').textContent = '안녕';
+document.querySelector('.cal-day').textContent = '이날의 추억 보러가기';
 
 $btnNext.addEventListener('click', () => loadYYMM(init.nextMonth()));
 $btnPrev.addEventListener('click', () => loadYYMM(init.prevMonth()));
@@ -198,10 +201,12 @@ if (e.target.classList.contains('day')) {
         url: '/articles/id-sort/',
         headers : {'X-CSRFTOKEN' : '{{ csrf_token }}'},
         data: {'target_id': target_id}
-      }) //.then
+      }).then(response => {
+        document.querySelector('.cal-date').textContent = response.data.results;
+        document.querySelector('.cal-day').textContent = '이날의 추억 보러가기';
+      })
   }
   let day = Number(e.target.textContent);
-  loadDate(day, e.target.cellIndex);
   e.target.classList.add('day-active');
   init.activeDTag = e.target;
   init.activeDate.setDate(day);

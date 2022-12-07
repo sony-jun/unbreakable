@@ -258,14 +258,16 @@ def id_sort(request):
     temp_results = temp_results_user.filter(Q(created_at__contains=target_id))
 
     if temp_results:
-        results = 1
+        results = '이날의 추억 보러가기'
     else:
-        results = 0
+        results = '작성된 일기가 없습니다.'
+    diaries = temp_results
         
     print(results)
 
     context = {
-        'results': results
+        'results': results,
+        'diaries': diaries
     }
 
     return JsonResponse({'results': results})
