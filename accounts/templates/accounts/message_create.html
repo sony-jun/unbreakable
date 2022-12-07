@@ -3,6 +3,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="/static/css/btn.css">
+<link rel="stylesheet" href="/static/css/search2.css">
 {% endblock css %}
 
 {% block content %}
@@ -16,6 +17,7 @@
       <div>원하는 노래가 없다면
         <a class="text-decoration-none" href="{% url 'music:search' %}" onclick="window.open(this.href, '_blank', 'width=800, height=600, toolbars=no, scrollbars=yes'); return false;">노래 추가</a>
         <div class="search-off search-div " id="search_box"></div>
+
       </div>
       <input class="btn-two purple mt-3" type="submit">
   </form>

@@ -39,7 +39,7 @@
                   <p>정말로 탈퇴하시겠습니까?</p>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                        <a href="{% url 'accounts:delete' %}" type="submit" class="btn btn-danger">탈퇴하기</a>
                     </div>
                 </div>
             </div>

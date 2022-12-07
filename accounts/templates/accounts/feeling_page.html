@@ -1,11 +1,43 @@
 {% extends 'base.html' %}
+{% load static %} 
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/articles_index.css">
+{% endblock css %}
 
 {% block content %}
-<h1>feeling_page</h1>
-<div class="container">
-    {% for feeling in feelings %}
-    <p>{{ feeling.articles.content }}</p>
-    {% endfor %}
+<h3 class="text-center text-white">공감한 글</h3>
+{% for feeling in feelings %}
+<div class="d-flex justify-content-center py-2 mb-2">
+    <div class="second py-2 px-2">
+        <a class="text-decoration-none" href="{% url 'articles:articles_detail' feeling.articles.pk %}">
+            {% if feeling.articles.picture %}
+            <span><img class="hover" src="{{ feeling.articles.picture.url }}" alt="{{ feeling.articles.picture }}" width="125"></span>
+            {% else %}
+      <div class="d-flex justify-content-center">
+        <img src="" alt="">
+      </div>
+      {% endif %}
+            <span class="text1">{{ feeling.articles.content | linebreaksbr}}</span>
+            <!-- 3줄 넘으면 더보기로 보이게 -->
+        </a>
+        <div class="d-flex justify-content-between py-1 pt-2">
+            <div>
+                <img src="{% static 'images/face.png' %}" alt="" width="18">
+                <span class="text2">
+                    글쓴이의 오늘 감정은  {{ feeling.articles.feelings }}
+                </span>
+            </div>
+            <div>
+                <span class="text3">공감</span>
+                <span class="thumbup">공감받은거</span> 
+                <span class="text4">{{ feeling.articles.sympathy_set.count }}</span>
+            </div>
+        </div>
+        <div>
+            <span class="text5">{{ feeling.articles.created_at }}</span>
+        </div>
+    </div>
 </div>
+{% endfor %}
 {% endblock content %}
-
