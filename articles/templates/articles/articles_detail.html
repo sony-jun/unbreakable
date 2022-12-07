@@ -35,7 +35,11 @@
           <div class="mb-3 d-flex justify-content-between align-items-center">
           </div>
           <div class="mb-3 d-flex justify-content-between align-items-center" style="flex-direction: column;">
+            {% if request.user == articles.user %}
+            <h1 class="text-start fs-6 mb-0 fw-bold font-space">내가 쓴 글</h1>
+            {% else %}
             <h1 class="text-start fs-6 mb-0 fw-bold font-space">#익명#</h1>
+            {% endif %}
 
 
 
@@ -52,6 +56,13 @@
             {% endif %}
             <div class="fs-6 font-space m-2">{{ articles.content | linebreaksbr }}</div>
             <div style="font-size: 30pt;">{{ articles.feelings }}</div>
+            <form action="{% url 'articles:sympathy' articles.pk %}" method="POST">
+              {% csrf_token %}
+              <input type="submit" name="feeling" value="😊">
+              <input type="submit" name="feeling" value="😥">
+              <input type="submit" name="feeling" value="😡">
+              <input type="submit" name="feeling" value="🤣">
+            </form>
 
             {% if request.user == articles.user %}
             <form action="{% url 'articles:articles_delete' articles.pk %}" method="POST">
@@ -62,10 +73,11 @@
                 <input class="btn articles-delete-btn rounded-0" type="submit" value="삭제">
               </div>
             </form>
-            {% endif %}
-            {% if request.user != articles.user %}
-            <a href="{% url 'accounts:message_create' articles.user.pk articles.pk %}">메시지 보내기</a>
-            <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">게시글 신고하기</a>
+            {% else %}
+              {% if user.is_authenticated%}
+              <a href="{% url 'accounts:message_create' articles.user.pk articles.pk %}">메시지 보내기</a>
+              <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">게시글 신고하기</a>
+              {% endif%}
             {% endif %}
           </div>
         </div>
@@ -96,6 +108,7 @@
 
       </div>
       <div class="col-md-12 col-lg-4 my-2">
+        {% if articles.song %}
         <div class="d-plex bg-white p-1 rounded-5 review-card" style="top: 10rem;">
           <div class="d-flex justify-content-between align-items-center" style="flex-direction: column;">
             <!--썸네일 부분-->
@@ -107,7 +120,7 @@
                 <div id="time" class="time ">00:00:00</div>
               </div>
               <div class="btnBox d-flex justify-content-center align-items-center">
-                <div class="recorder" style="height: 100px; width: 100px;">
+                <div class="" id="recorder" style="height: 100px; width: 100px;">
                   <img src="{{ articles.song.song_thumbnail }}"
                     style="height: 100px; width: 100px; border-radius: 50px;">
                 </div>
@@ -119,9 +132,13 @@
               </div>
               <div id="player"></div>
             </div>
+            <div class="text-bg-dark">
+              <MARQUEE>{{ articles.song.song_title }}</MARQUEE>
+            </div>
           </div>
         </div>
         <br>
+        {% endif %}
         <div class="d-plex bg-white p-1 rounded-5 review-card" style="top: 10rem;">
 
           {% comment %} 댓글 작성 {% endcomment %}
@@ -148,8 +165,7 @@
                     </div>
                     <!-- 댓글 내용 상세 보기 -->
                     <a class="mb-0 mx-3 text-truncate font-space text-decoration-none text-black" data-bs-toggle="modal"
-                      data-bs-target="#commentDetailModal{{ comment.pk }}">{{ comment.content
-                      }}</a>
+                      data-bs-target="#commentDetailModal{{ comment.pk }}">{{ comment.content }}</a>
                     <!-- 댓글 내용 상세 모달 -->
                     <div class="modal fade shadow-lg" id="commentDetailModal{{ comment.pk }}" tabindex="-1"
                       aria-labelledby="modalLabel" aria-hidden="true">
@@ -173,8 +189,11 @@
                         {% csrf_token %}
                         <input class="btn btn-outline-dark rounded-0" type="submit" value="삭제">
                       </form>
+                      {% else %}
+                        {% if user.is_authenticated %}
+                        <a href=""  type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">댓글 신고하기</a>
+                        {% endif %}
                       {% endif %}
-                      <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">댓글 신고하기</a>
                     </div>
                   </div>
                   <div class='d-flex align-items-center'>
@@ -258,7 +277,9 @@
     </div>
   </div>
 </div>
+
 <div class="container" style="height: 100px;"></div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -291,7 +312,7 @@
                   <div class="d-flex align-items-center">
                     <span class="text-muted ms-2 font-space">${response.data.userName}</span>
                   </div>
-                  <a class="mb-0 mx-3 text-truncate font-space text-decoration-none text-black" data-bs-toggle="modal" data-bs-target="#commentDetailModal${response.data.comment_pk}">${response.data.content}</a>
+                  <a class="mb-0 ms-3 text-truncate font-space text-decoration-none text-black" data-bs-toggle="modal" data-bs-target="#commentDetailModal${response.data.comment_pk}">${response.data.content}</a>
                   <div class="modal fade shadow-lg" id="commentDetailModal${response.data.comment_pk}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered rounded-0">
                       <div class="modal-content p-3 rounded-0">
@@ -518,7 +539,7 @@
 
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-
+  var recorder = document.getElementById('recorder')
 
   // 3. This function creates an <iframe> (and YouTube player)
 
@@ -558,18 +579,22 @@
   function onPlayerReady(event) {
     var playButton = document.getElementById("play-button");
     playButton.addEventListener("click", function () {
+      recorder.classList.add('recorder')
+      recorder.classList.remove('anim-pause')
       event.target.setVolume(10);
       event.target.getVolume(10);
       player.playVideo(10);
     });
     var pauseButton = document.getElementById("pause-button");
     pauseButton.addEventListener("click", function () {
+      recorder.classList.add('anim-pause')
       event.target.setVolume(10);
       event.target.getVolume(10);
       player.pauseVideo(10);
     });
     var stopButton = document.getElementById("stop-button");
     stopButton.addEventListener("click", function () {
+      recorder.classList.remove('recorder')
       event.target.setVolume(10);
       event.target.getVolume(10);
       player.stopVideo(10);
