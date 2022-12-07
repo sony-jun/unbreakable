@@ -258,16 +258,17 @@ def id_sort(request):
     temp_results = temp_results_user.filter(Q(created_at__contains=target_id))
 
     if temp_results:
-        results = '이날의 추억 보러가기'
+        results = 1
     else:
-        results = '작성된 일기가 없습니다.'
-    diaries = temp_results
+        results = 0
         
     print(results)
 
     context = {
         'results': results,
-        'diaries': diaries
     }
 
     return JsonResponse({'results': results})
+
+def calendar_detail(request, date):
+    return render(request, 'articles/calendar_detail.html')
