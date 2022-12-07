@@ -12,6 +12,8 @@ from .models import Articles
 from django.utils import timezone
 from music.models import Song
 from django.views.generic.base import TemplateView
+import json
+from django.db.models import Q
 
 
 # search
@@ -247,3 +249,25 @@ def comment_declaration(request, articles_pk, comment_pk):
         "comment_declaration_form": comment_declaration_form,
     }
     return render(request, "articles/articles_detail.html", context)
+
+def id_sort(request):
+    jsonObject = json.loads(request.body)
+    target_id = jsonObject.get('target_id')
+
+    temp_results_user = Articles.objects.all().filter(user=request.user)
+    temp_results = temp_results_user.filter(Q(created_at__contains=target_id))
+
+    if temp_results:
+        results = '이날의 추억 보러가기'
+    else:
+        results = '작성된 일기가 없습니다.'
+    diaries = temp_results
+        
+    print(results)
+
+    context = {
+        'results': results,
+        'diaries': diaries
+    }
+
+    return JsonResponse({'results': results})

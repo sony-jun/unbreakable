@@ -11,8 +11,8 @@ body {
 }
 
 .box {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 100px;
 }
 
 .timerBox {
@@ -28,7 +28,7 @@ body {
 }
 
 .btnBox {
-  margin: 20px auto;
+  margin: 10px auto;
   text-align: center;
 }
 
@@ -37,4 +37,8 @@ body {
   font-size: 30pt;
   color: #FAED7D;
   cursor: pointer;
+}
+
+.review-card {
+  box-shadow: rgba(210, 224, 236, 0.25) 0px 50px 60px -10px, rgba(131, 139, 146, 0.3) 0px 30px 40px -20px, rgba(38, 40, 43, 0.167) 0px -2px 6px 0px inset;
 }
