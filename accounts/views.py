@@ -221,6 +221,12 @@ def message_delete(request):
                     m.delete()
     return redirect('accounts:message_receive')
 
+@login_required
+def message_delete_all(request):
+    messages = Message.objects.filter(receiver_id=request.user)
+    messages.delete()
+    return redirect('accounts:message_receive')
+
 def message_detail(request, message_pk):
     message = Message.objects.get(pk=message_pk)
     message.read = True
