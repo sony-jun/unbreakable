@@ -1,18 +1,26 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/btn.css">
+{% endblock css %}
+
 {% block content %}
-<h1>메시지 작성</h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form message_form %}
-    <input id="search_input" class="reviewcreate-userinfo" name="song" type="search" placeholder="클릭 후 노래를 검색하세요"
-    aria-label="Search" autocomplete="off">
-    <div class="search-off search-div " id="search_box"></div>
-    <div>원하는 노래가 없다면
-      <a class="text-decoration-none" href="{% url 'music:search' %}" onclick="window.open(this.href, '_blank', 'width=800, height=600, toolbars=no, scrollbars=yes'); return false;">노래 추가</a>
-    </div>
-    <input type="submit">
-</form>
+<div class="card m-5 p-5">
+  <h1>메시지 작성</h1>
+  <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form message_form %}
+      <input id="search_input" class="reviewcreate-userinfo" name="song" type="search" placeholder="클릭 후 노래를 검색하세요"
+      aria-label="Search" autocomplete="off">
+      <div class="search-off search-div " id="search_box"></div>
+      <div>원하는 노래가 없다면
+        <a class="text-decoration-none" href="{% url 'music:search' %}" onclick="window.open(this.href, '_blank', 'width=800, height=600, toolbars=no, scrollbars=yes'); return false;">노래 추가</a>
+      </div>
+      <input class="btn-two purple mt-3" type="submit">
+  </form>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   const search_input = document.querySelector('#search_input');

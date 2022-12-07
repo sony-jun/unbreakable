@@ -94,11 +94,13 @@ def profile(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
     articles = user.articles_set.filter(user=user.pk)
     messages = Message.objects.filter(receiver_id=user.pk).order_by('-articles')
+    feelings = Sympathy.objects.filter(user=user_pk)
 
     context = {
         'user':user,
         'articles':articles,
         'messages':messages,
+        'feelings':len(feelings),
 
     }
     return render(request, 'accounts/profile.html', context)
@@ -120,8 +122,8 @@ def message_receive(request):
     return render(request, 'accounts/message_receive.html', context)
 
 @login_required
-def delete(request, user_pk):
-    user = get_user_model().objects.get(pk=user_pk)
+def delete(request):
+    user = get_user_model().objects.get(pk=request.user.pk)
     user.delete()
     return redirect("accounts:index")
 
@@ -277,4 +279,10 @@ def counter(request):
     except Message.DoesNotExist:
         count = 0
     return {'count':count,}
-                    
+
+def feeling_page(request):
+    feelings = Sympathy.objects.filter(user=request.user)
+    context = {
+        'feelings':feelings,
+    }
+    return render(request, 'accounts/feeling_page.html', context)
