@@ -14,13 +14,6 @@ from articles.models import *
 from django.contrib import messages
 # Create your views here.
 
-# 임시
-def index(request):
-    context = {'check':False}
-    if request.session.get('access_token'):
-        context['check'] = True
-    return render(request, 'accounts/index.html', context)
-
 def signup(request):
     # 이미 회원가입한 유저라면 
     # if request.user.is_authenticated:
@@ -125,7 +118,7 @@ def message_receive(request):
 def delete(request):
     user = get_user_model().objects.get(pk=request.user.pk)
     user.delete()
-    return redirect("accounts:index")
+    return redirect("main")
 
 # 비밀번호 변경
 @login_required
