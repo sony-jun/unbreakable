@@ -10,7 +10,7 @@ urlpatterns = [
     path('login/', views.login, name="login"),
     path('logout/', views.logout, name="logout"),
     path('<int:user_pk>/update/', views.update, name="update"),
-    path('<int:user_pk>/delete/', views.delete, name="delete"),
+    path('delete/', views.delete, name="delete"),
     path('<int:user_pk>/profile/', views.profile, name="profile"),
     path('password/', views.password, name="password"),
     # 카카오 소셜 로그인
@@ -24,4 +24,5 @@ urlpatterns = [
     path('<int:message_pk>/message_detail/', views.message_detail, name="message_detail"),
     # 메시지 신고
     path('<int:message_pk>/message_declaration', views.message_declaration, name="message_declaration"),
+    path('feeling_page/', views.feeling_page, name="feeling_page"),
 ]

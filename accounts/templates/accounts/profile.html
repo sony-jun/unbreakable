@@ -18,14 +18,32 @@
         <div class="d-flex flex-row justify-content-center mt-4 pr-4">
           <div class="d-flex flex-column align-items-center mx-3"><small class="text-muted">나의 일기</small><h6 ><a class="text-decoration-none" style="color: black;" href="{% url 'main' %}">{{ articles.count }}개</a></h6></div>
           <div class="d-flex flex-column align-items-center mx-3"><small class="text-muted">받은 메세지</small><h6><a class="text-decoration-none" style="color: black;" href="{% url 'accounts:message_receive' %}">{{ messages.count }}개</a></h6></div>
-          <div class="d-flex flex-column align-items-center mx-3"><small class="text-muted">좋아하는 글</small><h6><a class="text-decoration-none" style="color: black;" href="#">개</a></h6></div>
+          <div class="d-flex flex-column align-items-center mx-3"><small class="text-muted">공감한 글</small><h6><a class="text-decoration-none" style="color: black;" href="{% url 'accounts:feeling_page' %}">{{feelings}}개</a></h6></div>
         </div>
         <div class="d-flex justify-content-end mt-3">
             <a class="btn-two purple" href="{% url 'accounts:update' user.pk %}">수정</a>
-            <a class="btn-two purple mx-2" href="#">탈퇴</a>
+            <a class="btn-two purple mx-2" href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">탈퇴</a>
             <a class="btn-two purple" href="{% url 'accounts:password' %}">비밀번호 변경</a>
         </div>
       </div>
+    </div>
+    <!-- 탈퇴 Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">탈퇴하기</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>정말로 탈퇴하시겠습니까?</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 
