@@ -137,4 +137,4 @@ AUTH_USER_MODEL = "accounts.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-YOUTUBE_DATA_API_KEY = "AIzaSyAGD39v1FVMzOZVygjCsz6mOyoxpbVYMvE"
+YOUTUBE_DATA_API_KEY = ""
