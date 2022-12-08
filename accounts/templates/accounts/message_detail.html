@@ -7,17 +7,18 @@
 <link rel="stylesheet" href="/static/css/search.css">
 <link rel="stylesheet" href="/static/css/articles_create.css">
 <link rel="stylesheet" href="/static/css/btn.css">
+<link rel="stylesheet" href="/static/accounts/css/message_detail.css">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
   integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="stopwatch.js"></script>
+{% comment %} <script type="text/javascript" src="stopwatch.js"></script> {% endcomment %}
 {% endblock css %}
 
 {% block content %}
 <h1 class="text-center">메시지 디테일</h1>
 <div class="d-flex justify-content-center">
-  <div style="background-color:rgb(239, 239, 239, 0.8); box-shadow:5px 5px 30px 5px #363062; border-radius:15px; width:30vw; min-width: 320px; word-break:break-all;">
-    <a class="d-flex justify-content-end mx-3 my-3 text-decoration-none" style="color: red;" href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3">메시지 신고하기</a>
+  <div class="message_detail_1">
+    <a class="d-flex justify-content-end mx-3 my-3 text-decoration-none message_detail_2" href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3">메시지 신고하기</a>
     <div class="bg-white p-1 rounded-5 review-card mx-3 my-4">
       <h3 class="text-center">{{ message.content }}</h3>
     </div>
@@ -30,11 +31,10 @@
           <div id="time" class="time ">00:00:00</div>
         </div>
         <div class="btnBox d-flex justify-content-center align-items-center">
-          <div class="" id="recorder" style="height: 100px; width: 100px;">
-            <img src="{{ message.song.song_thumbnail }}"
-              style="height: 100px; width: 100px; border-radius: 50px;">
+          <div class="message_detail_3" id="recorder">
+            <img src="{{ message.song.song_thumbnail }}" class="message_detail_4">
           </div>
-          <div class="d-flex justify-content-center align-items-center" style="height: 100px; width: 150px;">
+          <div class="d-flex justify-content-center align-items-center">
             <i id="play-button" class="fa fa-play" aria-hidden="true"></i>
             <i id="pause-button" class="fa fa-pause" aria-hidden="true"></i>
             <i id="stop-button" class="fa fa-stop" aria-hidden="true"></i>
@@ -74,239 +74,110 @@
     </div>
 </div>
 
-<!--음악재생 스크립트!-->
-
-<!-- 1. The < iframe > (and video player) will replace this < div > tag. -->
-
-
-
 <script>
-
   // 2. This code loads the IFrame Player API code asynchronously.
 
-  var tag = document.createElement('script');
+var tag = document.createElement('script');
 
-  tag.src = "https://www.youtube.com/iframe_api";
+tag.src = "https://www.youtube.com/iframe_api";
 
-  var firstScriptTag = document.getElementsByTagName('script')[0];
+var firstScriptTag = document.getElementsByTagName('script')[0];
 
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  var recorder = document.getElementById('recorder')
+var recorder = document.getElementById('recorder')
 
-  // 3. This function creates an <iframe> (and YouTube player)
+// 3. This function creates an <iframe> (and YouTube player)
 
-  //    after the API code downloads.
+//    after the API code downloads.
 
-  var player;
+var player;
 
-  function onYouTubeIframeAPIReady() {
+function onYouTubeIframeAPIReady() {
 
     player = new YT.Player('player', {
 
-      height: '0',
+        height: '0',
 
-      width: '0',
+        width: '0',
 
-      videoId: '{{ message.song.song_url }}',
+        videoId: '{{ message.song.song_url }}',
 
-      playerVars: { 'controls': 2, 'autohide': 1, 'playlist': '{{ message.song.song_url }}', 'loop': 1, 'start': '{{ message.music_start }}' },
+        playerVars: { 'controls': 2, 'autohide': 1, 'playlist': '{{ message.song.song_url }}', 'loop': 1, 'start': '{{ message.music_start }}' },
 
-      events: {
+        events: {
 
-        'onReady': onPlayerReady,
+            'onReady': onPlayerReady,
 
-        'onStateChange': onPlayerStateChange
+            'onStateChange': onPlayerStateChange
 
-      }
+        }
 
     });
 
-  }
+}
 
 
 
-  // 4. The API will call this function when the video player is ready.
+// 4. The API will call this function when the video player is ready.
 
 
-  function onPlayerReady(event) {
+function onPlayerReady(event) {
     var playButton = document.getElementById("play-button");
     playButton.addEventListener("click", function () {
-      recorder.classList.add('recorder')
-      recorder.classList.remove('anim-pause')
-      event.target.setVolume(10);
-      event.target.getVolume(10);
-      player.playVideo(10);
+        recorder.classList.add('recorder')
+        recorder.classList.remove('anim-pause')
+        event.target.setVolume(10);
+        event.target.getVolume(10);
+        player.playVideo(10);
     });
     var pauseButton = document.getElementById("pause-button");
     pauseButton.addEventListener("click", function () {
-      recorder.classList.add('anim-pause')
-      event.target.setVolume(10);
-      event.target.getVolume(10);
-      player.pauseVideo(10);
+        recorder.classList.add('anim-pause')
+        event.target.setVolume(10);
+        event.target.getVolume(10);
+        player.pauseVideo(10);
     });
     var stopButton = document.getElementById("stop-button");
     stopButton.addEventListener("click", function () {
-      recorder.classList.remove('recorder')
-      event.target.setVolume(10);
-      event.target.getVolume(10);
-      player.stopVideo(10);
+        recorder.classList.remove('recorder')
+        event.target.setVolume(10);
+        event.target.getVolume(10);
+        player.stopVideo(10);
     });
-  }
+}
 
 
 
-  // 5. The API calls this function when the player's state changes.
+// 5. The API calls this function when the player's state changes.
 
-  //    The function indicates that when playing a video (state=1),
+//    The function indicates that when playing a video (state=1),
 
-  //    the player should play for six seconds and then stop.
+//    the player should play for six seconds and then stop.
 
-  var done = false;
+var done = false;
 
-  function onPlayerStateChange(event) {
+function onPlayerStateChange(event) {
 
     if (event.data == YT.PlayerState.PLAYING && !done) {
 
-      done = true;
+        done = true;
 
     }
 
-  }
+}
 
-  function stopVideo() {
+function stopVideo() {
     event.target.setVolume(10);
     event.target.getVolume(10);
     player.stopVideo(10);
 
-  }
-
-</script>
-<!--음악재생 스크립트 마지막!-->
-
-<!--스톱워치-->
-
-<script>
-  var time = 0;
-  var starFlag = true;
-  $(document).ready(function () {
-    buttonEvt();
-  });
-
-  function init() {
-    document.getElementById("time").innerHTML = "00:00:00";
-  }
-
-  function buttonEvt() {
-    var hour = 0;
-    var min = 0;
-    var sec = 0;
-    var timer;
-
-    // start btn
-    $("#play-button").click(function () {
-
-      if (starFlag) {
-        $(".fa").css("color", "#FAED7D")
-        this.style.color = "#4C4C4C";
-        starFlag = false;
-
-        if (time == 0) {
-          init();
-        }
-
-        timer = setInterval(function () {
-          time++;
-
-          min = Math.floor(time / 60);
-          hour = Math.floor(min / 60);
-          sec = time % 60;
-          min = min % 60;
-
-          var th = hour;
-          var tm = min;
-          var ts = sec;
-          if (th < 10) {
-            th = "0" + hour;
-          }
-          if (tm < 10) {
-            tm = "0" + min;
-          }
-          if (ts < 10) {
-            ts = "0" + sec;
-          }
-
-          document.getElementById("time").innerHTML = th + ":" + tm + ":" + ts;
-        }, 1000);
-      }
-    });
-
-    // pause btn
-    $("#pause-button").click(function () {
-      if (time != 0) {
-        $(".fa").css("color", "#FAED7D")
-        this.style.color = "#4C4C4C";
-        clearInterval(timer);
-        starFlag = true;
-      }
-    });
-
-    // stop btn
-    $("#stop-button").click(function () {
-      if (time != 0) {
-        $(".fa").css("color", "#FAED7D")
-        this.style.color = "#4C4C4C";
-        clearInterval(timer);
-        starFlag = true;
-        time = 0;
-        init();
-      }
-    });
-  }
+}
 
 </script>
 
-<!--스톱워치 끝-->
-
-<!--레코드-->
-<script>
-  var rouletter = {
-    // 부여할 숫자 랜덤으로 하기
-    random: function () {
-      min = Math.ceil(0);
-      max = Math.floor(5);
-      return Math.floor(Math.random() * (max - min)) + min;
-    },
-    // start 버튼
-    start: function () {
-      var btn = document.querySelector('.rouletter-btn');
-      var panel = document.querySelector('.rouletter-wacu');
-
-      panel.classList.add('on');
-      btn.innerText = 'stop';
-    },
-    // stop 버튼
-    stop: function () {
-      var btn = document.querySelector('.rouletter-btn');
-      var panel = document.querySelector('.rouletter-wacu');
-      // 돌림판 형태가 6개로 분할되어있어 필요한 각도를 array로 만들었다.
-      // 후에 length로 for문으로 돌려서 array처리로 변경하면 보다 동적으로 대처할수 있겠다.
-      var deg = [60, 120, 180, 240, 300, 360];
-
-      panel.style.transform = 'rotate(' + deg[rouletter.random()] + 'deg)';
-      panel.classList.remove('on');
-      btn.innerText = 'start';
-    }
-  }
-
-  document.addEventListener('click', function (e) {
-    var target = e.target
-    if (target.tagName === 'BUTTON') {
-      target.innerText === 'start'
-        ? rouletter.start() : rouletter.stop();
-    }
-  })
-</script>
-
+<script src="{% static 'accounts/js/message_detail_music.js' %}"></script>
+<script src="{% static 'accounts/js/message_detail_stopwatch.js' %}"></script>
+<script src="{% static 'accounts/js/message_detail_record.js' %}"></script>
 {% endblock content %}
 

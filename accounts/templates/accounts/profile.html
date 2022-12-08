@@ -3,6 +3,7 @@
 {% block css %}
 <link rel="stylesheet" href="/static/css/profile.css">
 <link rel="stylesheet" href="/static/css/btn.css">
+<link rel="stylesheet" href="/static/accounts/css/profile.css">
 {% endblock css %}
 
 {% block content %}
@@ -11,9 +12,9 @@
       <div>
         <h2 class="d-flex justify-content-center">{{ user.fullname }}님의 프로필</h2>
         <div class="mt-4">
-            <p class="d-flex justify-content-center"><span style="font-weight:bold;">아이디 : </span>{{ user.username }}</p>
-            <p class="d-flex justify-content-center"><span style="font-weight:bold;">전화번호 : </span>{{ user.phone_number }}</p>
-            <p class="d-flex justify-content-center"><span style="font-weight:bold;">생일 : </span>{{ user.birthday }}</p>
+            <p class="d-flex justify-content-center"><span class="text1">아이디 : </span>{{ user.username }}</p>
+            <p class="d-flex justify-content-center"><span class="text1">전화번호 : </span>{{ user.phone_number }}</p>
+            <p class="d-flex justify-content-center"><span class="text1">생일 : </span>{{ user.birthday }}</p>
         </div>
         <div class="d-flex flex-row justify-content-center mt-4 pr-4">
           <div class="d-flex flex-column align-items-center mx-3"><small class="text-muted">나의 일기</small><h6 ><a class="text-decoration-none" style="color: black;" href="{% url 'main' %}">{{ articles.count }}개</a></h6></div>

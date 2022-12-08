@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="/static/css/style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <link rel="stylesheet" href="/static/css/mainstyle.css">
+  <link rel="stylesheet" href="/static/css/base.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,57 +21,46 @@
   {% endblock css %}
   <!-- JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  <style>
-    body{
-      font-family: 'Noto Sans KR', sans-serif;
-      font-weight: lighter;
-      z-index:-2;
-    }
-    .bg{
-      background-size: 330px;
-      background-image: url('/static/images/bg.png');
-    }
-  </style>
 </head>
 
 <body>
 
 <!-- header -->
 <div class="bg">
-  <div class="header-text" style="padding:2vh 0; z-index:2;">
+  <div class="header-text base_1">
     <!-- blank -->
-    <div style="width:30%; padding-left:5vh;"></div>
+    <div class="base_2"></div>
     <!-- logo -->
     <div>
-      <a href="{% url 'main' %}"><img class="logo-img" src="{% static 'images/logo2.png' %}" alt="logo" style="height:100px; width:100px;"></a>
+      <a href="{% url 'main' %}"><img class="logo-img base_3" src="{% static 'images/logo2.png' %}" alt="logo"></a>
     </div>
     <!-- login/bell -->
-    <div class="top_account" style="margin:0; width:30%; padding-right:5vh;">
+    <div class="top_account base_4">
       {% if request.user.is_authenticated %}
-      <a class="top_account_img" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" style="height:30px; width:30px;"></a>
+      <a class="top_account_img" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" class="base_5"></a>
       <div class="position-relative">
-        <a class="top_account_img mx-3" href="{% url 'accounts:message_receive' %}"><img src="{% static 'images/bell.png' %}" alt="bell" style="height:30px; width:30px;"></a>
+        <a class="top_account_img mx-3" href="{% url 'accounts:message_receive' %}"><img src="{% static 'images/bell.png' %}" alt="bell" class="base_5"></a>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{count}}</span>
       </div>
       {% else %}
-      <a class="top_account_img" href="{% url 'accounts:login' %}"><img src="{% static 'images/login.png' %}" alt="logo" style="height:30px; width:30px;"></a>
-      <a class="top_account_img mx-3" href="{% url 'accounts:signup' %}"><img src="{% static 'images/signup.png' %}" alt="logo" style="height:30px; width:30px;"></a>
+      <a class="top_account_img" href="{% url 'accounts:login' %}"><img src="{% static 'images/login.png' %}" alt="logo" class="base_5"></a>
+      <a class="top_account_img mx-3" href="{% url 'accounts:signup' %}"><img src="{% static 'images/signup.png' %}" alt="logo" class="base_5"></a>
       {% endif %}
     </div>
   </div>
   {% block content %}
   {% endblock content %}
 </div>
-<div class="container" style="height: 100px;"></div>
+<div class="container base_6"></div>
   <!-- nav bar -->
   <div class="nav-bar fixed-bottom">
-    <a href="{% url 'articles:calendar' %}"><img class="nav-img" src="{% static 'images/calendar2.png' %}" alt="" style="height:32px; width:32px;"></a>
-    <a href="{% url 'articles:articles_create' %}"><img class="nav-img" src="{% static 'images/diary2.png' %}" alt="" style="height:35px; width:35px;"></a>
-    <a href="{% url 'main' %}"><img class="nav-img" src="{% static 'images/community2.png' %}" alt="" style="height:40px; width:40px;"></a>
+    <a href="{% url 'articles:calendar' %}"><img class="nav-img base_7" src="{% static 'images/calendar2.png' %}" alt=""></a>
+    <a href="{% url 'articles:articles_create' %}"><img class="nav-img base_8" src="{% static 'images/diary2.png' %}" alt=""></a>
+    <a href="{% url 'main' %}"><img class="nav-img base_9" src="{% static 'images/community2.png' %}" alt="" ></a>
     {% if user.is_authenticated %}
-    <a href="{% url 'accounts:profile' user.pk %}"><img class="nav-img" src="{% static 'images/user2.png' %}" alt="" style="height:30px; width:30px;"></a>
+    <a href="{% url 'accounts:profile' user.pk %}"><img class="nav-img base_5" src="{% static 'images/user2.png' %}" alt=""></a>
     {% else %}
-    <a href="{% url 'accounts:login' %}"><img class="nav-img" src="{% static 'images/user2.png' %}" alt="" style="height:30px; width:30px;"></a>
+    <a href="{% url 'accounts:login' %}"><img class="nav-img base_5" src="{% static 'images/user2.png' %}" alt=""></a>
     {% endif %}
   </div>
 
