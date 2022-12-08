@@ -1,55 +1,4 @@
-{% extends 'base.html' %}
-
-{% block css %}
-  <link rel="stylesheet" href="/static/css/calendar2.css">
-{% endblock css %}
-
-{% block content %}
-<div class="container d-flex justify-content-center align-items-center">
-  <div class="my-calendar clearfix">
-    {% if user.is_authenticated %}
-    <h3 class="mt-3 title_is_user d-flex justify-content-center align-items-center" style="padding-bottom:1rem;"><span style="font-weight:bold;">{{ user.fullname }}</span>님의 다이어리🎵</h3>
-    {% else %}
-      <h3 class="mt-3 title_not_user d-flex justify-content-center" style="padding-bottom:1rem;"><a class="title_not_user_link" href="{% url 'accounts:login' %}">로그인 해 주세요!</a></h3>
-    {% endif %}
-    <div class="row">
-      <div class="calendar-box col-md-6 col-sm-12">
-        <div class="ctr-box clearfix">
-          <button type="button" title="prev" class="btn-cal prev">
-          </button>
-          <span class="cal-year"></span>
-          <span class="cal-month"></span>
-          <button type="button" title="next" class="btn-cal next">
-          </button>
-        </div>
-        <table class="cal-table">
-          <thead>
-            <tr>
-              <th>일</th>
-              <th>월</th>
-              <th>화</th>
-              <th>수</th>
-              <th>목</th>
-              <th>금</th>
-              <th>토</th>
-            </tr>
-          </thead>
-          <tbody class="cal-body"></tbody>
-        </table>
-      </div>
-      <div class="clicked-date col-md-6 col-sm-12" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <div class="cal-day" style="padding-bottom:1rem; font-size:20px;"></div>
-        <div class="cal-date" style="font-size:15px;"></div>
-      </div>
-    </div>
-  </div>
-  <!-- // .my-calendar -->
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-  const init = {
+const init = {
   monList: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
   dayList: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
   today: new Date(),
@@ -183,9 +132,3 @@ if (e.target.classList.contains('day')) {
   init.activeDate.setDate(day);
 }
 });
-
-</script>
-
-<div style="height:10rem;"></div>
-
-{% endblock content %}
