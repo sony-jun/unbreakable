@@ -4,6 +4,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="/static/css/accounts.css">
+<link rel="stylesheet" href="/static/accounts/css/signup.css">
 {% endblock css %}
 
 {% block content %}
@@ -73,8 +74,8 @@
                     </div>
                 </div>
 
-                <div style="overflow:auto;" id="nextprevious">
-                    <div style="float:right; padding:3vw;">
+                <div class="text2" id="nextprevious">
+                    <div class="text3">
                         <img class="step-button prev" id="prevBtn" onclick="nextPrev(-1)" src="{% static 'images/left-arrow.png' %}" alt="">
                         <img class="step-button next" id="nextBtn" onclick="nextPrev(1)" src="{% static 'images/right-arrow.png' %}" alt="">
                         <button class="final" id="signup-submit" type="submit"><img class="step-button" src="{% static 'images/right-arrow.png' %}" alt=""></button>
