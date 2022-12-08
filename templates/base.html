@@ -37,10 +37,10 @@
     <!-- login/bell -->
     <div class="top_account base_4">
       {% if request.user.is_authenticated %}
-      <a class="top_account_img" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" class="base_5"></a>
+      <a class="top_account_img logo-bg" href="{% url 'accounts:logout' %}"><img src="{% static 'images/logout.png' %}" alt="logo" class="base_5"></a>
+      <a class="top_account_img mx-3 logo-bg" href="{% url 'accounts:message_receive' %}"><img src="{% static 'images/bell.png' %}" alt="bell" class="base_5"></a>
       <div class="position-relative">
-        <a class="top_account_img mx-3" href="{% url 'accounts:message_receive' %}"><img src="{% static 'images/bell.png' %}" alt="bell" class="base_5"></a>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{count}}</span>
+        <span class="cnt start-100 translate-middle badge rounded-pill bg-danger">{{count}}</span>
       </div>
       {% else %}
       <a class="top_account_img" href="{% url 'accounts:login' %}"><img src="{% static 'images/login.png' %}" alt="logo" class="base_5"></a>

@@ -29,6 +29,11 @@
 
 .detail_content_position {
   flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .thumbnail {
@@ -51,4 +56,18 @@
 .music_btn {
   height: 100px;
   width: 150px;
+}
+
+.flag {
+  height: 30px;
+  width: 30px;
+}
+
+.cdp {
+  background-color: white; 
+  padding: 1rem; 
+  position: absolute; 
+  top: 34px; 
+  left: 34px; 
+  border-radius: 50%;
 }

@@ -74,6 +74,18 @@
     background-color: rgb(255, 255, 255, 0.4);
 }
 
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.title-text {
+font-weight: lighter;
+background-color:rgb(239, 239, 239, 0.4); 
+width:40vw;
+text-align: center;
+}
+
 .short{
     display: -webkit-box;
 	-webkit-box-orient: vertical;

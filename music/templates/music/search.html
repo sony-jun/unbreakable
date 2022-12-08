@@ -22,17 +22,8 @@
           <button type="submit" name="submit" value="search" class="btn px-5 btn-submit">검색</button>
         </div>
       </form>
-
     </div>
-    <form method="POST">
-      <div class="input-group mb-3">
-        {% csrf_token %}
-        <input type="text" name="search" placeholder="검색어에 따라 6개의 결과물을 출력해 줍니다." class="form-control input-box" aria-label="Username">
-        <button type="submit" name="submit" value="search" class="btn px-5 btn-submit">검색</button>
-      </div>
-    </form>
-  </div>
-</section>
+  </section>
 
   <div class="py-5">
     <div class="container">
@@ -41,10 +32,10 @@
         <div class="col-6 col-md-4 mb-4">
           <form class="h-100" action="{% url 'music:create' %}" method="post">
             {% csrf_token %}
-            <input name="song_title" class="invi" value='{{ video.title }}'></input>
-            <input name="song_url" class="invi" value='{{ video.id }}'></input>
-            <input name="song_thumbnail" class="invi" value='{{ video.thumbnail }}'></input>
-            <input name="song_runtime" class="invi" value="{{ video.duration }}"></input>
+            <input name="song_title" style="display: none;" value='{{ video.title }}'></input>
+            <input name="song_url" style="display: none;" value='{{ video.id }}'></input>
+            <input name="song_thumbnail" style="display: none;" value='{{ video.thumbnail }}'></input>
+            <input name="song_runtime" style="display: none;" value="{{ video.duration }}"></input>
           <div class="card shadow-sm h-100">
               <iframe class="youtube-player-4f3f462072931" type="text/html" width="100%" height="225" src="http://www.youtube.com/embed/{{ video.id }}" frameborder="0"></iframe>
             <div class="card-body card-box">
@@ -53,10 +44,8 @@
                 <small class="text-muted">{{ video.duration }}</small>
                 <button type="submit" class="btn btn-submit add-btn">노래 추가하기</button>
               </div>
-
             </div>
           </div>
-        </div>
         </form>
       </div>
       {% endfor %}
