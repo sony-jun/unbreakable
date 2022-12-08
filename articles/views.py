@@ -30,10 +30,6 @@ from django.db.models import Value
 from django.db.models.functions import Replace
 
 
-def test(request):
-    return render(request, "articles/test.html")
-
-
 def calendar2(request):
     return render(request, "articles/calendar2.html")
 

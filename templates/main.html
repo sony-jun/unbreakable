@@ -68,7 +68,7 @@
                 {% if article.picture %}
                 <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover rounded" src="{{ article.picture.url }}" alt="{{ article.picture }}" style="height:300px; width:100%;"></a>
                 {% else %}
-                <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover rounded" src="" alt="" style="height:300px; width:100%;"></a>
+                <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover rounded" src="{% static 'images/logo.png' %}" alt="" style="height:300px; width:100%;"></a>
                 {% endif %}
             </div>
             <div class="col-md-6 col-sm-12">
