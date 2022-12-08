@@ -22,7 +22,7 @@
             {% endif %}
             <form action="{% url 'accounts:signup' %}" method="POST">
                 {% csrf_token %}
-                <h1 align="center" style="font-size:25px;">회원가입</h1>
+                <h1 class="text1" align="center">회원가입</h1>
                 <div class="all-steps" id="all-steps"> 
                     <img class="step" src="{% static 'images/heart.png' %}" alt=""> 
                     <img class="step" src="{% static 'images/heart.png' %}" alt=""> 
