@@ -26,3 +26,8 @@
     height: 100px;
     width: 150px;
 }
+
+.message_detail_6{
+    max-width: 450px;
+    margin:auto;
+}

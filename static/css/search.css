@@ -15,7 +15,7 @@
 .search-div {
   position: absolute;
   top: 1;
-  width: 700px;
+  width: 40%;
   height: 300px;
   background-color: rgb(238, 238, 238);
   overflow: scroll;
@@ -24,4 +24,16 @@
   border-radius: 10px;
   border: var(--my-gray) solid 1px;
   opacity: 1;
+}
+
+@media(max-width: 768px) {
+  .search-div {
+    width: 50%;
+  }
+}
+
+@media(max-width: 480px) {
+  .search-div {
+    width: 70%;
+  }
 }
