@@ -26,8 +26,8 @@
 }
 
 .song-box{
-    background-color:black; 
-    width:97%; 
+    background-color:black;
+    width:100%;
     flex-direction:row; 
     margin-bottom:2rem;
 }
@@ -58,18 +58,17 @@
 }
 
 .picture-box{
-    margin:2rem;
+
 }
 
 .no-picture-box{
-    margin:2rem; 
     height:20vh; 
     overflow:hidden; 
     text-overflow:ellipsis;
 }
 
 .content-text{
-    font-size:20px; 
+    font-size:16px; 
     margin:0; 
     color:gray; 
     background-color: rgb(255, 255, 255, 0.4);
@@ -85,4 +84,11 @@ font-weight: lighter;
 background-color:rgb(239, 239, 239, 0.4); 
 width:40vw;
 text-align: center;
+}
+
+.short{
+    display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+    overflow:hidden;
 }
