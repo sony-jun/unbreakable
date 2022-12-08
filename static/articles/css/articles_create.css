@@ -1,0 +1,42 @@
+.main_position {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_style {
+  background-color: rgb(239, 239, 239, 0.5);
+  box-shadow: 5px 5px 30px 5px #363062;
+  border-radius: 15px;
+  width: 60vw;
+  min-width: 350px;
+}
+
+.main_title {
+  margin-top: 1rem;
+  font-weight: lighter;
+  font-size: 20px;
+  padding-top: 2rem;
+}
+
+.title_name {
+  font-weight: bold;
+}
+
+.main_search {
+  display: flex;
+  flex-direction: column;
+}
+
+.main_today_search {
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.main_create_button {
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
