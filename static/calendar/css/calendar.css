@@ -1,12 +1,25 @@
+html, body {
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight:lighter!important;
+}
+
+.bold{
+  font-weight:bold;
+}
+
+/*로그인 유무에 따라*/
 .title_is_user{
   font-size:20px; 
   font-weight:lighter;
+  padding-bottom:1rem;
 }
 
 .title_not_user{
   font-size:20px; 
   color:black; 
   font-weight:lighter;
+  padding-bottom:1rem;
 }
 
 .title_not_user_link{
@@ -28,12 +41,6 @@
   font-weight:bold;
 }
 
-html, body {
-  box-sizing: border-box;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-weight:lighter!important;
-}
-
 *, *:before, *:after {
   box-sizing: inherit;
 }
@@ -45,7 +52,6 @@ html, body {
   float: none;
 }
 
-/* ======== Calendar ======== */
 .my-calendar {
   width: 800px;
   margin: 30px;
@@ -63,6 +69,10 @@ html, body {
   font-weight:400;
   padding: 46px 0 26px;
   background-color: rgb(152, 146, 206);
+  display:flex; 
+  flex-direction:column; 
+  justify-content:center; 
+  align-items:center;
 }
 
 .my-calendar .calendar-box {
@@ -71,11 +81,14 @@ html, body {
 
 .clicked-date .cal-day {
   font-size: 30px;
+  padding-bottom:1rem; 
+  font-size:20px;
 }
 
 .clicked-date .cal-date {
   font-size: 20px;
   font-weight:lighter;
+  font-size:15px;
 }
 
 .ctr-box {

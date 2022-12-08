@@ -8,39 +8,21 @@ from .forms import (
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from accounts.models import Message
-from .models import Articles, Sympathy
+from .models import Articles, Sympathy, Comment
 from django.utils import timezone
 from music.models import Song
 from django.views.generic.base import TemplateView
 import json
 from django.db.models import Q
-
-
-# search
 import requests
 from django.conf import settings
 from isodate import parse_duration
-
-# Create your views here.
-
-from .models import Articles, Comment
 from django.contrib.auth.decorators import login_required
-
 from django.db.models import Value
 from django.db.models.functions import Replace
 
-
-def test(request):
-    return render(request, "articles/test.html")
-
-
-def calendar2(request):
-    return render(request, "articles/calendar2.html")
-
-
 def calendar(request):
-    return render(request, "articles/calendar2.html")
-
+    return render(request, "articles/calendar.html")
 
 def articles_index(request):
     articles = Articles.objects.filter(disclosure=True).order_by("-created_at")
@@ -48,7 +30,6 @@ def articles_index(request):
         "articles": articles,
     }
     return render(request, "articles/articles_index.html", context)
-
 
 @login_required
 def articles_create(request):
@@ -61,7 +42,6 @@ def articles_create(request):
                 articles.song = so
             articles.user = request.user
             articles.save()
-
             return redirect("main")
     else:
         articles_form = ArticlesForm()
@@ -69,7 +49,6 @@ def articles_create(request):
         "articles_form": articles_form,
     }
     return render(request, "articles/articles_create.html", context)
-
 
 def song_search(request):
     search_data = request.GET.get("search", "")
@@ -89,10 +68,6 @@ def song_search(request):
     }
     return JsonResponse(context)
 
-
-# test
-
-
 def articles_detail(request, articles_pk):
     articles = get_object_or_404(Articles, pk=articles_pk)
     context = {
@@ -104,7 +79,6 @@ def articles_detail(request, articles_pk):
     }
     return render(request, "articles/articles_detail.html", context)
 
-
 @login_required
 def articles_delete(request, articles_pk):
     articles = get_object_or_404(Articles, pk=articles_pk)
@@ -113,7 +87,6 @@ def articles_delete(request, articles_pk):
             articles.delete()
             return redirect("articles:articles_index")  # 아마도 메인페이지?
     return redirect("articles:articles_detail", articles_pk)
-
 
 @login_required
 def articles_update(request, articles_pk):
@@ -188,7 +161,6 @@ def comment_create(request, articles_pk):
     else:
         return redirect("accounts:login")
 
-
 @login_required
 def comment_delete(request, articles_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
@@ -223,7 +195,6 @@ def sympathy(request, articles_pk):
 # 게시글 신고
 from django.db import IntegrityError
 
-
 @login_required
 def articles_declaration(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
@@ -247,7 +218,6 @@ def articles_declaration(request, articles_pk):
         "articles_declaration_form": articles_declaration_form,
     }
     return render(request, "articles/articles_detail.html", context)
-
 
 @login_required
 def comment_declaration(request, articles_pk, comment_pk):

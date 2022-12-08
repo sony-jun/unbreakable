@@ -1,0 +1,28 @@
+.message_detail_1{
+    background-color: rgb(239, 239, 239, 0.8);
+    box-shadow: 5px 5px 30px 5px #363062;
+    border-radius: 15px;
+    width: 30vw;
+    min-width: 320px;
+    word-break: break-all;
+}
+
+.message_detail_2{
+    color: red;
+}
+
+.message_detail_3{
+    height: 100px;
+    width: 100px;
+}
+
+.message_detail_4{
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+}
+
+.message_detail_5{
+    height: 100px;
+    width: 150px;
+}

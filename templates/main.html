@@ -2,27 +2,7 @@
 {% load static %}
 
 {% block css %}
-<style>
-.addtxt {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	text-align: center;
-	font-size: 13px;
-	width: 400px;
-	background-color: #e5e8ed;
-}
-.form-control {
-	color: #000;
-}
-
-.text1{
-	text-overflow: ellipsis;
-	overflow: hidden;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 15;
-}
-</style>
+<link rel="stylesheet" href="/static/css/timeline.css">
 {% endblock css %}
 
 {% block content %}
@@ -54,16 +34,16 @@
 <div class="container">
     {% for article in articles %}
     <div> 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 my-5" style=" box-shadow:5px 5px 30px 5px #363062; background-color:rgb(239, 239, 239, 0.5); border-radius:15px;">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 my-5 card-box">
             <div class="col-md-6 col-sm-12 p-4">
                 <div class="row row-cols-2">
                     {% if article.song %}
-                    <div class="d-flex ms-2 mt-2 rounded" style="background-color:black; width:97%; flex-direction:row; margin-bottom:2rem;">
-                        <div class="col-5" style="display:flex; justify-content:center; align-items:center;">
-                            <img src="{{ article.song.song_thumbnail }}" alt="" style="width:100px; padding:0;">
+                    <div class="d-flex ms-2 mt-2 rounded song-box">
+                        <div class="col-5 song-img-box">
+                            <img class="song-img" src="{{ article.song.song_thumbnail }}" alt="">
                         </div>
-                        <div class="col-7 d-flex" style="align-items:center;">
-                            <p class="mt-3" style="color:white; overflow:hidden; word-break:break-all; font-size:12px; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical;">{{ article.song.song_title }}</p>
+                        <div class="col-7 d-flex song-title-box">
+                            <p class="mt-3 song-title">{{ article.song.song_title }}</p>
                         </div>
                     </div>
                     {% endif %}
@@ -71,19 +51,19 @@
                 {% if article.picture %}
                 <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover rounded" src="{{ article.picture.url }}" alt="{{ article.picture }}" style="height:300px; width:100%;"></a>
                 {% else %}
-                <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover rounded" src="" alt="" style="height:300px; width:100%;"></a>
+                <a href="{% url 'articles:articles_detail' article.pk %}"><img class="hover rounded" src="{% static 'images/logo.png' %}" alt="" style="height:300px; width:100%;"></a>
                 {% endif %}
             </div>
             <div class="col-md-6 col-sm-12">
                 {% if article.picture %}
-                <div style="margin:2rem;">
-                    <h1 style="font-size:20px; margin:0; color:gray; background-color: rgb(255, 255, 255, 0.4);" class="mb-2">누군가의 이야기</h1>
+                <div class="picture-box">
+                    <h1 class="mb-2 content-text">누군가의 이야기</h1>
                     <p class="text5 text-end">{{ article.created_at }}</p>
                     <a class="text-decoration-none text-dark" href="{% url 'articles:articles_detail' article.pk %}"><p class="text1 long">{{ article.content | linebreaksbr }}</p></a>
                 </div>
                 {% else %}
-                <div style="margin:2rem; height:20vh; overflow:hidden; text-overflow:ellipsis;">
-                    <h1 style="font-size:20px; margin:0; color:gray; background-color: rgb(255, 255, 255, 0.4);" class="mb-2">누군가의 이야기</h1>
+                <div class="no-picture-box">
+                    <h1 class="mb-2 content-text">누군가의 이야기</h1>
                     <p class="text5 text-end">{{ article.created_at }}</p>
                     <a class="text-decoration-none text-dark" href="{% url 'articles:articles_detail' article.pk %}"><p class="text1 short">{{ article.content | linebreaksbr }}</p></a>
                 </div>
