@@ -3,27 +3,27 @@
 
 {% block css %}
 <link rel="stylesheet" href="/static/css/accounts.css">
+<link rel="stylesheet" href="/static/accounts/css/login.css">
 {% endblock css %}
-
 {% block content %}
 
 <!-- login -->
 
-<div class="text-center login-box" style="height:100vh;">
-    <h1 style="font-size:20px;">로그인</h1>
+<div class="text-center login-box">
+    <h1 class="text1">로그인</h1>
 
-    <form class="form-signin" action="{% url 'accounts:login' %}" method="POST" style="padding:1rem 0;">
+    <form class="form-signin form1" action="{% url 'accounts:login' %}" method="POST">
         {% csrf_token %}
         <div class="input-text">
-            <input class="input-box input-id" style="min-width: 300px;" type="text" name="username" id="id" class="form-control" placeholder="아이디" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+            <input class="input-box input-id width" type="text" name="username" id="id" class="form-control" placeholder="아이디" required autofocus readonly onfocus="this.removeAttribute('readonly');">
         </div>
         <div class="input-text">
-            <input class="input-box input-password" style="min-width: 300px;" type="password" name="password" id="pw" class="form-control" placeholder="비밀번호" required autofocus readonly onfocus="this.removeAttribute('readonly');">
+            <input class="input-box input-password width" type="password" name="password" id="pw" class="form-control" placeholder="비밀번호" required autofocus readonly onfocus="this.removeAttribute('readonly');">
         </div>
-        <button class="btn login-btn" style="min-width: 300px;" type="submit">로그인</button>
+        <button class="btn login-btn width" type="submit">로그인</button>
     </form>
-    <a href="{% url 'accounts:kakao' %}"><button class="btn kakao-btn" style="min-width: 300px;">카카오 로그인</button></a><br>
-    <div style="padding-top:3vh;">
+    <a href="{% url 'accounts:kakao' %}"><button class="btn kakao-btn width">카카오 로그인</button></a><br>
+    <div class="pt-3">
         <a align="center" class="signup-link" href="{% url 'accounts:signup' %}">회원가입 하러가기</a>
     </div>
 </div>

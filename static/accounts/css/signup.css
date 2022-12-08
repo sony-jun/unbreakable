@@ -1,0 +1,12 @@
+.text1{
+    font-size: 25px;
+}
+
+.text2{
+    overflow: auto;
+}
+
+.text3{
+    float: right;
+    padding: 3vw;
+}
