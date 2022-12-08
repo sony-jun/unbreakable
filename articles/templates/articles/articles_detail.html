@@ -20,7 +20,7 @@
 <meta charset="UTF-8">
 <title>StopWatch</title>
 
-
+{% block content %}
 
 <div class="main_position">
   <div class="main_style">
@@ -34,7 +34,7 @@
         <div class="d-flex bg-white p-4 rounded-5 review-card" style="top: 10rem;">
           <div class="mb-3 d-flex justify-content-between align-items-center">
           </div>
-          <div class="mb-3 d-flex justify-content-between align-items-center detail_content_position">
+          <div class="detail_content_position">
             {% if request.user == articles.user %}
             <h1 class="text-start fs-6 mb-0 fw-bold font-space">내가 쓴 글</h1>
             {% else %}
@@ -73,8 +73,10 @@
             </form>
             {% else %}
               {% if user.is_authenticated%}
-              <a href="{% url 'accounts:message_create' articles.user.pk articles.pk %}">메시지 보내기</a>
-              <a href="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">게시글 신고하기</a>
+              <div>
+                <a href="{% url 'accounts:message_create' articles.user.pk articles.pk %}" class="btn btn-primary my-3 mx-2">메시지 보내기</a>
+                <a href="{% url 'articles:articles_declaration' articles.pk %}" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger my-3 mx-2">게시글 신고하기</a>
+              </div>
               {% endif%}
             {% endif %}
           </div>
@@ -118,8 +120,9 @@
                 <div id="time" class="time ">00:00:00</div>
               </div>
               <div class="btnBox d-flex justify-content-center align-items-center">
-                <div class="thumbnail" id="recorder" >
+                <div class="thumbnail" id="recorder" style="position: relative;">
                   <img src="{{ articles.song.song_thumbnail }}" class="thumbnail">
+                  <div class="cdp"></div>
                 </div>
                 <div class="d-flex justify-content-center align-items-center music_btn">
                   <i id="play-button" class="fa fa-play" aria-hidden="true"></i>
@@ -129,7 +132,7 @@
               </div>
               <div id="player"></div>
             </div>
-            <div class="text-bg-dark">
+            <div class="mt-2 text-bg-dark">
               <MARQUEE>{{ articles.song.song_title }}</MARQUEE>
             </div>
           </div>
@@ -188,7 +191,7 @@
                       </form>
                       {% else %}
                         {% if user.is_authenticated %}
-                        <a href="" class="text-decoration-none" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">댓글 신고하기</a>
+                        <a href="" class="text-decoration-none" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="{% static 'images/warning.png' %}" class="flag"></a>
                         {% endif %}
                       {% endif %}
                     </div>

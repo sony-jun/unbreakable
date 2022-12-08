@@ -92,6 +92,6 @@ class CommentDeclarationForm(forms.ModelForm):
         fields = [
             "content",
         ]
-        label = {
+        labels = {
             "content": "신고내용",
         }

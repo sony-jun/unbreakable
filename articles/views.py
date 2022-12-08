@@ -37,9 +37,10 @@ def articles_create(request):
         articles_form = ArticlesForm(request.POST, request.FILES)
         if articles_form.is_valid():
             articles = articles_form.save(commit=False)
-            if request.POST["song"]:
-                so = Song.objects.get(song_title=request.POST["song"])
-                articles.song = so
+            so = Song.objects.filter(song_title=request.POST["song"]).exists()
+            if so:
+                song = Song.objects.get(song_title=request.POST["song"])
+                articles.song = song
             articles.user = request.user
             articles.save()
             return redirect("main")
