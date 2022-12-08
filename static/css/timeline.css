@@ -58,19 +58,25 @@
 }
 
 .picture-box{
-    margin:2rem;
+
 }
 
 .no-picture-box{
-    margin:2rem; 
     height:20vh; 
     overflow:hidden; 
     text-overflow:ellipsis;
 }
 
 .content-text{
-    font-size:20px; 
+    font-size:16px; 
     margin:0; 
     color:gray; 
     background-color: rgb(255, 255, 255, 0.4);
+}
+
+.short{
+    display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+    overflow:hidden;
 }

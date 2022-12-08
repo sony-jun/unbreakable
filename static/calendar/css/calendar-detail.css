@@ -58,11 +58,10 @@
 }
 
 .picture-box{
-    margin:2rem;
+
 }
 
 .no-picture-box{
-    margin:2rem; 
     height:20vh; 
     overflow:hidden; 
     text-overflow:ellipsis;
