@@ -6,7 +6,6 @@ def main(request):
     articles = []
     if request.user.is_authenticated:
         articles = Articles.objects.filter(user=request.user).order_by('-pk')
-    print(articles)
     context = {
         'articles':articles,
     }
