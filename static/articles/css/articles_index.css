@@ -5,8 +5,8 @@
 
 .title-text {
   font-weight: lighter;
-  background-color:rgb(239, 239, 239, 0.4); 
-  width:40vw;
+  background-color: rgb(239, 239, 239, 0.4);
+  width: 30vw;
   text-align: center;
 }
 
@@ -17,66 +17,66 @@
 }
 
 .article-card {
-  box-shadow:5px 5px 30px 5px #363062; 
-  background-color:rgb(239, 239, 239, 0.5); 
-  border-radius:15px;
+  box-shadow: 5px 5px 30px 5px #363062;
+  background-color: rgb(239, 239, 239, 0.5);
+  border-radius: 15px;
   margin-bottom: 3rem !important;
 }
 
 .playlist {
-  background-color:black; 
-  width:97%; flex-direction:row; 
-  margin-bottom:2rem;
+  background-color: black;
+  width: 97%;
+  flex-direction: row;
+  margin-bottom: 2rem;
 }
 
 .thumbnail-body {
-  display:flex; 
-  justify-content:center; 
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .thumbnail-image {
-  width:100px; 
-  padding:0;
+  width: 100px;
+  padding: 0;
 }
 
 .song-title-body {
-  align-items:center;
+  align-items: center;
   display: flex;
 }
 
 .song-title-text {
   margin: 0;
-  color:white;
-  overflow:hidden;
-  word-break:break-all; 
-  font-size:12px; 
+  color: white;
+  overflow: hidden;
+  word-break: break-all;
+  font-size: 12px;
   display:
-  -webkit-box; 
-  -webkit-line-clamp:1; 
-  -webkit-box-orient:vertical
+    -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical
 }
 
 .articles-image {
-  height:300px; 
-  width:100%;
+  height: 300px;
+  width: 100%;
 }
 
 .articles-body-nopic {
-  margin:2rem;
+  margin: 2rem;
 }
 
 .articles-body-pic {
-  margin:2rem; 
-  height:20vh; 
-  overflow:hidden; 
-  text-overflow:ellipsis;
+  margin: 2rem;
+  height: 20vh;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .articles-user {
-  font-size:20px; 
-  margin-bottom: 0.5rem; 
-  color:gray; 
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+  color: gray;
   background-color: rgb(255, 255, 255, 0.4);
 }
-
