@@ -57,7 +57,7 @@
 
     <a href="{% url 'articles:calendar' %}"><img class="nav-img base_7" src="{% static 'images/calendar2.png' %}" alt=""></a>
     <a href="{% url 'articles:articles_create' %}"><img class="nav-img base_8" src="{% static 'images/diary2.png' %}" alt=""></a>
-    <a href="{% url 'main' %}"><img class="nav-img base_9" src="{% static 'images/community2.png' %}" alt="" ></a>
+    <a href="{% url 'articles:articles_index' %}"><img class="nav-img base_9" src="{% static 'images/community2.png' %}" alt="" ></a>
     {% if user.is_authenticated %}
     <a href="{% url 'accounts:profile' user.pk %}"><img class="nav-img base_5" src="{% static 'images/user2.png' %}" alt=""></a>
     {% else %}

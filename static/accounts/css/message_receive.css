@@ -2,3 +2,16 @@
     font-size: 20px;
     overflow: hidden;
 }
+
+.message_receive_3{
+    width: 400px;
+    margin:auto;
+    display: flex;
+    justify-content: end;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.red{
+    background-color: red;
+}
