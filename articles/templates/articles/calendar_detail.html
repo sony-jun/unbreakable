@@ -12,22 +12,19 @@
     <div> 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 my-5 card-box">
             <div class="col-md-6 col-sm-12 p-4">
-                <div class="row row-cols-2">
-                    {% if diary.song %}
-                    <div class="d-flex ms-2 mt-2 rounded song-box">
-                        <div class="col-5 song-img-box">
-                            <img class="song-img" src="{{ diary.song.song_thumbnail }}" alt="">
-                        </div>
-                        <div class="col-7 d-flex song-title-box">
-                            <p class="mt-3 song-title">{{ diary.song.song_title }}</p>
-                        </div>
+                {% if diary.song %}
+                <div class="d-flex mt-4 rounded song-box">
+                    <div class="col-5 song-img-box" >
+                        <img class="song-img" src="{{ diary.song.song_thumbnail }}" alt="">
                     </div>
-                    {% endif %}
+                    <div class="col-7 d-flex song-title-box">
+                        <p class="mt-3 song-title">{{ diary.song.song_title }}</p>
+                    </div>
                 </div>
+                {% endif %}
                 {% if diary.picture %}
                 <a href="{% url 'articles:articles_detail' diary.pk %}"><img class="hover rounded" src="{{ diary.picture.url }}" alt="{{ diary.picture }}" style="height:300px; width:100%;"></a>
-                {% else %}
-                <a href="{% url 'articles:articles_detail' diary.pk %}"><img class="hover rounded" src="" alt="" style="height:300px; width:100%;"></a>
+
                 {% endif %}
             </div>
             <div class="col-md-6 col-sm-12">
