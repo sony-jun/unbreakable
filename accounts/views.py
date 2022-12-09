@@ -201,7 +201,7 @@ def message_create(request, user_pk, articles_pk):
     receiver = User.objects.get(pk=user_pk)
     if request.method == "POST":
         message_form = MessageForm(request.POST)
-        if message_form.is_valid:
+        if message_form.is_valid():
             message = message_form.save(commit=False)
             message.sender = request.user
             message.receiver = receiver
@@ -211,6 +211,13 @@ def message_create(request, user_pk, articles_pk):
                 message.song = song
             message.save()
             return redirect("articles:articles_detail", articles_pk)
+        else:
+            message_form = MessageForm()
+            context = {
+                "receiver": receiver,
+                "message_form": message_form,
+            }
+        return render(request, "accounts/message_create.html", context)
     else:
         message_form = MessageForm()
     context = {
