@@ -3,7 +3,8 @@ name: EB_Deploy
 on:
   push:
     branches: [master]
-
+  pull_request:
+    branches: [master]
 
 jobs: 
   deploy: 
@@ -19,7 +20,7 @@ jobs:
       - name: Get timestamp
         uses: gerred/actions/current-time@master
         id: current-time
-        
+
       - name: Run string replace
         uses: frabert/replace-string-action@master
         id: format-time
