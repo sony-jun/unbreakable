@@ -26,9 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-!a4^uwgtbq*i($&-yhxu-0yq2oo#jedseqse=fgiig--tqzeeu"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "Unbreakableheart-env.eba-fq3y3emz.ap-northeast-2.elasticbeanstalk.com",
+]
 
 
 # Application definition
@@ -38,6 +43,7 @@ INSTALLED_APPS = [
     "articles",
     "imagekit",
     "music",
+    "storages",
     "django_bootstrap5",
     "django_extensions",
     "django.contrib.admin",
@@ -83,12 +89,23 @@ WSGI_APPLICATION = "unbreakable.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "unbreakableheart_rds",  # 코드 블럭 아래 이미지 참고하여 입력
+#         "USER": "postgres",
+#         "PASSWORD": "thsgmlwns12#",  # 데이터베이스 생성 시 작성한 패스워드
+#         "HOST": "unbreakableheart.cfuekq4buyvu.ap-northeast-2.rds.amazonaws.com",  # 코드 블럭 아래 이미지 참고하여 입력
+#         "PORT": "5432",
+#     }
+# }
 
 
 # Password validation
@@ -133,11 +150,60 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-MEDIA_ROOT = BASE_DIR / "images"
-MEDIA_URL = "/media/"
+# MEDIA_ROOT = BASE_DIR / "images"
+# MEDIA_URL = "/media/"
+
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+# AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+# AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+# AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+
+# AWS_REGION = "ap-northeast-2"
+# AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (
+#     AWS_STORAGE_BUCKET_NAME,
+#     AWS_REGION,
+# )
+
 
 AUTH_USER_MODEL = "accounts.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-YOUTUBE_DATA_API_KEY = "AIzaSyD1FOwUsqUrzqG_G03FzWXOEDckbiSVA1M"
+YOUTUBE_DATA_API_KEY = "AIzaSyDmM8FkPClJwXWbnF3-OMHJSxo5Ia5gbP8"
+
+
+DEBUG = os.getenv("DEBUG") == "True"
+# DEBUG = False
+if DEBUG:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+else:
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+
+    AWS_REGION = "ap-northeast-2"
+    AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (
+        AWS_STORAGE_BUCKET_NAME,
+        AWS_REGION,
+    )
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "unbreakableheart_rds",  # 코드 블럭 아래 이미지 참고하여 입력
+            "USER": "postgres",
+            "PASSWORD": "thsgmlwns12#",  # 데이터베이스 생성 시 작성한 패스워드
+            "HOST": "unbreakableheart.cfuekq4buyvu.ap-northeast-2.rds.amazonaws.com",  # 코드 블럭 아래 이미지 참고하여 입력
+            "PORT": "5432",
+        }
+    }
