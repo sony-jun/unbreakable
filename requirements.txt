@@ -17,6 +17,7 @@ django-cleanup==6.0.0
 django-compressor==4.1
 django-extensions==3.2.1
 django-imagekit==4.1.0
+django-pwa==1.0.10
 django-sass-processor==1.2.2
 django-shortcuts==1.6
 django-storages==1.13.1
