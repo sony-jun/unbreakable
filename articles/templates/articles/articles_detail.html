@@ -20,7 +20,7 @@
 
 
 <div class="main_position">
-  <div class="main_style">
+  <div class="main_style" style="margin-bottom: 8rem;">
     <div>
       <h3 class="main_title" align="center"><span style="font-weight:bold;">{{ articles.created_at }}</span>에 작성된 글</h3>
 
@@ -315,11 +315,8 @@
   </div>
 </div>
 
-<div class="container" style="height: 100px;"></div>
-{% if request.user.is_authenticated %}
- {% else %}
-<div class="container" style="height: 100px;">
-{% endif %}
+
+
 
 
 
