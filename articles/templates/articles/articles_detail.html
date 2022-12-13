@@ -316,7 +316,10 @@
 </div>
 
 <div class="container" style="height: 100px;"></div>
-<div class="container" style="height: 100px;"></div>
+{% if request.user.is_authenticated %}
+ {% else %}
+<div class="container" style="height: 100px;">
+{% endif %}
 
 
 
