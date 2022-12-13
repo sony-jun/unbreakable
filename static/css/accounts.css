@@ -152,12 +152,12 @@
 }
 
 .step.active{
-    filter:opacity(0.5) drop-shadow(0 0 0 wheat);
+    filter:opacity(0.5) drop-shadow(0 0 0 rgb(255, 0, 0));
     opacity:1;
 }
 
 .step.finish{
-    filter:opacity(0.5) drop-shadow(0 0 0 wheat);
+    filter:opacity(0.5) drop-shadow(0 0 0 rgb(255, 0, 0));
     opacity: 1;
 }
 

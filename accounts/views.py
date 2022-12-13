@@ -53,10 +53,8 @@ def login(request):
             articles_d = ArticlesDeclaration.objects.filter(reported=request.user.pk)
             if len(message_d) + len(comment_d) + len(articles_d) >= 3:
                 # 임시
-                # auth_logout(request)
-                messages.add_message(
-                    request, messages.WARNING, "정지된 계정입니다. 운영자에게 문의해주세요."
-                )
+                auth_logout(request)
+                messages.warning(request, "정지된 계정입니다. 운영자에게 문의해주세요.")
                 return redirect("main")
             else:
                 return redirect(request.GET.get("next") or "main")
@@ -97,30 +95,36 @@ def update(request, user_pk):
 def profile(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
     articles = user.articles_set.filter(user=user.pk)
-    messages = Message.objects.filter(receiver_id=user.pk).order_by("-articles")
+    message = Message.objects.filter(receiver_id=user.pk).order_by("-articles")
     feelings = Sympathy.objects.filter(user=user_pk)
-
+    liked = []
+    for article in feelings:
+        for i in liked:
+            if article.articles == i.articles:
+                break
+        else:
+            liked.append(article)
     context = {
         "user": user,
         "articles": articles,
-        "messages": messages,
-        "feelings": len(feelings),
+        "message": message,
+        "feelings": len(liked),
     }
     return render(request, "accounts/profile.html", context)
 
 
 @login_required
 def message_receive(request):
-    messages = Message.objects.filter(receiver_id=request.user).order_by("-articles")
+    message = Message.objects.filter(receiver_id=request.user).order_by("-pk")
 
-    if messages:
+    if message:
         context = {
-            "messages": messages,
+            "message": message,
             "message_declaration_form": MessageDeclarationForm(),
         }
     else:
         context = {
-            "messages": 1,
+            "message": 1,
         }
 
     return render(request, "accounts/message_receive.html", context)
@@ -154,7 +158,7 @@ def password(request):
 # 카카오 소셜 로그인
 def kakao_request(reqeust):
     kakao_api = "https://kauth.kakao.com/oauth/authorize?response_type=code"
-    redirect_uri = "http://unbreakableheart-env.eba-fq3y3emz.ap-northeast-2.elasticbeanstalk.com/accounts/kakao/login/callback/"
+    redirect_uri = "http://localhost:8000/accounts/kakao/login/callback/"
     client_id = "fdc7989db5f7e970c9ba50edb78ec9a6"
     return redirect(f"{kakao_api}&client_id={client_id}&redirect_uri={redirect_uri}")
 
@@ -163,7 +167,7 @@ def kakao_callback(request):
     data = {
         "grant_type": "authorization_code",
         "client_id": "fdc7989db5f7e970c9ba50edb78ec9a6",
-        "redirect_uri": "http://unbreakableheart-env.eba-fq3y3emz.ap-northeast-2.elasticbeanstalk.com/accounts/kakao/login/callback/",
+        "redirect_uri": "http://localhost:8000/accounts/kakao/login/callback/",
         "code": request.GET.get("code"),
     }
 
@@ -201,7 +205,7 @@ def message_create(request, user_pk, articles_pk):
     receiver = User.objects.get(pk=user_pk)
     if request.method == "POST":
         message_form = MessageForm(request.POST)
-        if message_form.is_valid():
+        if message_form.is_valid:
             message = message_form.save(commit=False)
             message.sender = request.user
             message.receiver = receiver
@@ -211,13 +215,6 @@ def message_create(request, user_pk, articles_pk):
                 message.song = song
             message.save()
             return redirect("articles:articles_detail", articles_pk)
-        else:
-            message_form = MessageForm()
-            context = {
-                "receiver": receiver,
-                "message_form": message_form,
-            }
-        return render(request, "accounts/message_create.html", context)
     else:
         message_form = MessageForm()
     context = {
@@ -229,12 +226,12 @@ def message_create(request, user_pk, articles_pk):
 
 @login_required
 def message_delete(request):
-    messages = Message.objects.filter(receiver_id=request.user).order_by("-articles")
+    message = Message.objects.filter(receiver_id=request.user).order_by("-articles")
     if request.method == "POST":
 
         selected = request.POST.getlist("selected")
         print(selected)
-        for m in messages:
+        for m in message:
             for s in selected:
                 if m.id == int(s):
                     m.delete()
@@ -243,8 +240,8 @@ def message_delete(request):
 
 @login_required
 def message_delete_all(request):
-    messages = Message.objects.filter(receiver_id=request.user)
-    messages.delete()
+    message = Message.objects.filter(receiver_id=request.user)
+    message.delete()
     return redirect("accounts:message_receive")
 
 
@@ -275,10 +272,10 @@ def message_declaration(request, message_pk):
                 declaration.reported = message.sender
                 declaration.message = message
                 message_declaration_form.save()
-                # messages.warning(request, "신고되었습니다.")
+                messages.warning(request, "신고되었습니다.")
                 return redirect("accounts:message_detail", message_pk)
             except IntegrityError:
-                # messages.info(request, '이미 신고된 메시지입니다.')
+                messages.info(request, '이미 신고된 메시지입니다.')
                 return redirect("accounts:message_detail", message_pk)
     else:
         message_declaration_form = MessageDeclarationForm()
@@ -292,9 +289,9 @@ def counter(request):
     count = 0
     try:
         if request.user.is_authenticated:
-            messages = Message.objects.filter(receiver=request.user)
-            for message in messages:
-                if message.read == 0:
+            message = Message.objects.filter(receiver=request.user)
+            for m in message:
+                if m.read == 0:
                     count += 1
         else:
             pass
@@ -306,8 +303,15 @@ def counter(request):
 
 
 def feeling_page(request):
-    feelings = Sympathy.objects.filter(user=request.user)
+    feelings = Sympathy.objects.filter(user=request.user).order_by("-pk")
+    liked = []
+    for article in feelings:
+        for i in liked:
+            if article.articles == i.articles:
+                break
+        else:
+            liked.append(article)
     context = {
-        "feelings": feelings,
+        "feelings": liked,
     }
     return render(request, "accounts/feeling_page.html", context)

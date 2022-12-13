@@ -18,8 +18,8 @@ function buttonEvt() {
     $("#play-button").click(function () {
 
         if (starFlag) {
-            $(".fa").css("color", "#FAED7D")
-            this.style.color = "#4C4C4C";
+            $(".fa").css("color", "#e2a384")
+            this.style.color = "#4d4c7d";
             starFlag = false;
 
             if (time == 0) {
@@ -55,8 +55,8 @@ function buttonEvt() {
     // pause btn
     $("#pause-button").click(function () {
         if (time != 0) {
-            $(".fa").css("color", "#FAED7D")
-            this.style.color = "#4C4C4C";
+            $(".fa").css("color", "#e2a384")
+            this.style.color = "#4d4c7d";
             clearInterval(timer);
             starFlag = true;
         }
@@ -65,8 +65,8 @@ function buttonEvt() {
     // stop btn
     $("#stop-button").click(function () {
         if (time != 0) {
-            $(".fa").css("color", "#FAED7D")
-            this.style.color = "#4C4C4C";
+            $(".fa").css("color", "#e2a384")
+            this.style.color = "#4d4c7d";
             clearInterval(timer);
             starFlag = true;
             time = 0;

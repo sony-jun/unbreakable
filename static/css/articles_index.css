@@ -17,9 +17,6 @@
 	box-shadow: 10px 10px 5px #aaaaaa;
 }
 .text1{
-	font-size: 15px;
-    font-weight: lighter;
-    color: #56575b;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	display: -webkit-box;
@@ -85,6 +82,6 @@
 }
 
 .text5{
-	font-size: 7px;
-    color: #828386;
+	font-size: 12px;
+    color: #676769;
 }

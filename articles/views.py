@@ -16,13 +16,15 @@ import json
 from django.db.models import Q
 import requests
 from django.conf import settings
-from isodate import parse_duration
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Value
 from django.db.models.functions import Replace
 
+
 def calendar(request):
     return render(request, "articles/calendar.html")
+
 
 def articles_index(request):
     articles = Articles.objects.filter(disclosure=True).order_by("-created_at")
@@ -30,6 +32,7 @@ def articles_index(request):
         "articles": articles,
     }
     return render(request, "articles/articles_index.html", context)
+
 
 @login_required
 def articles_create(request):
@@ -51,6 +54,7 @@ def articles_create(request):
     }
     return render(request, "articles/articles_create.html", context)
 
+
 def song_search(request):
     search_data = request.GET.get("search", "")
     song = Song.objects.filter(song_title__icontains=search_data).all()
@@ -69,25 +73,42 @@ def song_search(request):
     }
     return JsonResponse(context)
 
+
 def articles_detail(request, articles_pk):
     articles = get_object_or_404(Articles, pk=articles_pk)
+    if request.user.is_authenticated:
+        happy = Sympathy.objects.filter(articles=articles, user=request.user, feeling=1)
+        sad = Sympathy.objects.filter(articles=articles, user=request.user, feeling=2)
+        angry = Sympathy.objects.filter(articles=articles, user=request.user, feeling=3)
+        funny = Sympathy.objects.filter(articles=articles, user=request.user, feeling=4)
+    else:
+        happy = 0
+        sad = 0
+        angry = 0
+        funny = 0
+    
     context = {
         "articles": articles,
         "comment_form": CommentForm(),
         "comments": articles.comment_set.all(),
         "articles_declaration_form": ArticlesDeclarationForm(),
         "comment_declaration_form": CommentDeclarationForm(),
+        'f1':happy,
+        'f2':sad,
+        'f3':angry,
+        'f4':funny,
     }
     return render(request, "articles/articles_detail.html", context)
+
 
 @login_required
 def articles_delete(request, articles_pk):
     articles = get_object_or_404(Articles, pk=articles_pk)
     if request.user == articles.user:
-        if request.method == "POST":
-            articles.delete()
-            return redirect("articles:articles_index")  # 아마도 메인페이지?
+        articles.delete()
+        return redirect("articles:articles_index")  # 아마도 메인페이지?
     return redirect("articles:articles_detail", articles_pk)
+
 
 @login_required
 def articles_update(request, articles_pk):
@@ -101,7 +122,7 @@ def articles_update(request, articles_pk):
                     so = Song.objects.get(song_title=request.POST["song"])
                     articles.song = so
                 article.save()
-                
+
             return redirect("articles:articles_detail", articles_pk)
         else:
             articles_form = ArticlesForm(instance=articles)
@@ -112,6 +133,7 @@ def articles_update(request, articles_pk):
     else:
         messages.warning(request, "작성자만 수정 할 수 있습니다.")
         return redirect("articles:articles_index")
+
 
 @login_required
 def comment_create(request, articles_pk):
@@ -162,6 +184,7 @@ def comment_create(request, articles_pk):
     else:
         return redirect("accounts:login")
 
+
 @login_required
 def comment_delete(request, articles_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
@@ -173,28 +196,68 @@ def comment_delete(request, articles_pk, comment_pk):
     return JsonResponse(data)
 
 # 공감 표현
+# 행복
 @login_required
-def sympathy(request, articles_pk):
+def happy(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
-    sympathy = Sympathy.objects.filter(articles=articles, user=request.user)
-    if not sympathy:
-        Sympathy.objects.create(articles=articles, user=request.user)
-    if request.method == "POST":
-        sympathy = Sympathy.objects.get(articles=articles)
-        if request.POST['feeling']=='😊':
-            sympathy.feeling = 1
-        elif request.POST['feeling']=='😥':
-            sympathy.feeling = 2
-        elif request.POST['feeling']=='😡':
-            sympathy.feeling = 3  
-        else:
-            sympathy.feeling = 4
-        sympathy.save()
-        
-    return redirect('articles:articles_detail', articles_pk)
+    sympathy = Sympathy.objects.filter(articles=articles, user=request.user, feeling=1)
+    if sympathy:
+        sympathy.delete()
+        s = False
+    else:
+        Sympathy.objects.create(articles=articles, user=request.user, feeling=1)
+        s = True
+    data = {
+        's': s,
+    }
+    return JsonResponse(data)
+# 슬픔
+def sad(request, articles_pk):
+    articles = Articles.objects.get(pk=articles_pk)
+    sympathy = Sympathy.objects.filter(articles=articles, user=request.user, feeling=2)
+    if sympathy:
+        sympathy.delete()
+        s = False
+    else:
+        Sympathy.objects.create(articles=articles, user=request.user, feeling=2)
+        s = True
+    data = {
+        's': s,
+    }
+    return JsonResponse(data)
+# 화남
+def angry(request, articles_pk):
+    articles = Articles.objects.get(pk=articles_pk)
+    sympathy = Sympathy.objects.filter(articles=articles, user=request.user, feeling=3)
+    if sympathy:
+        sympathy.delete()
+        s = False
+    else:
+        Sympathy.objects.create(articles=articles, user=request.user, feeling=3)
+        s = True
+    data = {
+        's': s,
+    }
+    return JsonResponse(data)
+# 웃김
+def funny(request, articles_pk):
+    articles = Articles.objects.get(pk=articles_pk)
+    sympathy = Sympathy.objects.filter(articles=articles, user=request.user, feeling=4)
+    if sympathy:
+        sympathy.delete()
+        s = False
+    else:
+        Sympathy.objects.create(articles=articles, user=request.user, feeling=4)
+        s = True
+    data = {
+        's': s,
+    }
+    return JsonResponse(data)
+
 
 # 게시글 신고
 from django.db import IntegrityError
+
 
 @login_required
 def articles_declaration(request, articles_pk):
@@ -208,10 +271,10 @@ def articles_declaration(request, articles_pk):
                 declaration.reported = articles.user
                 declaration.articles = articles
                 articles_declaration_form.save()
-                # messages.warning(request, "신고되었습니다.")
+                messages.warning(request, "신고되었습니다.")
                 return redirect("articles:articles_detail", articles_pk)
             except IntegrityError:
-                # messages.info(request, '이미 신고한 게시글입니다.')
+                messages.info(request, '이미 신고한 게시글입니다.')
                 return redirect("articles:articles_detail", articles_pk)
     else:
         articles_declaration_form = ArticlesDeclarationForm()
@@ -219,6 +282,7 @@ def articles_declaration(request, articles_pk):
         "articles_declaration_form": articles_declaration_form,
     }
     return render(request, "articles/articles_detail.html", context)
+
 
 @login_required
 def comment_declaration(request, articles_pk, comment_pk):
@@ -232,10 +296,10 @@ def comment_declaration(request, articles_pk, comment_pk):
                 declaration.reported = comment.user
                 declaration.comment = comment
                 comment_declaration_form.save()
-                # messages.warning(request, "신고되었습니다.")
+                messages.warning(request, "신고되었습니다.")
                 return redirect("articles:articles_detail", articles_pk)
             except IntegrityError:
-                # messages.info(request, '이미 신고한 댓글입니다.')
+                messages.info(request, '이미 신고한 댓글입니다.')
                 return redirect("articles:articles_detail", articles_pk)
     else:
         comment_declaration_form = ArticlesDeclarationForm()
@@ -244,9 +308,10 @@ def comment_declaration(request, articles_pk, comment_pk):
     }
     return render(request, "articles/articles_detail.html", context)
 
+
 def id_sort(request):
     jsonObject = json.loads(request.body)
-    target_id = jsonObject.get('target_id')
+    target_id = jsonObject.get("target_id")
 
     temp_results_user = Articles.objects.all().filter(user=request.user)
     temp_results = temp_results_user.filter(Q(created_at__contains=target_id))
@@ -255,17 +320,25 @@ def id_sort(request):
         results = 1
     else:
         results = 0
-        
+
     context = {
-        'results': results,
+        "results": results,
     }
 
-    return JsonResponse({'results': results})
+    return JsonResponse({"results": results})
+
 
 def calendar_detail(request, date):
     temp_results_user = Articles.objects.all().filter(user=request.user)
-    temp_results = temp_results_user.filter(Q(created_at__contains=date))
+    temp_results = temp_results_user.filter(Q(created_at__contains=date)).order_by('-created_at')
+    dates = date.split('-')
+    year = dates[0]
+    month = dates[1]
+    date = dates[2]
     context = {
-        'diaries': temp_results
+        "diaries": temp_results,
+        "year": year,
+        "month": month,
+        "date": date
     }
-    return render(request, 'articles/calendar_detail.html', context)
+    return render(request, "articles/calendar_detail.html", context)

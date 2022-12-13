@@ -3,7 +3,7 @@
 {% load static %} 
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/accounts.css">
+<!-- <link rel="stylesheet" href="/static/css/accounts.css"> -->
 <link rel="stylesheet" href="/static/accounts/css/signup.css">
 {% endblock css %}
 
@@ -21,10 +21,10 @@
                 </div>
             {% else %}
             {% endif %}
-            <form action="{% url 'accounts:signup' %}" method="POST">
+            <form action="{% url 'accounts:signup' %}" method="POST" style="padding-top:2rem; background-color:rgb(239, 239, 239, 0.5); border-radius: 15px; ">
                 {% csrf_token %}
                 <h1 class="text1" align="center">회원가입</h1>
-                <div class="all-steps" id="all-steps"> 
+                <div class="all-steps" id="all-steps">
                     <img class="step" src="{% static 'images/heart.png' %}" alt=""> 
                     <img class="step" src="{% static 'images/heart.png' %}" alt=""> 
                     <img class="step" src="{% static 'images/heart.png' %}" alt=""> 
@@ -86,7 +86,8 @@
         </div>
     </div>
 </div>
-<div style="height:10rem;"></div>
+
+<div style="height:2rem;"></div>
 
 <script src="{% static 'accounts/js/signup.js' %}"></script>
 {% endblock content %}

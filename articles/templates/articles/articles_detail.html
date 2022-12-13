@@ -4,10 +4,6 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/articles_detail.css">
-<link rel="stylesheet" href="/static/css/search.css">
-<link rel="stylesheet" href="/static/css/articles_create.css">
-<link rel="stylesheet" href="/static/css/btn.css">
 <link rel="stylesheet" href="/static/articles/css/articles_detail.css">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
   integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -26,22 +22,25 @@
 <div class="main_position">
   <div class="main_style">
     <div>
-      <h3 class="main_title" align="center" >오늘은 어떠신가요?</h3>
+      <h3 class="main_title" align="center"><span style="font-weight:bold;">{{ articles.created_at }}</span>에 작성된 글</h3>
 
     </div>
 
     <div class="row detail_box_position">
       <div class="col-lg-7 my-2">
-        <div class="d-flex bg-white p-4 rounded-5 review-card" style="top: 10rem;">
+        <div class="d-flex p-4 review-card" style="top: 10rem; border-radius:15px; background-color:rgb(235, 235, 235);">
           <div class="mb-3 d-flex justify-content-between align-items-center">
           </div>
           <div class="detail_content_position">
             {% if request.user == articles.user %}
-            <h1 class="text-start fs-6 mb-0 fw-bold font-space">내가 쓴 글</h1>
+            <h1 class="text-start fs-5 mb-0 font-space" style="color:rgb(83, 83, 83); padding-bottom:1rem;">나의 추억 <span>{{ articles.feelings }}</span></h1>
             {% else %}
-            <h1 class="text-start fs-6 mb-0 fw-bold font-space">#익명#</h1>
+            <div class="d-flex justify-content-between w-100">
+              <div style=" width:35%;"></div>
+              <h1 class="text-start fs-5 mb-0 font-space" style="color:rgb(83, 83, 83); padding-bottom:1rem; width: 45%;">다른 사람의 추억 </h1>
+              <div style=" width: 15%;">{{ articles.feelings }}</div>
+            </div>
             {% endif %}
-
             {% if articles.picture %}
             <div class="d-flex justify-content-center">
               <img src="{{ articles.picture.url }}" alt="{{ articles.picture }}" class="container px-0"
@@ -53,25 +52,63 @@
             </div>
             {% endif %}
             <div class="fs-6 font-space m-2">{{ articles.content | linebreaksbr }}</div>
-            <div style="font-size: 30pt;">{{ articles.feelings }}
+            {% if user.is_authenticated %}
+            <div class="d-flex">
+              {% if f1 %}
+              <form action="{% url 'articles:happy' articles.pk %}" id="happy-form" data-detail-id="{{ articles.pk }}" class="p-1 m-1 rounded-circle" style=" box-shadow: 5px 5px 5px #363062">
+                {% csrf_token %}
+                <input type="submit" name="feeling" value="😊" class="feeling" style="background: none;">
+              </form>
+              {% else %}
+              <form action="{% url 'articles:happy' articles.pk %}" id="happy-form" data-detail-id="{{ articles.pk }}" class="p-1 m-1 rounded-circle">
+                {% csrf_token %}
+                <input type="submit" name="feeling" value="😊" class="feeling" style="background: none;">
+              </form>
+              {% endif %}
+              {% if f2 %}
+              <form action="{% url 'articles:sad' articles.pk %}" id="sad-form" data-detail-id="{{ articles.pk }}" class="p-1 m-1 rounded-circle" style=" box-shadow: 5px 5px 5px #363062">
+                {% csrf_token %}
+                <input type="submit" name="feeling" value="😥" class="feeling" style="background: none;">
+              </form>
+              {% else %}
+              <form action="{% url 'articles:sad' articles.pk %}" id="sad-form" data-detail-id="{{ articles.pk }}" class="p-1 m-1 rounded-circle">
+                {% csrf_token %}
+                <input type="submit" name="feeling" value="😥" class="feeling" style="background: none;">
+              </form>
+              {% endif %}
+              {% if f3 %}
+              <form action="{% url 'articles:angry' articles.pk %}" id="angry-form" data-detail-id="{{ articles.pk }}" class="p-1 m-1 rounded-circle" style=" box-shadow: 5px 5px 5px #363062">
+                {% csrf_token %}
+                <input type="submit" name="feeling" value="😡" class="feeling" style="background: none;">
+              </form>
+              {% else %}
+              <form action="{% url 'articles:angry' articles.pk %}" id="angry-form" data-detail-id="{{ articles.pk }}" class="p-1 m-1 rounded-circle">
+                {% csrf_token %}
+                <input type="submit" name="feeling" value="😡" class="feeling" style="background: none;">
+              </form>
+              {% endif %}
+              {% if f4 %}
+              <form action="{% url 'articles:funny' articles.pk %}" id="funny-form" data-detail-id="{{ articles.pk }}" class="p-1 m-1 rounded-circle" style=" box-shadow: 5px 5px 5px #363062">
+                {% csrf_token %}
+                <input type="submit" name="feeling" value="🤣" class="feeling" style="background: none;">
+              </form>
+              {% else %}
+              <form action="{% url 'articles:funny' articles.pk %}" id="funny-form" data-detail-id="{{ articles.pk }}" class="p-1 m-1 rounded-circle">
+                {% csrf_token %}
+                <input type="submit" name="feeling" value="🤣" class="feeling" style="background: none;">
+              </form>
+              {% endif %}
+
             </div>
-            <form action="{% url 'articles:sympathy' articles.pk %}" method="POST">
-              {% csrf_token %}
-              <input type="submit" name="feeling" value="😊">
-              <input type="submit" name="feeling" value="😥">
-              <input type="submit" name="feeling" value="😡">
-              <input type="submit" name="feeling" value="🤣">
-            </form>
+            {% endif %}
 
             {% if request.user == articles.user %}
-            <form action="{% url 'articles:articles_delete' articles.pk %}" method="POST">
-              {% csrf_token %}
-              <div class="text-end">
-                <a href="{% url 'articles:articles_update' articles.pk %}" class="btn articles-update-btn rounded-0"
-                  method="POST">수정</a>
-                <input class="btn articles-delete-btn rounded-0" type="submit" value="삭제">
-              </div>
-            </form>
+            <div>
+              <a href="{% url 'articles:articles_update' articles.pk %}" class="btn articles-update-btn rounded-0"
+                method="POST"><i class="bi bi-pencil-square fs-3"></i></a>
+              <a href="{% url 'articles:articles_delete' articles.pk %}" class="btn articles-update-btn rounded-0"
+                ><img src="{% static 'images/trash-can.png' %}" class="flag"></a>
+            </div>
             {% else %}
               {% if user.is_authenticated%}
               <div>
@@ -110,7 +147,7 @@
       </div>
       <div class="col-md-12 col-lg-4 my-2">
         {% if articles.song %}
-        <div class="d-plex bg-white p-1 rounded-5 review-card" style="top: 10rem;">
+        <div class="d-flex pt-2 review-card" style="top: 10rem; border-radius:15px; background-color:rgb(235, 235, 235);">
           <div class="d-flex justify-content-between align-items-center detail_content_position">
             <!--썸네일 부분-->
 
@@ -125,7 +162,7 @@
                   <img src="{{ articles.song.song_thumbnail }}" class="thumbnail">
                   <div class="cdp"></div>
                 </div>
-                <div class="d-flex justify-content-center align-items-center music_btn">
+                <div class="d-flex justify-content-center align-items-center music_btn ms-5">
                   <i id="play-button" class="fa fa-play" aria-hidden="true"></i>
                   <i id="pause-button" class="fa fa-pause" aria-hidden="true"></i>
                   <i id="stop-button" class="fa fa-stop" aria-hidden="true"></i>
@@ -133,14 +170,14 @@
               </div>
               <div id="player"></div>
             </div>
-            <div class="mt-2 text-bg-dark">
+            <div class="mt-2 text-bg-dark rounded-3" style="width: 100%;">
               <MARQUEE>{{ articles.song.song_title }}</MARQUEE>
             </div>
           </div>
         </div>
         <br>
         {% endif %}
-        <div class="d-plex bg-white p-1 rounded-5 review-card" style="top: 10rem;">
+        <div class="d-plex m-1 review-card" style="top: 10rem; border-radius:15px; background-color:rgb(235, 235, 235);">
 
           {% comment %} 댓글 작성 {% endcomment %}
           {% if request.user.is_authenticated %}
@@ -160,13 +197,10 @@
                 {% for comment in comments %}
                 {% if comment.parent_id == None %}
                 <div class="container" id='com{{ comment.pk }}'>
-                  <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                      <span class="text-muted ms-2 font-space">#익명#</span>
+                      <span class="text-muted font-space" style="width:2rem; margin:0;">익명</span>
                     </div>
-                    <!-- 댓글 내용 상세 보기 -->
-                    <a class="mb-0 mx-3 text-truncate font-space text-decoration-none text-black" data-bs-toggle="modal"
-                      data-bs-target="#commentDetailModal{{ comment.pk }}">{{ comment.content }}</a>
                     <!-- 댓글 내용 상세 모달 -->
                     <div class="modal fade shadow-lg" id="commentDetailModal{{ comment.pk }}" tabindex="-1"
                       aria-labelledby="modalLabel" aria-hidden="true">
@@ -188,17 +222,21 @@
                       <form id='parentform' data-articles-id='{{ articles.pk }}' data-comment-id='{{ comment.pk }}'
                         action="{% url 'articles:comment_delete' articles.pk comment.pk %}" method="POST">
                         {% csrf_token %}
-                        <input class="btn btn-outline-dark rounded-0" type="submit" value="삭제">
+                        <button type="submit" style="border:none;"><img src="/static/images/trash-can.png" alt="" style="height:1rem;"></button>
                       </form>
                       {% else %}
                         {% if user.is_authenticated %}
-                        <a href="" class="text-decoration-none" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="{% static 'images/warning.png' %}" class="flag"></a>
+                        <a href="" class="text-decoration-non" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="{% static 'images/alarm.png' %}" class="flag alarm"></a>
                         {% endif %}
                       {% endif %}
                     </div>
                   </div>
+                  <!-- 댓글 내용 상세 보기 -->
+                  <div class="d-flex justify-content-between align-items-center">
+                    <a class="my-2 text-truncate font-space text-decoration-none text-black" data-bs-toggle="modal"
+                      data-bs-target="#commentDetailModal{{ comment.pk }}">{{ comment.content}}</a>
+                  </div>
                   <div class='d-flex align-items-center'>
-                    <hr class="border border-dark border-1 opacity-50 d-block me-2" width="25px;">
                     <a href="" class='text-decoration-none text-dark recomBox'><span data-box-id={{comment.id}}
                         class='text-muted'>답글 보기</span></a>
                   </div>
@@ -226,25 +264,24 @@
                     </div>
                   </div>
 
-                  {% comment %} 대댓글 출력 {% endcomment %}
-
+                  <!-- 대댓글 출력 -->
                   <div id='recom_set{{comment.id}}' style='display: none;' class='py-2'>
                     {% for recom in comments %}
                     {% if comment.id == recom.parent_id %}
                     <div id='com{{ recom.pk }}' class="border my-2 p-2">
-                      <div class="d-flex align-items-center">
-                        <p class="mb-0 ms-2 me-auto text-muted">#익명#</p>
+                      <div class="d-flex align-items-center justify-content-between">
+                        <span class="text-muted font-space" style="width:2rem; margin:0;">익명</span>
+                        <div class="comments_set text-end">
+                          {% if recom.user == request.user %}
+                          <form id='parentform' data-articles-id='{{ articles.pk }}' data-comment-id='{{ recom.id }}'
+                            action="{% url 'articles:comment_delete' articles.pk recom.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" style="border:none;"><img src="/static/images/trash-can.png" alt="" style="height:1rem;"></button>
+                          </form>
+                          {% endif %}
+                        </div>
                       </div>
-                      <div class="p-3">{{ recom.content }}</div>
-                      <div class="comments_set text-end">
-                        {% if recom.user == request.user %}
-                        <form id='parentform' data-articles-id='{{ articles.pk }}' data-comment-id='{{ recom.id }}'
-                          action="{% url 'articles:comment_delete' articles.pk recom.pk %}" method="POST">
-                          {% csrf_token %}
-                          <input class="btn btn-outline-dark rounded-0" type="submit" value="삭제">
-                        </form>
-                        {% endif %}
-                      </div>
+                      <div>{{ recom.content }}</div>
                     </div>
                     {% endif %}
                     {% endfor %}
@@ -265,8 +302,7 @@
                     </form>
                   </div>
                   {% endif %}
-                  <hr>
-                  <br>
+                  <hr class="my-3">
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -311,9 +347,8 @@
               <div class="container" id="com${response.data.comment_pk}">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <div class="d-flex align-items-center">
-                    <span class="text-muted ms-2 font-space">${response.data.userName}</span>
+                    <span class="text-muted font-space" style="width:2rem; margin:0;">익명</span>
                   </div>
-                  <a class="mb-0 ms-3 text-truncate font-space text-decoration-none text-black" data-bs-toggle="modal" data-bs-target="#commentDetailModal${response.data.comment_pk}">${response.data.content}</a>
                   <div class="modal fade shadow-lg" id="commentDetailModal${response.data.comment_pk}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered rounded-0">
                       <div class="modal-content p-3 rounded-0">
@@ -329,15 +364,18 @@
                   <div class='comments_set'>
                     <form data-articles-id='${response.data.articles_pk}' data-comment-id='${response.data.comment_pk}' action="http://127.0.0.1:8000/articles/${response.data.articles_pk}/articles_detail/comments/${response.data.comment_pk}/comment_delete/" method="POST">
                       {% csrf_token %}
-                      <input class="btn btn-outline-dark rounded-0" type="submit" value="삭제">
+                      <button type="submit" style="border:none;"><img src="/static/images/trash-can.png" alt="" style="height:1rem;"></button>
                     </form>
                   </div>
                 </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <a class="my-2 text-truncate font-space text-decoration-none text-black" data-bs-toggle="modal" 
+                  data-bs-target="#commentDetailModal${response.data.comment_pk}">${response.data.content}</a>
+                </div>
                 <div class='d-flex align-items-center'>
-                  <hr class="border border-dark border-1 opacity-50 d-block me-2" width="25px;">
                   <a href="" class='text-decoration-none text-dark recomBox'><span data-box-id=${response.data.comment_pk} class='text-muted'>답글 보기</span></a>
                 </div>
-                <hr>
+                <hr class="my-3">
                 <br>
               </div>`);
 
@@ -436,15 +474,15 @@
           recomSet.insertAdjacentHTML('beforeend', `
             <div id='com${response.data.comment_pk}' class="border my-2 p-2">
               <div class="d-flex align-items-center">
-                <p class="mb-0 ms-2 me-auto text-muted">${response.data.userName}</p>
+                <p class="mb-0 me-auto text-muted">익명</p>
+                <div class="comments_set text-end">           
+                  <form id='parentform' data-articles-id='${articles_pk}' data-comment-id='${response.data.comment_pk}' action="http://127.0.0.1:8000/articles/${articles_pk}/articles_detail/comments/${response.data.comment_pk}/comment_delete/" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" style="border:none;"><img src="/static/images/trash-can.png" alt="" style="height:1rem;"></button>
+                  </form>
+                </div>
               </div>
-              <p class="p-3">${response.data.content}</p>
-              <div class="comments_set text-end">           
-                <form id='parentform' data-articles-id='${articles_pk}' data-comment-id='${response.data.comment_pk}' action="http://127.0.0.1:8000/articles/${articles_pk}/articles_detail/comments/${response.data.comment_pk}/comment_delete/" method="POST">
-                  {% csrf_token %}
-                  <input class="btn btn-outline-dark rounded-0" type="submit" value="삭제">
-                </form>
-              </div>
+              <p>${response.data.content}</p>
             </div>
             `)
 
@@ -655,8 +693,8 @@
     $("#play-button").click(function () {
 
       if (starFlag) {
-        $(".fa").css("color", "#FAED7D")
-        this.style.color = "#4C4C4C";
+        $(".fa").css("color", "#e2a384")
+        this.style.color = "#4d4c7d";
         starFlag = false;
 
         if (time == 0) {
@@ -692,8 +730,8 @@
     // pause btn
     $("#pause-button").click(function () {
       if (time != 0) {
-        $(".fa").css("color", "#FAED7D")
-        this.style.color = "#4C4C4C";
+        $(".fa").css("color", "#e2a384")
+        this.style.color = "#4d4c7d";
         clearInterval(timer);
         starFlag = true;
       }
@@ -702,8 +740,8 @@
     // stop btn
     $("#stop-button").click(function () {
       if (time != 0) {
-        $(".fa").css("color", "#FAED7D")
-        this.style.color = "#4C4C4C";
+        $(".fa").css("color", "#e2a384")
+        this.style.color = "#4d4c7d";
         clearInterval(timer);
         starFlag = true;
         time = 0;
@@ -756,4 +794,98 @@
   })
 </script>
 
+<script>
+  // 행복
+  const happyform = document.querySelector('#happy-form')
+
+  happyform.addEventListener('submit', function (event) {
+    event.preventDefault();
+    console.log(event)
+    
+    axios({
+      method : 'POST',
+      url: `/articles/${event.target.dataset.detailId}/happy/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      }
+    })
+    .then(response => {
+      console.log(response)
+      if (response.data.s === true) {
+        event.target.style.boxShadow = "5px 5px 5px #363062"
+      } else {
+        event.target.style.boxShadow = "none"
+      }
+    })
+  })
+  // 슬픔
+  const sadform = document.querySelector('#sad-form')
+
+  sadform.addEventListener('submit', function (event) {
+    event.preventDefault();
+    console.log(event)
+    
+    axios({
+      method : 'POST',
+      url: `/articles/${event.target.dataset.detailId}/sad/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      }
+    })
+    .then(response => {
+      console.log(response)
+      if (response.data.s === true) {
+        event.target.style.boxShadow = "5px 5px 5px #363062"
+      } else {
+        event.target.style.boxShadow = "none"
+      }
+    })
+  })
+  // 화남
+  const angryform = document.querySelector('#angry-form')
+
+  angryform.addEventListener('submit', function (event) {
+    event.preventDefault();
+    console.log(event)
+    
+    axios({
+      method : 'POST',
+      url: `/articles/${event.target.dataset.detailId}/angry/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      }
+    })
+    .then(response => {
+      console.log(response)
+      if (response.data.s === true) {
+        event.target.style.boxShadow = "5px 5px 5px #363062"
+      } else {
+        event.target.style.boxShadow = "none"
+      }
+    })
+  })
+  // 웃김
+  const funnyform = document.querySelector('#funny-form')
+
+  funnyform.addEventListener('submit', function (event) {
+    event.preventDefault();
+    console.log(event)
+    
+    axios({
+      method : 'POST',
+      url: `/articles/${event.target.dataset.detailId}/funny/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      }
+    })
+    .then(response => {
+      console.log(response)
+      if (response.data.s === true) {
+        event.target.style.boxShadow = "5px 5px 5px #363062"
+      } else {
+        event.target.style.boxShadow = "none"
+      }
+    })
+  })
+</script>
 {% endblock content %}

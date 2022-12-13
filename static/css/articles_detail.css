@@ -33,9 +33,9 @@ body {
 }
 
 .btnBox .fa {
-  margin: 0px 5px;
+  margin: 10px 10px;
   font-size: 30pt;
-  color: #FAED7D;
+  color: #e2a384;
   cursor: pointer;
 }
 

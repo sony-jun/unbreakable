@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 body{
 	font-family: 'Roboto', sans-serif;
-    height: 100vh;
 }
 .card{
     background-color:rgb(239, 239, 239, 0.5);
