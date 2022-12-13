@@ -3,8 +3,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/music-search.css">
-<link rel="stylesheet" href="/static/song/search.css">
+<link rel="stylesheet" href="/static/music/css/search.css">
 {% endblock css %}
 
 {% block content %}
@@ -13,7 +12,7 @@
   <section class="text-center">
     <div class="container">
       <div class="search-text-box">
-        <h1 class="mb-5 search-text">유튜브에서 음악 검색</h1>
+        <h1 class="mb-5 search-text rounded-3">유튜브에서 음악 검색</h1>
       </div>
       <form method="POST">
         <div class="input-group mb-3">
@@ -21,6 +20,7 @@
           <input type="text" name="search" placeholder="검색어에 따라 6개의 결과물을 출력해 줍니다." class="form-control input-box" aria-label="Username">
           <button type="submit" name="submit" value="search" class="btn px-5 btn-submit">검색</button>
         </div>
+        <div class="fw-bold">(재생할 수 없는 영상은 글이나 메세지에 첨부하여도 재생이 안 되요)</div>
       </form>
     </div>
   </section>

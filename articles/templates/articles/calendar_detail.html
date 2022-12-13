@@ -17,7 +17,7 @@
 
         {% if diary.song or diary.picture %}
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 my-4 card-box" onclick="location.href='http://localhost:8000/articles/' + {{diary.pk}} + '/articles_detail/';">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 my-4 card-box" onclick="location.href='http://unbreakableheart-env.eba-fq3y3emz.ap-northeast-2.elasticbeanstalk.com/articles/' + {{diary.pk}} + '/articles_detail/';">
             <div class="col-md-6 col-sm-12" style="padding:0 12px;">
                 {% if diary.song %}
                     {% if diary.picture %}
@@ -82,7 +82,7 @@
 
         {% else %}
 
-        <div class="row card-box my-4 no_song_no_picture" onclick="location.href='http://localhost:8000/articles/' + {{diary.pk}} + '/articles_detail/';">
+        <div class="row card-box my-4 no_song_no_picture" onclick="location.href='http://unbreakableheart-env.eba-fq3y3emz.ap-northeast-2.elasticbeanstalk.com/articles/' + {{diary.pk}} + '/articles_detail/';">
             <div class="picture-box">
                 <h1 class="mb-2 content-text text-center">이날의 추억</h1>
                 <p class="text-end mb-1 created_at">{{ diary.created_at }}</p>
